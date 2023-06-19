@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
+class Developer extends StatelessWidget {
+  const Developer ({super.key});
 
   @override
   Widget build(BuildContext context) {

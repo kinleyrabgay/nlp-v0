@@ -1,5 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-import 'package:dzongkha_nlp_mobile/pages/about/about.dart';
+import 'package:dzongkha_nlp_mobile/pages/about/about_us.dart';
+import 'package:dzongkha_nlp_mobile/pages/about/developer.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/dashboardcard.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
@@ -130,7 +131,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       englishState.isEnglishSelected ? 'About' : 'ཞིབ་འཚོལ་པ་།',
                       style: const TextStyle(fontSize: 16),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const AboutPage(),
+                          transitionDuration: const Duration(milliseconds: 500),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            var begin = const Offset(1.0, 0.0);
+                            var end = Offset.zero;
+                            var curve = Curves.ease;
+                            var tween = Tween(begin: begin, end: end)
+                                .chain(CurveTween(curve: curve));
+                            return SlideTransition(
+                              position: animation.drive(tween),
+                              child: child,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                   const Divider(
                     color: Colors.black12,
@@ -150,7 +173,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const AboutPage(),
+                                  const Developer(),
                           transitionDuration: const Duration(milliseconds: 500),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
