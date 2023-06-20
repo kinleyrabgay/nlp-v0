@@ -11,6 +11,7 @@ class DataServices {
   static const UPLOAD_AUDIO = 'http://10.2.5.154:8000/upload/';
   static const TRANSCRIBE_AUDIO = 'http://10.2.5.154:8000/transcribe-audio/';
 
+
   static Future<Map> getTranscription() async {
     try {
       print("get data called");
@@ -85,6 +86,28 @@ class DataServices {
       return {};
     }
   }
+
+  // TTS Services
+
+
+
+  // TTS END =======================================================
+
+
+
+
+
+
+
+
+
+
+
+  // NMT Services
+
+
+
+  // NMT END =======================================================
 
 //services (End) _______________________________________________________________________________
 }
