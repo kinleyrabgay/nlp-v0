@@ -67,7 +67,7 @@ class AudioPlayerState extends State<AudioPlayer> {
 
   void uploadAudio(file, id, user) {
     // ignore: avoid_print
-    DataServices.uploadAudio(file, id, user).then((value) => {print(value)});
+    // DataServices.uploadAudio(file, id, user).then((value) => {print(value)});
   }
 
   // update the progress value in the SharedPreferences
