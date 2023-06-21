@@ -49,22 +49,48 @@ class TTSModel extends StatefulWidget {
   const TTSModel({super.key});
 
   @override
-  State<TTSModel> createState() => _TTSModelState();
+  _TTSModelState createState() => _TTSModelState();
 }
 
 class _TTSModelState extends State<TTSModel> {
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
+  String formatTime(int seconds) {
+    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
+  }
+
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
 
   String text = '';
   bool isPlaying = false;
   bool audioReceived = false;
+  bool audioReceivedToLocal = false;
+
   final AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     _predicted_text_controller.text = "";
+    audioPlayer.onPlayerStateChanged.listen((state) {
+      setState(() {
+        isPlaying = state == audioPlayer.play;
+      });
+    });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+
+    audioPlayer.onPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
   }
 
   @override
@@ -77,24 +103,44 @@ class _TTSModelState extends State<TTSModel> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
+
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
           : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
     }
 
-    fetchAudioAndSave(String text) {
+    Future<void> fetchAudioAndSave(String text) async {
+      bool fasle_storage = false;
+
+      setState(() {
+        audioReceivedToLocal = fasle_storage;
+      });
+
       print('Fetch audio data called');
       print(text);
-      Future<bool> audioIsReceivedStatus = fetchAudioData(text);
+      bool audioIsReceivedStatus = await fetchAudioData(text);
+
+      print('Audio is Received Status ===================================');
+      print(audioIsReceivedStatus);
       // ignore: unrelated_type_equality_checks
       if (audioIsReceivedStatus == true) {
-        
+        setState(() {
+          audioReceivedToLocal = true;
+          print('Setting state =============================');
+          print(audioReceivedToLocal);
+        });
+
         print('Audio synthesized and saved');
         print('Now enable the play button and play it.');
       } else {
         print(
             'Failed to get audio from server and save on temporary directory');
+        setState(() {
+          audioReceivedToLocal = false;
+          print('Setting state =============================');
+          print(audioReceivedToLocal);
+        });
       }
     }
 
@@ -154,6 +200,7 @@ class _TTSModelState extends State<TTSModel> {
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12.0),
                         textStyle: const TextStyle(fontSize: 14.0),
+                        backgroundColor: Color.fromARGB(255, 37, 58, 107),
                         minimumSize: const Size(
                           200.0,
                           48.0,
@@ -162,20 +209,44 @@ class _TTSModelState extends State<TTSModel> {
                       child: const Text('Generate Audio'),
                     ),
                     SizedBox(
-                      height: 8.0,
+                      height: 20.0,
                     ),
-                    ElevatedButton(
-                      onPressed: playAudioFromTempDir,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        textStyle: const TextStyle(fontSize: 14.0),
-                        minimumSize: const Size(
-                          100.0,
-                          40.0,
-                        ),
-                      ),
-                      child: const Text('Play'),
-                    ),
+                    Column(
+                      children: [
+                        if (audioReceivedToLocal == true)
+                          Column(
+                            children: [
+                              CircleAvatar(
+                                  backgroundColor:
+                                      Color.fromARGB(255, 37, 58, 107),
+                                  radius: 20,
+                                  child: IconButton(
+                                    color: Color.fromARGB(255, 242, 243, 247),
+                                    icon: Icon(
+                                      isPlaying
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                    ),
+                                    onPressed: playAudioFromTempDir,
+                                  )),
+                              Slider(
+                                min: 0,
+                                max: duration.inSeconds.toDouble(),
+                                value: position.inSeconds.toDouble(),
+                                onChanged: (value) {
+                                  final position =
+                                      Duration(seconds: value.toInt());
+                                  audioPlayer.seek(position);
+                                  audioPlayer.resume();
+                                },
+                              ),
+                            ],
+                          )
+                        else
+                          const Text(
+                              'Audio player will appread here after being loaded'),
+                      ],
+                    )
                   ],
                 ),
               )
