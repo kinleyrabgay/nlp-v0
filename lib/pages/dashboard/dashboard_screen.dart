@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/app_bar.dart';
 import '../model/asr/try_model.dart';
+import '../model/tts/tts_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
@@ -83,7 +84,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
                       imagepath: "assets/img/tts-logo.png",
                       cardcolor: Colors.green,
-                      onCardClick: () {},
+                      onCardClick: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TTSModel(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
                     DashboardCard(
