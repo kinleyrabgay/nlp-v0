@@ -198,7 +198,7 @@ class _Nmt_modelState extends State<Nmt_model> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 37, 58, 107),
+                    primary: Color.fromARGB(255, 44, 154, 243),
                     fixedSize:
                         Size(150, 50), // Set the desired width and height
                   ),
@@ -212,7 +212,8 @@ class _Nmt_modelState extends State<Nmt_model> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 37, 58, 107),
+                    primary:
+                        Color.fromARGB(255, 235, 44, 76), //255, 42, 188, 108
                     fixedSize:
                         Size(150, 50), // Set the desired width and height
                   ),
