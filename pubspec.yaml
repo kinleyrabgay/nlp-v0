@@ -60,6 +60,8 @@ dependencies:
   flutter_native_splash: ^2.2.19
   assets_audio_player: ^3.0.6
   just_audio: ^0.9.34
+  wave: ^0.2.2
+  audio_slider: ^0.0.1
 
 dev_dependencies:
   flutter_test:
