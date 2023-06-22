@@ -141,7 +141,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               BorderSide(width: 0, color: Colors.transparent),
                         ),
                         image: DecorationImage(
-                          image: AssetImage('assets/img/dashboard_drawer.png'),
+                          image: AssetImage('assets/img/flag.jpg'),
                           fit: BoxFit.cover,
                         ),
                       ),
