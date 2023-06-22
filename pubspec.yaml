@@ -41,8 +41,7 @@ dependencies:
   audioplayers: ^3.0.1
   onboarding: ^3.1.0
   record: ^4.0.0
-  flutter_countdown_timer: ^4.1.0
-  flutter_spinkit: ^5.1.0
+  flutter_spinkit: ^5.2.0
   flutter_audio_waveforms: ^1.2.1+8
   audio_waveforms: ^1.0.3
   microphone: ^0.1.0

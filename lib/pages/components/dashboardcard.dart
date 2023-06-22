@@ -48,16 +48,16 @@ class _DashboardCardState extends State<DashboardCard> {
                         Text(
                           widget.heading,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color.fromARGB(222, 20, 20, 20),
                             fontWeight: FontWeight.bold,
-                            fontSize: 18,
+                            fontSize: 22,
                           ),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           widget.subtitle,
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 26, 26, 26),
                             fontSize: 14,
                           ),
                         ),
@@ -69,8 +69,7 @@ class _DashboardCardState extends State<DashboardCard> {
                             widget.onCardClick();
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 255, 255, 255),
+                            backgroundColor: Color(0xFF0F1F41),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),
@@ -80,9 +79,9 @@ class _DashboardCardState extends State<DashboardCard> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
-                                'Try Yourself',
+                                'Get Started',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 14,
                                 ),
                               ),
@@ -92,11 +91,11 @@ class _DashboardCardState extends State<DashboardCard> {
                               Container(
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 255, 105, 105),
+                                  color: Color.fromARGB(255, 255, 136, 0),
                                 ),
                                 padding: const EdgeInsets.all(1),
                                 child: const Icon(Icons.chevron_right,
-                                    color: Colors.white),
+                                    color: Color.fromARGB(255, 255, 255, 255)),
                               )
                             ],
                           ),
