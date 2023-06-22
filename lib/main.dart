@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color.fromARGB(255, 15, 31, 65),
         fontFamily: 'Roboto',
       ),
-      home: const SplashScreen(),
+      home: SplashScreen(),
     );
   }
 }

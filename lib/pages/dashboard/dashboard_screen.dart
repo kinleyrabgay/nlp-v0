@@ -1,5 +1,5 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-import 'package:dzongkha_nlp_mobile/pages/about/about_developer.dart';
+import 'package:dzongkha_nlp_mobile/pages/about/about_developer_card.dart';
 import 'package:dzongkha_nlp_mobile/pages/about/about_us.dart';
 import 'package:dzongkha_nlp_mobile/pages/about/developer.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/dashboardcard.dart';
@@ -66,7 +66,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? "Transcribe Dzongkha Speech into Text"
                           : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
                       imagepath: "assets/img/splash_1.png",
-                      cardcolor: Colors.red,
+                      cardcolor: Colors.white,
                       onCardClick: () {
                         Navigator.push(
                           context,
@@ -85,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? "Transcribe Dzongkha Speech into Text"
                           : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
                       imagepath: "assets/img/tts-logo.png",
-                      cardcolor: Colors.green,
+                      cardcolor: Colors.white,
                       onCardClick: () {
                         Navigator.push(
                           context,
@@ -104,7 +104,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? "Transcribe Dzongkha Speech into Text"
                           : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
                       imagepath: "assets/img/nmt_logo.png",
-                      cardcolor: Colors.cyan,
+                      cardcolor: Colors.white,
                       onCardClick: () {
                         Navigator.push(
                           context,

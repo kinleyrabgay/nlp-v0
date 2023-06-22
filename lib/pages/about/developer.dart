@@ -1,6 +1,6 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable
 
-import 'package:dzongkha_nlp_mobile/pages/about/about_developer.dart';
+import 'package:dzongkha_nlp_mobile/pages/about/about_developer_card.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class Developer extends StatelessWidget {
                     twitterurl: "",
                     linkedinurl: "",
                     githuburl: "",
-                    avaterurl: "assets/img/ng.jpg",
+                    avaterurl: "assets/img/nsp_trans.png",
                   ),
                   ProfileCard(
                     name: "Ngawang Samten Pelzang",
@@ -52,7 +52,7 @@ class Developer extends StatelessWidget {
                     twitterurl: "",
                     linkedinurl: "",
                     githuburl: "",
-                    avaterurl: "assets/img/ng.jpg",
+                    avaterurl: "assets/img/nsp_trans.png",
                   ),
                   ProfileCard(
                     name: "Ngawang Samten Pelzang",
@@ -62,7 +62,7 @@ class Developer extends StatelessWidget {
                     twitterurl: "",
                     linkedinurl: "",
                     githuburl: "",
-                    avaterurl: "assets/img/ng.jpg",
+                    avaterurl: "assets/img/nsp_trans.png",
                   )
                 ],
               ),

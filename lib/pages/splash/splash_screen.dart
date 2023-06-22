@@ -1,61 +1,77 @@
 import 'dart:async';
+
 import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
 import 'package:dzongkha_nlp_mobile/pages/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
-
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
+
   @override
   void initState() {
-    super.initState();
+    _animationController = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this,
+    );
+    _animation = Tween<Offset>(
+      begin: Offset(0, -1.5),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeOut,
+    ));
 
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
+    _animationController.forward().then((value) {
+      Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
+        MaterialPageRoute(
+          builder: (context) => const OnboardingScreen(),
+        ),
       );
     });
+    ;
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: const Color(0xFF0F1F41),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              // Spacer(),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 100),
-              //   child: SpinKitWave(
-              //     color: Colors.white,
-              //     itemCount: 30,
-              //     size: 40,
-              //     type: SpinKitWaveType.center,
-              //   ),
-              // ),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(bottom: 30.0),
-                child: Text(
-                  'Powered By DDC',
-                  style: TextStyle(
-                      fontSize: 12,
-                      fontFamily: ' Montserrat',
-                      color: Colors.white),
-                ),
-              ),
-            ],
-          ),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SlideTransition(
+              position: _animation,
+              child: Container(
+                  height: 200,
+                  width: 200,
+                  child: Image.asset("assets/logo/app_logo_trans.png")),
+            ),
+            SpinKitWaveSpinner(
+              color: Color.fromARGB(255, 228, 225, 67),
+              trackColor: Color.fromARGB(255, 222, 100, 13),
+              waveColor: Color.fromARGB(255, 224, 201, 55),
+              size: 60,
+              duration: Duration(milliseconds: 1000),
+            )
+          ],
         ),
       ),
     );
