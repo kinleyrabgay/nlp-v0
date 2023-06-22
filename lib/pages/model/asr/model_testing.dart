@@ -102,23 +102,30 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
     late Color color;
 
     if (_recordState != RecordState.stop) {
-      icon = const Icon(Icons.stop, color: Colors.red, size: 30);
+      icon = const Icon(Icons.stop, color: Colors.red, size: 20);
       color = Colors.red.withOpacity(0.1);
     } else {
       final theme = Theme.of(context);
-      icon = Icon(Icons.mic, color: theme.primaryColor, size: 30);
+      icon = Icon(Icons.mic, color: theme.primaryColor, size: 20);
       color = theme.primaryColor.withOpacity(0.1);
     }
 
-    return ClipOval(
-      child: Material(
-        // color: color,
-        child: InkWell(
-          child: SizedBox(width: 56, height: 56, child: icon),
-          onTap: () {
-            (_recordState != RecordState.stop) ? _stop() : _start();
-          },
-        ),
+    return InkWell(
+      onTap: () {
+        (_recordState != RecordState.stop) ? _stop() : _start();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          icon,
+          Text(
+            (_recordState != RecordState.stop) ? "Recording" : "Record",
+            style: (_recordState != RecordState.stop)
+                ? TextStyle(fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
+                : TextStyle(fontSize: 14, color: Colors.black),
+          ),
+        ],
       ),
     );
   }
@@ -162,33 +169,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: Colors.transparent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // _buildText(),
-          // if (_amplitude != null) ...[
-          //   const Padding(
-          //     padding: EdgeInsets.symmetric(vertical: 20),
-          //     child: SpinKitWave(
-          //       color: Colors.black,
-          //       itemCount: 60,
-          //       size: 30,
-          //       type: SpinKitWaveType.center,
-          //     ),
-          //   ),
-          // ],
-
-          // const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildRecordStopControl(),
-            ],
-          ),
-        ],
-      ),
+      child: _buildRecordStopControl(),
     );
   }
 }
