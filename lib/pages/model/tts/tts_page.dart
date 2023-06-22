@@ -1,14 +1,16 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print
 import 'dart:convert';
 import 'dart:typed_data';
-
+import 'dart:async';
+import 'dart:math';
+import 'package:audio_slider/audio_slider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:file_picker/file_picker.dart';
-// import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
@@ -53,15 +55,18 @@ class TTSModel extends StatefulWidget {
 }
 
 class _TTSModelState extends State<TTSModel> {
-  Duration duration = Duration.zero;
-  Duration position = Duration.zero;
+  // Duration duration = Duration.zero;
+  // Duration position = Duration.zero;
+  // Timer? timer;
+  // List<double> valueData = <double>[];
 
-  String formatTime(int seconds) {
-    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
-  }
+  // String formatTime(int seconds) {
+  //   return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
+  // }
 
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
+  var text_controller = TextEditingController();
 
   String text = '';
   bool isPlaying = false;
@@ -74,23 +79,10 @@ class _TTSModelState extends State<TTSModel> {
   void initState() {
     super.initState();
     _predicted_text_controller.text = "";
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
-        isPlaying = state == audioPlayer.play;
-      });
-    });
-
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
-        duration = newDuration;
-      });
-    });
-
-    audioPlayer.onPositionChanged.listen((newPosition) {
-      setState(() {
-        position = newPosition;
-      });
-    });
+    // timer = Timer.periodic(const Duration(milliseconds: 0), (timer) {
+    //   valueData.add(20 + Random().nextInt(5).toDouble());
+    //   setState(() {});
+    // });
   }
 
   @override
@@ -98,6 +90,11 @@ class _TTSModelState extends State<TTSModel> {
     audioPlayer
         .dispose(); // Dispose the audio player when the widget is disposed
     super.dispose();
+    // timer?.cancel();
+  }
+
+  void stopAudio() {
+    audioPlayer.stop();
   }
 
   @override
@@ -112,6 +109,9 @@ class _TTSModelState extends State<TTSModel> {
 
     Future<void> fetchAudioAndSave(String text) async {
       bool fasle_storage = false;
+      setState(() {
+        isLoading = true;
+      });
 
       setState(() {
         audioReceivedToLocal = fasle_storage;
@@ -142,6 +142,9 @@ class _TTSModelState extends State<TTSModel> {
           print(audioReceivedToLocal);
         });
       }
+      setState(() {
+        isLoading = false;
+      });
     }
 
     Future<void> playAudioFromTempDir() async {
@@ -151,6 +154,10 @@ class _TTSModelState extends State<TTSModel> {
       // Play the audio file.
       AudioPlayer player = AudioPlayer();
       await player.play(DeviceFileSource(filePath));
+    }
+
+    Future<void> pause() async {
+      audioPlayer.pause();
     }
 
     return Scaffold(
@@ -167,8 +174,8 @@ class _TTSModelState extends State<TTSModel> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
-                      height: 300.0, // Adjust the desired height
-                      width: 300.0, // Adjust the desired width
+                      height: 400.0,
+                      width: 300.0,
                       margin: const EdgeInsets.only(bottom: 10.0),
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
@@ -179,6 +186,7 @@ class _TTSModelState extends State<TTSModel> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: TextField(
+                        controller: text_controller,
                         onChanged: (value) {
                           setState(() {
                             text = value;
@@ -192,64 +200,135 @@ class _TTSModelState extends State<TTSModel> {
                         style: const TextStyle(fontSize: 16.0),
                       ),
                     ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    ElevatedButton(
-                      onPressed: () => fetchAudioAndSave(text),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        textStyle: const TextStyle(fontSize: 14.0),
-                        backgroundColor: Color.fromARGB(255, 37, 58, 107),
-                        minimumSize: const Size(
-                          200.0,
-                          48.0,
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (text.isEmpty) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Please enter text.'),
+                                      ),
+                                    );
+                                  } else {
+                                    fetchAudioAndSave(text);
+                                  }
+                                },
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            textStyle: const TextStyle(fontSize: 14.0),
+                            backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                            minimumSize: const Size(150.0, 48.0),
+                          ),
+                          child: isLoading
+                              ? Center(
+                                  child:
+                                      LoadingAnimationWidget.staggeredDotsWave(
+                                    color: const Color(0XFF0F1F41),
+                                    size: 40.0,
+                                  ),
+                                )
+                              : const Text('Generate Audio'),
                         ),
-                      ),
-                      child: const Text('Generate Audio'),
+                        ElevatedButton(
+                          onPressed: text_controller.clear,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            textStyle: const TextStyle(fontSize: 14.0),
+                            backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                            minimumSize: const Size(150.0, 48.0),
+                          ),
+                          child: const Text('Clear'),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
+                    SizedBox(height: 20.0),
                     Column(
                       children: [
                         if (audioReceivedToLocal == true)
                           Column(
                             children: [
-                              CircleAvatar(
-                                  backgroundColor:
-                                      Color.fromARGB(255, 37, 58, 107),
-                                  radius: 20,
-                                  child: IconButton(
-                                    color: Color.fromARGB(255, 242, 243, 247),
-                                    icon: Icon(
-                                      isPlaying
-                                          ? Icons.pause
-                                          : Icons.play_arrow,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 37, 58, 107),
+                                    radius: 20,
+                                    child: IconButton(
+                                      color: Color.fromARGB(255, 242, 243, 247),
+                                      icon: Icon(
+                                        isPlaying
+                                            ? Icons.pause
+                                            : Icons.play_arrow,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isPlaying = !isPlaying;
+                                          if (isPlaying) {
+                                            playAudioFromTempDir();
+                                          } else {
+                                            audioPlayer.pause();
+                                          }
+                                        });
+                                      },
                                     ),
-                                    onPressed: playAudioFromTempDir,
-                                  )),
-                              Slider(
-                                min: 0,
-                                max: duration.inSeconds.toDouble(),
-                                value: position.inSeconds.toDouble(),
-                                onChanged: (value) {
-                                  final position =
-                                      Duration(seconds: value.toInt());
-                                  audioPlayer.seek(position);
-                                  audioPlayer.resume();
-                                },
+                                  ),
+                                  CircleAvatar(
+                                    backgroundColor:
+                                        Color.fromARGB(255, 37, 58, 107),
+                                    radius: 20,
+                                    child: IconButton(
+                                      onPressed: stopAudio,
+                                      icon: Icon(Icons.stop),
+                                      iconSize: 20,
+                                      color: Color.fromARGB(255, 242, 243, 247),
+                                    ),
+                                  ),
+                                  Slider(
+                                    onChanged: (value) {},
+                                    value: 0.0,
+                                    min: 0.0,
+                                    max: 1.0,
+                                    activeColor:
+                                        Color.fromARGB(255, 37, 58, 107),
+                                    inactiveColor:
+                                        Color.fromARGB(255, 37, 58, 107)
+                                            .withOpacity(0.3),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '00:00',
+                                        style: TextStyle(fontSize: 12.0),
+                                      ),
+                                      Text(
+                                        '00:00',
+                                        style: TextStyle(fontSize: 12.0),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
+                              SizedBox(height: 8.0),
                             ],
                           )
                         else
                           const Text(
-                              'Audio player will appread here after being loaded'),
+                              'Audio player will appear here after being loaded'),
                       ],
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
