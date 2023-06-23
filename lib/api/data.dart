@@ -6,14 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class DataServices {
-  static const GET_TRANSCRIPTION =
-      'http://10.2.5.154:8000/next_transcription/2/';
-  static const UPLOAD_AUDIO = 'http://10.2.5.154:8000/upload/';
   static const TRANSCRIBE_AUDIO =
       'https://nlp.cst.edu.bt/asr/transcribe-audio/';
+  // static const TRANSCRIBE_AUDIO = 'http://10.2.4.138:8000/transcribe-audio/';
 
   //ASR Service
-  static Future<Map> transcribeAudio(file) async {
+  static Future<Map> transcribeAudio(file, modelid) async {
     print("transcribeAudio Called");
     try {
       File audioFile = File(file);
@@ -22,6 +20,8 @@ class DataServices {
       var request = http.MultipartRequest('POST', Uri.parse(TRANSCRIBE_AUDIO));
       request.files
           .add(await http.MultipartFile.fromPath('audio', audioFile.path));
+      request.fields['modelid'] = modelid;
+
       var response = await request.send();
 
       print("transcribeAudio >> Response:: ${response}\n");

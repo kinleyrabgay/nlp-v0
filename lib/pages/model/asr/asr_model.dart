@@ -19,8 +19,8 @@ class TryModel extends StatefulWidget {
 class _TryModelState extends State<TryModel> {
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
-  var model = ['asdfasdf', 'asdfasdfa'];
-  var currentmodel = 'asdfasdf';
+  var model = ['Wav2Vac2XLR', 'Wav2Vac2XLR with LM'];
+  var currentmodel = 'Wav2Vac2XLR with LM';
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _TryModelState extends State<TryModel> {
     setState(() {
       isLoading = true; // start the spinner
     });
-    DataServices.transcribeAudio(file).then(
+    DataServices.transcribeAudio(file, model.indexOf(currentmodel) + 1).then(
       (value) => {
         // print(value),
         if (value != null)

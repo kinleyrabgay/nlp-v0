@@ -44,6 +44,9 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               SizedBox(height: 8),
@@ -52,8 +55,10 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(
-                      255, 255, 255, 255), // Replace with your desired color
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 240, 25)
+                      : Color.fromARGB(
+                          255, 0, 71, 165), // Replace with your desired color
                   fontFamily:
                       'Montserrat', // Replace with your desired font family
                 ),
@@ -63,6 +68,9 @@ class _AboutPageState extends State<AboutPage> {
                 'v1.0.0',
                 style: TextStyle(
                   fontSize: 18,
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               SizedBox(height: 24),
@@ -70,6 +78,9 @@ class _AboutPageState extends State<AboutPage> {
                 'Our App is a collaboration with',
                 style: TextStyle(
                   fontSize: 18,
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               SizedBox(height: 8),
@@ -114,7 +125,9 @@ class _AboutPageState extends State<AboutPage> {
                 label: Text(
                   'Share App',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: englishState.isEnglishSelected
+                        ? Color.fromARGB(255, 255, 255, 255)
+                        : Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -150,17 +163,23 @@ class _AboutPageState extends State<AboutPage> {
               ),
               SizedBox(height: 16),
               Text(
-                'Contact DDC: example@ddc.com',
+                'Contact CST: https://nlp.cst.edu.bt/',
                 style: TextStyle(
                   fontSize: 14,
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               SizedBox(height: 8),
               Text(
-                '© 2023 DDC. All rights reserved.',
+                '© 2023 CST. All rights reserved.',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
+                  color: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 255, 255, 255)
+                      : Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ],
