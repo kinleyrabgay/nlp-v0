@@ -50,8 +50,8 @@ class Developer extends StatelessWidget {
                   ),
                   ProfileCard(
                     developer1: "Karma Wangchuk",
-                    developer2: "Thinley Norbu",
-                    developer3: "Dodrup Wangchuk Sherpa",
+                    developer2: "Dodrup Wangchuk Sherpa",
+                    developer3: "Thinley Norbu",
                     developer4: "Sonam Yangchen",
                     projectname: "Dzongkha Translation Developer",
                     projectlogo: 'assets/img/nmt_logo.png',
