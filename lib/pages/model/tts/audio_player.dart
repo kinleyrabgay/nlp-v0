@@ -2,8 +2,11 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../provider/state.dart';
 
 class AudioPlayer extends StatefulWidget {
   final String source;
@@ -68,6 +71,7 @@ class AudioPlayerState extends State<AudioPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    final englishState = Provider.of<EnglishState>(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
@@ -116,13 +120,16 @@ class AudioPlayerState extends State<AudioPlayer> {
   }
 
   Widget _buildDownload() {
+    final englishState = Provider.of<EnglishState>(context);
     Icon icon;
     Color color;
 
     final theme = Theme.of(context);
-    icon = Icon(Icons.download_rounded, color: theme.primaryColor, size: 24);
+    icon = Icon(Icons.download_rounded, color: Colors.white, size: 24);
     // color = theme.primaryColor.withOpacity(0.1);
-    color = const Color(0xFF5ACFC9);
+    color = englishState.isEnglishSelected
+        ? Color.fromARGB(255, 37, 58, 107)
+        : Color.fromARGB(255, 243, 181, 56);
 
     // Color color;
     return ClipOval(
@@ -140,6 +147,7 @@ class AudioPlayerState extends State<AudioPlayer> {
   }
 
   Widget _buildControl() {
+    final englishState = Provider.of<EnglishState>(context);
     Icon icon;
     Color color;
 
@@ -148,7 +156,11 @@ class AudioPlayerState extends State<AudioPlayer> {
       color = Colors.red.withOpacity(0.1);
     } else {
       final theme = Theme.of(context);
-      icon = Icon(Icons.play_arrow, color: theme.primaryColor, size: 30);
+      icon = Icon(Icons.play_arrow,
+          color: englishState.isEnglishSelected
+              ? Color.fromARGB(255, 37, 58, 107)
+              : Color.fromARGB(255, 243, 181, 56),
+          size: 30);
       color = theme.primaryColor.withOpacity(0.1);
     }
 
@@ -171,14 +183,9 @@ class AudioPlayerState extends State<AudioPlayer> {
   }
 
   Widget _buildSlider(double widgetWidth) {
-    bool canSetValue = false;
+    final englishState = Provider.of<EnglishState>(context);
     final duration = _duration;
     final position = _position;
-
-    if (duration != null && position != null) {
-      canSetValue = position.inMilliseconds > 0;
-      canSetValue &= position.inMilliseconds < duration.inMilliseconds;
-    }
 
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
@@ -190,7 +197,6 @@ class AudioPlayerState extends State<AudioPlayer> {
         child: Row(
           children: [
             SizedBox(
-              // width: width,
               width: MediaQuery.of(context).size.width * 0.7,
               child: SliderTheme(
                 data: const SliderThemeData(
@@ -198,15 +204,30 @@ class AudioPlayerState extends State<AudioPlayer> {
                   trackShape: RoundedRectSliderTrackShape(),
                 ),
                 child: Slider(
-                  activeColor: const Color(0xFF5ACFC9),
+                  activeColor: englishState.isEnglishSelected
+                      ? Color.fromARGB(255, 37, 58, 107)
+                      : Color.fromARGB(255, 243, 181, 56),
                   inactiveColor: const Color.fromARGB(255, 92, 90, 90),
-                  value:
-                      canSetValue ? _position!.inMilliseconds.toDouble() : 0.0,
+                  value: position?.inMilliseconds.toDouble() ?? 0.0,
                   min: 0.0,
                   max: duration?.inMilliseconds.toDouble() ?? 0.0,
-                  onChanged: (double value) {
-                    if (canSetValue) {
-                      _audioPlayer.seek(Duration(milliseconds: value.round()));
+                  onChanged: (double value) async {
+                    await _audioPlayer
+                        .seek(Duration(milliseconds: value.round()));
+                    setState(() {
+                      _position = Duration(milliseconds: value.round());
+                    });
+                  },
+                  onChangeStart: (double value) {
+                    // Pause the player when dragging starts
+                    if (_audioPlayer.state == ap.PlayerState.playing) {
+                      _audioPlayer.pause();
+                    }
+                  },
+                  onChangeEnd: (double value) async {
+                    // Restore previous player state after dragging ends
+                    if (_audioPlayer.state == ap.PlayerState.playing) {
+                      await _audioPlayer.resume();
                     }
                   },
                 ),
@@ -215,7 +236,7 @@ class AudioPlayerState extends State<AudioPlayer> {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
-                '${_position?.inMinutes ?? 0}:${(_position?.inSeconds ?? 0) % 60}',
+                '${position?.inMinutes ?? 0}:${(position?.inSeconds ?? 0) % 60}',
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,

@@ -186,7 +186,9 @@ class _TTSModelState extends State<TTSModel> {
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
                           textStyle: const TextStyle(fontSize: 14.0),
-                          backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                          backgroundColor: englishState.isEnglishSelected
+                              ? Color.fromARGB(255, 37, 58, 107)
+                              : Color.fromARGB(255, 243, 181, 56),
                           minimumSize: const Size(150.0, 48.0),
                         ),
                         child: isLoading
@@ -203,7 +205,9 @@ class _TTSModelState extends State<TTSModel> {
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
                           textStyle: const TextStyle(fontSize: 14.0),
-                          backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                          backgroundColor: englishState.isEnglishSelected
+                              ? Color.fromARGB(255, 37, 58, 107)
+                              : Color.fromARGB(255, 243, 181, 56),
                           minimumSize: const Size(150.0, 48.0),
                         ),
                         child: const Text('Clear'),
@@ -213,7 +217,7 @@ class _TTSModelState extends State<TTSModel> {
                   SizedBox(height: 20.0),
                   Column(
                     children: [
-                      if (audioReceivedToLocal == false)
+                      if (audioReceivedToLocal == true)
                         AudioPlayer(
                           source: audiofilepath,
                         )
