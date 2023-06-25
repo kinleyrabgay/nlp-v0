@@ -3,25 +3,22 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:math';
-import 'package:audio_slider/audio_slider.dart';
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
+import 'package:dzongkha_nlp_mobile/pages/model/tts/audio_player.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:file_picker/file_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
-// import 'package:just_audio/just_audio.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
-Future<bool> fetchAudioData(String text) async {
+Future<Map> fetchAudioData(String text) async {
   // TODO: Change the url to deployed when webapp is deployed
-  final url = Uri.parse('http://10.2.5.122:7000/tts/');
+  final url = Uri.parse('https://nlp.cst.edu.bt/tts/');
   final headers = {'Content-Type': 'application/json'};
   final body = {'inputText': text};
 
@@ -41,9 +38,9 @@ Future<bool> fetchAudioData(String text) async {
     var file = File(filePath);
     await file.writeAsBytes(response.bodyBytes);
 
-    return true;
+    return {'success': true, "filepath": filePath};
   } else {
-    return false;
+    return {'success': false};
   }
 }
 
@@ -55,15 +52,6 @@ class TTSModel extends StatefulWidget {
 }
 
 class _TTSModelState extends State<TTSModel> {
-  // Duration duration = Duration.zero;
-  // Duration position = Duration.zero;
-  // Timer? timer;
-  // List<double> valueData = <double>[];
-
-  // String formatTime(int seconds) {
-  //   return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
-  // }
-
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
   var text_controller = TextEditingController();
@@ -72,29 +60,12 @@ class _TTSModelState extends State<TTSModel> {
   bool isPlaying = false;
   bool audioReceived = false;
   bool audioReceivedToLocal = false;
-
-  final AudioPlayer audioPlayer = AudioPlayer();
+  String audiofilepath = "";
 
   @override
   void initState() {
     super.initState();
     _predicted_text_controller.text = "";
-    // timer = Timer.periodic(const Duration(milliseconds: 0), (timer) {
-    //   valueData.add(20 + Random().nextInt(5).toDouble());
-    //   setState(() {});
-    // });
-  }
-
-  @override
-  void dispose() {
-    audioPlayer
-        .dispose(); // Dispose the audio player when the widget is disposed
-    super.dispose();
-    // timer?.cancel();
-  }
-
-  void stopAudio() {
-    audioPlayer.stop();
   }
 
   @override
@@ -119,7 +90,11 @@ class _TTSModelState extends State<TTSModel> {
 
       print('Fetch audio data called');
       print(text);
-      bool audioIsReceivedStatus = await fetchAudioData(text);
+      Map audioGenerated = await fetchAudioData(text);
+      bool audioIsReceivedStatus = audioGenerated['success'];
+      if (audioIsReceivedStatus) {
+        audiofilepath = audioGenerated['filepath'];
+      }
 
       print('Audio is Received Status ===================================');
       print(audioIsReceivedStatus);
@@ -127,6 +102,7 @@ class _TTSModelState extends State<TTSModel> {
       if (audioIsReceivedStatus == true) {
         setState(() {
           audioReceivedToLocal = true;
+
           print('Setting state =============================');
           print(audioReceivedToLocal);
         });
@@ -150,14 +126,6 @@ class _TTSModelState extends State<TTSModel> {
     Future<void> playAudioFromTempDir() async {
       var tempDir = await getTemporaryDirectory();
       var filePath = '${tempDir.path}/audio.wav';
-
-      // Play the audio file.
-      AudioPlayer player = AudioPlayer();
-      await player.play(DeviceFileSource(filePath));
-    }
-
-    Future<void> pause() async {
-      audioPlayer.pause();
     }
 
     return Scaffold(
@@ -168,166 +136,93 @@ class _TTSModelState extends State<TTSModel> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 600.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Container(
-                      height: 400.0,
-                      width: 300.0,
-                      margin: const EdgeInsets.only(bottom: 10.0),
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                        borderRadius: BorderRadius.circular(8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    height: 300.0,
+                    margin: const EdgeInsets.only(bottom: 10.0),
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
                       ),
-                      child: TextField(
-                        controller: text_controller,
-                        onChanged: (value) {
-                          setState(() {
-                            text = value;
-                          });
-                        },
-                        maxLines: null,
-                        decoration: const InputDecoration(
-                          hintText: 'Enter dzongkha text',
-                          border: InputBorder.none,
-                        ),
-                        style: const TextStyle(fontSize: 16.0),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: TextField(
+                      controller: text_controller,
+                      onChanged: (value) {
+                        setState(() {
+                          text = value;
+                        });
+                      },
+                      maxLines: null,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter dzongkha text',
+                        border: InputBorder.none,
                       ),
+                      style: const TextStyle(fontSize: 16.0),
                     ),
-                    SizedBox(height: 16.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: isLoading
-                              ? null
-                              : () {
-                                  if (text.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Please enter text.'),
-                                      ),
-                                    );
-                                  } else {
-                                    fetchAudioAndSave(text);
-                                  }
-                                },
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            textStyle: const TextStyle(fontSize: 14.0),
-                            backgroundColor: Color.fromARGB(255, 37, 58, 107),
-                            minimumSize: const Size(150.0, 48.0),
-                          ),
-                          child: isLoading
-                              ? Center(
-                                  child:
-                                      LoadingAnimationWidget.staggeredDotsWave(
-                                    color: const Color(0XFF0F1F41),
-                                    size: 40.0,
-                                  ),
-                                )
-                              : const Text('Generate Audio'),
-                        ),
-                        ElevatedButton(
-                          onPressed: text_controller.clear,
-                          style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
-                            textStyle: const TextStyle(fontSize: 14.0),
-                            backgroundColor: Color.fromARGB(255, 37, 58, 107),
-                            minimumSize: const Size(150.0, 48.0),
-                          ),
-                          child: const Text('Clear'),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20.0),
-                    Column(
-                      children: [
-                        if (audioReceivedToLocal == true)
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 37, 58, 107),
-                                    radius: 20,
-                                    child: IconButton(
-                                      color: Color.fromARGB(255, 242, 243, 247),
-                                      icon: Icon(
-                                        isPlaying
-                                            ? Icons.pause
-                                            : Icons.play_arrow,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          isPlaying = !isPlaying;
-                                          if (isPlaying) {
-                                            playAudioFromTempDir();
-                                          } else {
-                                            audioPlayer.pause();
-                                          }
-                                        });
-                                      },
+                  ),
+                  SizedBox(height: 16.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Please enter text.'),
                                     ),
-                                  ),
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        Color.fromARGB(255, 37, 58, 107),
-                                    radius: 20,
-                                    child: IconButton(
-                                      onPressed: stopAudio,
-                                      icon: Icon(Icons.stop),
-                                      iconSize: 20,
-                                      color: Color.fromARGB(255, 242, 243, 247),
-                                    ),
-                                  ),
-                                  Slider(
-                                    onChanged: (value) {},
-                                    value: 0.0,
-                                    min: 0.0,
-                                    max: 1.0,
-                                    activeColor:
-                                        Color.fromARGB(255, 37, 58, 107),
-                                    inactiveColor:
-                                        Color.fromARGB(255, 37, 58, 107)
-                                            .withOpacity(0.3),
-                                  ),
-                                  SizedBox(height: 8.0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '00:00',
-                                        style: TextStyle(fontSize: 12.0),
-                                      ),
-                                      Text(
-                                        '00:00',
-                                        style: TextStyle(fontSize: 12.0),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 8.0),
-                            ],
-                          )
-                        else
-                          const Text(
-                              'Audio player will appear here after being loaded'),
-                      ],
-                    ),
-                  ],
-                ),
+                                  );
+                                } else {
+                                  fetchAudioAndSave(text);
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          textStyle: const TextStyle(fontSize: 14.0),
+                          backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                          minimumSize: const Size(150.0, 48.0),
+                        ),
+                        child: isLoading
+                            ? Center(
+                                child: LoadingAnimationWidget.staggeredDotsWave(
+                                  color: const Color(0XFF0F1F41),
+                                  size: 40.0,
+                                ),
+                              )
+                            : const Text('Generate Audio'),
+                      ),
+                      ElevatedButton(
+                        onPressed: text_controller.clear,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12.0),
+                          textStyle: const TextStyle(fontSize: 14.0),
+                          backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                          minimumSize: const Size(150.0, 48.0),
+                        ),
+                        child: const Text('Clear'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20.0),
+                  Column(
+                    children: [
+                      if (audioReceivedToLocal == false)
+                        AudioPlayer(
+                          source: audiofilepath,
+                        )
+                      else
+                        const Text(
+                            'Audio player will appear here after being loaded'),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),
