@@ -2,21 +2,15 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../../api/data.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AudioPlayer extends StatefulWidget {
   final String source;
-  final VoidCallback onDelete;
-  final VoidCallback onSuccess;
-  final String currentId;
 
   const AudioPlayer({
     Key? key,
     required this.source,
-    required this.onDelete,
-    required this.onSuccess,
-    required this.currentId,
   }) : super(key: key);
 
   @override
@@ -65,11 +59,6 @@ class AudioPlayerState extends State<AudioPlayer> {
     super.dispose();
   }
 
-  void uploadAudio(file, id, user) {
-    // ignore: avoid_print
-    // DataServices.uploadAudio(file, id, user).then((value) => {print(value)});
-  }
-
   // update the progress value in the SharedPreferences
   void incrementProgress() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -101,7 +90,6 @@ class AudioPlayerState extends State<AudioPlayer> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: SizedBox(
-                  // color: Colors.blue,
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -110,11 +98,10 @@ class AudioPlayerState extends State<AudioPlayer> {
                       const SizedBox(height: 50),
                       Row(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
                           _buildControl(),
-                          _buildDelete(),
-                          _buildSuccess(),
+                          _buildDownload(),
                         ],
                       ),
                     ],
@@ -128,33 +115,12 @@ class AudioPlayerState extends State<AudioPlayer> {
     );
   }
 
-  Widget _buildDelete() {
-    Icon icon;
-    Color color;
-    final theme = Theme.of(context);
-    icon = Icon(Icons.delete, color: theme.primaryColor, size: 24);
-    color = theme.primaryColor.withOpacity(0.1);
-
-    // Color color;
-    return ClipOval(
-      child: Material(
-        color: color,
-        child: InkWell(
-            child: SizedBox(
-                width: _controlSize, height: _controlSize, child: icon),
-            onTap: () {
-              stop().then((value) => widget.onDelete());
-            }),
-      ),
-    );
-  }
-
-  Widget _buildSuccess() {
+  Widget _buildDownload() {
     Icon icon;
     Color color;
 
     final theme = Theme.of(context);
-    icon = Icon(Icons.check, color: theme.primaryColor, size: 24);
+    icon = Icon(Icons.download_rounded, color: theme.primaryColor, size: 24);
     // color = theme.primaryColor.withOpacity(0.1);
     color = const Color(0xFF5ACFC9);
 
@@ -166,66 +132,7 @@ class AudioPlayerState extends State<AudioPlayer> {
           child:
               SizedBox(width: _controlSize, height: _controlSize, child: icon),
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Confirmation'),
-                  content:
-                      const Text('Are you sure you want to upload the audio?'),
-                  actions: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: const Color(0xFFC6D2D2),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              child: const Text(
-                                'Cancel',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            child: TextButton(
-                              onPressed: () {
-                                // Upload the audio
-                                uploadAudio(
-                                    widget.source, widget.currentId, "1");
-                                incrementProgress();
-                                stop().then((value) => widget.onSuccess());
-                                Navigator.of(context).pop(); // Close the dialog
-                              },
-                              style: TextButton.styleFrom(
-                                backgroundColor: const Color(0xFF5ACFC9),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              child: const Text(
-                                'Okay',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            );
+            //download audio
           },
         ),
       ),

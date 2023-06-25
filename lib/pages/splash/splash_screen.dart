@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     ));
 
     _animationController.forward().then((value) {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => const OnboardingScreen(),
@@ -52,11 +52,14 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromARGB(255, 37, 58, 107),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SizedBox(
+              height: 10,
+            ),
             SlideTransition(
               position: _animation,
               child: Container(
@@ -70,6 +73,13 @@ class _SplashScreenState extends State<SplashScreen>
               waveColor: Color.fromARGB(255, 224, 201, 55),
               size: 60,
               duration: Duration(milliseconds: 1000),
+            ),
+            Container(
+              padding: EdgeInsets.only(bottom: 10),
+              child: Text(
+                "powered by CST",
+                style: TextStyle(color: Color.fromARGB(255, 224, 201, 55)),
+              ),
             )
           ],
         ),
