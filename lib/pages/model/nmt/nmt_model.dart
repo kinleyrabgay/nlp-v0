@@ -161,37 +161,70 @@ class _Nmt_modelState extends State<Nmt_model> {
               height: 40,
             ),
             Expanded(
-              // constraints: BoxConstraints(maxHeight: 100),
-              child: TextFormField(
-                cursorColor: Colors.black,
-                autofocus: false,
-                expands: true,
-                maxLines: null,
-                textAlign: TextAlign.left,
-                textAlignVertical: TextAlignVertical.top,
-                style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  labelText: 'Enter your text',
-                  labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  ),
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                  borderRadius: BorderRadius.circular(
+                      10), // Adjust the value to control the curve
                 ),
-                controller: languageController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Enter text to translate';
-                  }
-                  return null;
-                },
+                child: Form(
+                  child: TextFormField(
+                    cursorColor: Colors.black,
+                    autofocus: false,
+                    maxLines: null,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your text',
+                      hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                      border: InputBorder.none,
+                      errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                    ),
+                    controller: languageController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter text to translate';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
               ),
             ),
+
+            // Expanded(
+            //   // constraints: BoxConstraints(maxHeight: 100),
+            //   child: TextFormField(
+            //     cursorColor: Colors.black,
+            //     autofocus: false,
+            //     expands: true,
+            //     maxLines: null,
+            //     textAlign: TextAlign.left,
+            //     textAlignVertical: TextAlignVertical.top,
+            //     style: const TextStyle(color: Colors.black),
+            //     decoration: const InputDecoration(
+            //       labelText: 'Enter your text',
+            //       labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+            //       border: OutlineInputBorder(
+            //         borderSide: BorderSide(
+            //             color: Color.fromARGB(255, 37, 58, 107), width: 1),
+            //       ),
+            //       enabledBorder: OutlineInputBorder(
+            //         borderSide: BorderSide(
+            //             color: Color.fromARGB(255, 37, 58, 107), width: 1),
+            //       ),
+            //       errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+            //     ),
+            //     controller: languageController,
+            //     validator: (value) {
+            //       if (value == null || value.isEmpty) {
+            //         return 'Enter text to translate';
+            //       }
+            //       return null;
+            //     },
+            //   ),
+            // ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -227,7 +260,6 @@ class _Nmt_modelState extends State<Nmt_model> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              // constraints: BoxConstraints(maxHeight: 100),
               child: TextFormField(
                 controller: _output_controller,
                 cursorColor: Colors.black,
@@ -242,10 +274,14 @@ class _Nmt_modelState extends State<Nmt_model> {
                   labelText: '',
                   labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
                   border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)), // Set border radius to 10
                     borderSide: BorderSide(
                         color: Color.fromARGB(255, 37, 58, 107), width: 1),
                   ),
                   disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)), // Set border radius to 10
                     borderSide: BorderSide(
                         color: Color.fromARGB(255, 37, 58, 107), width: 1),
                   ),
@@ -253,29 +289,6 @@ class _Nmt_modelState extends State<Nmt_model> {
                 ),
               ),
             ),
-            // SingleChildScrollView(
-            //   child: ConstrainedBox(
-            //     constraints: BoxConstraints(
-            //       minHeight: MediaQuery.of(context).size.height * 0.3,
-            //     ),
-            //     child: Padding(
-            //       padding: const EdgeInsets.all(15.0),
-            //       child: Container(
-            //         width: MediaQuery.of(context).size.width,
-            //         decoration: BoxDecoration(
-            //           color: const Color.fromARGB(255, 247, 239, 239),
-            //           border: Border.all(
-            //               color: Color.fromARGB(255, 37, 58, 107), width: 2),
-            //           borderRadius: BorderRadius.circular(5),
-            //         ),
-            //         child: SelectableText(
-            //           "\n$output",
-            //           style: const TextStyle(color: Colors.black, fontSize: 20),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // )
           ])),
     );
   }
