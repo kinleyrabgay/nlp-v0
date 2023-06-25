@@ -46,7 +46,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
                 Text(
                   englishState.isEnglishSelected
                       ? "Dzongkha NLP"
-                      : 'དྲོ་པ་བདེ་ལེགས།',
+                      : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
                   style: TextStyle(color: Colors.white),
                 ),
                 LanguageToggle(),

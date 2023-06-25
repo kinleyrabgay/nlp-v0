@@ -61,10 +61,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
-                          : "ཐདནཔཐདན",
+                          : "དྷོ་ཅ་གིས་རང་ལུགས་ཀྱི་ཁ་སླབ་ངོས་འཛིན་འབད་ནི།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Speech into Text"
-                          : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
+                          : "ཕྲེང་ཁ་གི་གསུང་བཤད་འདི་ཡི་གུ་ནང་བྲི་ད།",
                       imagepath: "assets/img/splash_1.png",
                       cardcolor: Colors.white,
                       onCardClick: () {
@@ -80,10 +80,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha TTS"
-                          : "ཐདནཔཐདནཔ",
+                          : "ཕྲེང་ཁ་ལུ་ཡིག་ཆ་འབྲི་བ།",
                       subtitle: englishState.isEnglishSelected
-                          ? "Transcribe Dzongkha Speech into Text"
-                          : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
+                          ? "Transcribe Dzongkha Text into Speech"
+                          : "ཕྲིན་ལས་ཀྱི་ཡིག་ཆ་འདི་ཁ་སློང་ནང་ལུ་བྲི་བཅུག།",
                       imagepath: "assets/img/tts-logo.png",
                       cardcolor: Colors.white,
                       onCardClick: () {
@@ -99,10 +99,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha NMT"
-                          : "ཐདནཔཐདན",
+                          : "རྗོང་ཁ་ ནུ་རལ་མེསི་ནོ སྐད་སྒྱུར་།",
                       subtitle: englishState.isEnglishSelected
-                          ? "Transcribe Dzongkha Speech into Text"
-                          : "ཐདནཔཐདནཔཐདནཔཐ་པ་ཐདནཔཐ་དནཔཐ་ནཔ",
+                          ? "Translate Dzongkha Text"
+                          : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
                       imagepath: "assets/img/nmt_logo.png",
                       cardcolor: Colors.white,
                       onCardClick: () {
@@ -151,9 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       leading:
                           const Icon(Icons.edit_document, color: Colors.white),
                       title: Text(
-                        englishState.isEnglishSelected
-                            ? 'About'
-                            : 'ཞིབ་འཚོལ་པ་།',
+                        englishState.isEnglishSelected ? 'About' : 'སྐོར་ལུ།',
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),
@@ -192,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       title: Text(
                         englishState.isEnglishSelected
                             ? 'Developer'
-                            : 'ཞིབ་འཚོལ་པ་།',
+                            : 'གོང་འཕེལ་གྱི་ལས་འགན།',
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),
