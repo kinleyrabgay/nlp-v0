@@ -27,6 +27,9 @@ class _AboutPageState extends State<AboutPage> {
 
     return Scaffold(
       appBar: AppbarWidget(
+        title: englishState.isEnglishSelected
+            ? "Dzongkha NLP"
+            : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
         text: _getAppBarText(englishState),
       ),
       body: Container(

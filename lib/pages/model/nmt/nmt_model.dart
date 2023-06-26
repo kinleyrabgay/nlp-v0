@@ -74,7 +74,11 @@ class _Nmt_modelState extends State<Nmt_model> {
     }
 
     return Scaffold(
-      appBar: AppbarWidget(text: _getAppBarText(englishState)),
+      appBar: AppbarWidget(
+          title: englishState.isEnglishSelected
+              ? "Dzongkha NLP"
+              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+          text: _getAppBarText(englishState)),
       body: Container(
           padding: EdgeInsets.all(8),
           child: Column(children: [

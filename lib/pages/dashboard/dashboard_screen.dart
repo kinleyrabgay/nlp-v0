@@ -39,6 +39,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: PreferredSize(
         preferredSize: widget.preferredSize,
         child: AppbarWidget(
+          title: englishState.isEnglishSelected
+              ? "Dzongkha NLP"
+              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: englishState.isEnglishSelected
               ? "Send us your valuable feedback"
               : 'ཁྱོད་ཀྱིས་རིན་གོང་ཆེ་བའི་བརྡ་སྟོན་ཚུ་ ང་བཅས་ལུ་གཏང་གནང་།',

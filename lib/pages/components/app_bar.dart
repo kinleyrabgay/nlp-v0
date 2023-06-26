@@ -7,11 +7,10 @@ import '../../provider/language_toggle.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String text;
+  final String title;
 
-  const AppbarWidget({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
+  const AppbarWidget({Key? key, required this.text, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +43,7 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  englishState.isEnglishSelected
-                      ? "Dzongkha NLP"
-                      : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+                  title,
                   style: TextStyle(color: Colors.white),
                 ),
                 LanguageToggle(),
