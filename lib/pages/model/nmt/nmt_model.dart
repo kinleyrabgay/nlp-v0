@@ -161,33 +161,37 @@ class _Nmt_modelState extends State<Nmt_model> {
               height: 40,
             ),
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  borderRadius: BorderRadius.circular(
-                      10), // Adjust the value to control the curve
-                ),
-                child: Form(
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    autofocus: false,
-                    maxLines: null,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your text',
-                      hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                      border: InputBorder.none,
-                      errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10), // Adjust the padding value as needed
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Form(
+                    child: TextFormField(
+                      cursorColor: Colors.black,
+                      autofocus: false,
+                      maxLines: null,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(
+                        hintText: 'Enter your text',
+                        hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                        border: InputBorder.none,
+                        errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      controller: languageController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Enter text to translate';
+                        }
+                        return null;
+                      },
                     ),
-                    controller: languageController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter text to translate';
-                      }
-                      return null;
-                    },
                   ),
                 ),
               ),
@@ -250,7 +254,10 @@ class _Nmt_modelState extends State<Nmt_model> {
                     fixedSize:
                         Size(150, 50), // Set the desired width and height
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    languageController.clear();
+                    _output_controller.clear();
+                  },
                   child: const Text(
                     "Clear",
                     style: TextStyle(fontSize: 17),
@@ -260,32 +267,35 @@ class _Nmt_modelState extends State<Nmt_model> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: TextFormField(
-                controller: _output_controller,
-                cursorColor: Colors.black,
-                autofocus: false,
-                expands: true,
-                maxLines: null,
-                enabled: false,
-                textAlign: TextAlign.left,
-                textAlignVertical: TextAlignVertical.top,
-                style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  labelText: '',
-                  labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: TextFormField(
+                  controller: _output_controller,
+                  cursorColor: Colors.black,
+                  autofocus: false,
+                  expands: true,
+                  maxLines: null,
+                  readOnly: true, // Enable read-only mode for text selection
+                  textAlign: TextAlign.left,
+                  textAlignVertical: TextAlignVertical.top,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: const InputDecoration(
+                    labelText: '',
+                    labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    ),
+                    errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  ),
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
                 ),
               ),
             ),
