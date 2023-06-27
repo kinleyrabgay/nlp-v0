@@ -34,7 +34,7 @@ class _TryModelState extends State<TryModel> {
     });
     DataServices.transcribeAudio(file, model.indexOf(currentmodel) + 1).then(
       (value) => {
-        // print(value),
+        print(value),
         if (value != null)
           {
             if (value["transcription"].length > 0)
@@ -61,7 +61,7 @@ class _TryModelState extends State<TryModel> {
     return Scaffold(
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
-              ? "Dzongkha NLP"
+              ? "Dzongkha ASR"
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: _getAppBarText(englishState)),
       body: Padding(
@@ -113,18 +113,16 @@ class _TryModelState extends State<TryModel> {
                     );
                   }).toList(),
                 )),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
             Container(
                 child: Text(
-              englishState.isEnglishSelected
-                  ? "Upload or Select Audio"
-                  : "སྒྲ་འདི་ཕབ་ལེན། ཡང་ན་གདམ་ཁ་རྐྱབ།",
+              "Upload or Select Audio",
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20),
             )),
-            const SizedBox(
+            SizedBox(
               height: 30,
             ),
 
@@ -179,23 +177,21 @@ class _TryModelState extends State<TryModel> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.upload,
                         color: Colors.white,
                         size: 20,
                       ),
                       Text(
-                        englishState.isEnglishSelected
-                            ? "Upload Audio"
-                            : "སྒྲ་འདི་ཕབ་ལེན།",
-                        style: const TextStyle(fontSize: 14),
+                        "Upload Audio",
+                        style: TextStyle(fontSize: 14),
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(
+            SizedBox(
               height: 40,
             ),
             Expanded(
@@ -223,7 +219,7 @@ class _TryModelState extends State<TryModel> {
                 ],
               ),
             ),
-            const SizedBox(
+            SizedBox(
               height: 40,
             ),
             // Padding(
