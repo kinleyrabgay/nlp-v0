@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart' as path;
 
 import '../../../provider/state.dart';
 
@@ -140,10 +142,36 @@ class AudioPlayerState extends State<AudioPlayer> {
               SizedBox(width: _controlSize, height: _controlSize, child: icon),
           onTap: () {
             //download audio
+            downloadAudio();
           },
         ),
       ),
     );
+  }
+
+  Future<void> downloadAudio() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final appDirPath = directory.path;
+      final fileName =
+          'audio.mp3'; // Specify the desired file name and extension
+      final filePath = path.join(appDirPath, fileName);
+      final file = File(filePath);
+
+      await file.writeAsBytes(await File(widget.source).readAsBytes());
+
+      // Perform any necessary actions with the downloaded file
+      // For example, you can store the file path or update the UI
+
+      print('Audio downloaded successfully: $filePath');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Audio downloaded successfully'),
+        ),
+      );
+    } catch (e) {
+      print('Failed to download audio: $e');
+    }
   }
 
   Widget _buildControl() {
