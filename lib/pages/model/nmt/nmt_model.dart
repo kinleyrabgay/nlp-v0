@@ -242,9 +242,11 @@ class _Nmt_modelState extends State<Nmt_model> {
                   onPressed: () {
                     fetchDataFromAPI();
                   },
-                  child: const Text(
-                    "Translate",
-                    style: TextStyle(fontSize: 17),
+                  child: Text(
+                    englishState.isEnglishSelected
+                        ? "Translate"
+                        : "སྐད་སྒྱུར་འབད།",
+                    style: const TextStyle(fontSize: 17),
                   ),
                 ),
                 ElevatedButton(
@@ -258,9 +260,9 @@ class _Nmt_modelState extends State<Nmt_model> {
                     languageController.clear();
                     _output_controller.clear();
                   },
-                  child: const Text(
-                    "Clear",
-                    style: TextStyle(fontSize: 17),
+                  child: Text(
+                    englishState.isEnglishSelected ? "Clear" : "གསལ།",
+                    style: const TextStyle(fontSize: 17),
                   ),
                 ),
               ],

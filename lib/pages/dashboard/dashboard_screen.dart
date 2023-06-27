@@ -61,10 +61,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
-                          : "དྷོ་ཅ་གིས་རང་ལུགས་ཀྱི་ཁ་སླབ་ངོས་འཛིན་འབད་ནི།",
+                          : "རྫོང་ཁ་སྒྲ་ལས་ཡི་གུ།།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Speech into Text"
-                          : "ཕྲེང་ཁ་གི་གསུང་བཤད་འདི་ཡི་གུ་ནང་བྲི་ད།",
+                          : "ཕྲེང་ཁ་གི་གསུང་བཤད་འདི་ཡི་གུ་ནང་བྲི་བཅུག།",
                       imagepath: "assets/img/splash_1.png",
                       cardcolor: Colors.white,
                       onCardClick: () {
@@ -80,7 +80,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha TTS"
-                          : "ཕྲེང་ཁ་ལུ་ཡིག་ཆ་འབྲི་བ།",
+                          : "རྫོང་ཁ་ཡི་གུ་ལས་སྒྲ།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Text into Speech"
                           : "ཕྲིན་ལས་ཀྱི་ཡིག་ཆ་འདི་ཁ་སློང་ནང་ལུ་བྲི་བཅུག།",
@@ -99,7 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha NMT"
-                          : "རྗོང་ཁ་ ནུ་རལ་མེསི་ནོ སྐད་སྒྱུར་།",
+                          : "རྫོང་ཁའི་སྐད་སྒྱུར།།",
                       subtitle: englishState.isEnglishSelected
                           ? "Translate Dzongkha Text"
                           : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
@@ -151,7 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       leading:
                           const Icon(Icons.edit_document, color: Colors.white),
                       title: Text(
-                        englishState.isEnglishSelected ? 'About' : 'སྐོར་ལུ།',
+                        englishState.isEnglishSelected ? 'About' : 'སྐོར་ལས།',
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),

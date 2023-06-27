@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/state.dart';
 
 class DashboardCard extends StatefulWidget {
   const DashboardCard(
@@ -21,6 +24,7 @@ class DashboardCard extends StatefulWidget {
 class _DashboardCardState extends State<DashboardCard> {
   @override
   Widget build(BuildContext context) {
+    final englishState = Provider.of<EnglishState>(context);
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -78,9 +82,11 @@ class _DashboardCardState extends State<DashboardCard> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
-                                'Get Started',
-                                style: TextStyle(
+                              Text(
+                                englishState.isEnglishSelected
+                                    ? 'Get Started'
+                                    : 'འགོ་བཙུགས་ད།',
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
                                 ),

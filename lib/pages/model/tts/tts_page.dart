@@ -196,7 +196,9 @@ class _TTSModelState extends State<TTSModel> {
                                   size: 40.0,
                                 ),
                               )
-                            : const Text('Generate Audio'),
+                            : Text(englishState.isEnglishSelected
+                                ? 'Generate Audio'
+                                : 'སྒྲ་བཟོ་ནི།'),
                       ),
                       ElevatedButton(
                         onPressed: text_controller.clear,
@@ -206,7 +208,8 @@ class _TTSModelState extends State<TTSModel> {
                           backgroundColor: Color.fromARGB(255, 37, 58, 107),
                           minimumSize: const Size(150.0, 48.0),
                         ),
-                        child: const Text('Clear'),
+                        child: Text(
+                            englishState.isEnglishSelected ? 'Clear' : 'གསལ།'),
                       ),
                     ],
                   ),
