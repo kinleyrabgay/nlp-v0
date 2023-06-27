@@ -161,7 +161,11 @@ class _TTSModelState extends State<TTSModel> {
     }
 
     return Scaffold(
-      appBar: AppbarWidget(text: _getAppBarText(englishState)),
+      appBar: AppbarWidget(
+          title: englishState.isEnglishSelected
+              ? "Dzongkha NLP"
+              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+          text: _getAppBarText(englishState)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
         child: SingleChildScrollView(
