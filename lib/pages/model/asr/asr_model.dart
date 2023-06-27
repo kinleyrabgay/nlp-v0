@@ -59,7 +59,11 @@ class _TryModelState extends State<TryModel> {
     }
 
     return Scaffold(
-      appBar: AppbarWidget(text: _getAppBarText(englishState)),
+      appBar: AppbarWidget(
+          title: englishState.isEnglishSelected
+              ? "Dzongkha NLP"
+              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+          text: _getAppBarText(englishState)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
         child: Column(
@@ -150,7 +154,9 @@ class _TryModelState extends State<TryModel> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 37, 58, 107),
+                    backgroundColor: englishState.isEnglishSelected
+                        ? Color.fromARGB(255, 37, 58, 107)
+                        : Color.fromARGB(255, 243, 181, 56),
                     fixedSize:
                         Size(150, 50), // Set the desired width and height
                   ),

@@ -74,7 +74,11 @@ class _Nmt_modelState extends State<Nmt_model> {
     }
 
     return Scaffold(
-      appBar: AppbarWidget(text: _getAppBarText(englishState)),
+      appBar: AppbarWidget(
+          title: englishState.isEnglishSelected
+              ? "Dzongkha NLP"
+              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+          text: _getAppBarText(englishState)),
       body: Container(
           padding: EdgeInsets.all(8),
           child: Column(children: [
@@ -235,7 +239,9 @@ class _Nmt_modelState extends State<Nmt_model> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 44, 154, 243),
+                    backgroundColor: englishState.isEnglishSelected
+                        ? Color.fromARGB(255, 37, 58, 107)
+                        : Color.fromARGB(255, 243, 181, 56),
                     fixedSize:
                         Size(150, 50), // Set the desired width and height
                   ),

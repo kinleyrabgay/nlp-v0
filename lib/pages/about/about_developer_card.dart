@@ -109,7 +109,7 @@ class ProfileCard extends StatelessWidget {
                         Text(
                           developer1,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
@@ -130,7 +130,7 @@ class ProfileCard extends StatelessWidget {
                         Text(
                           developer2,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
@@ -151,7 +151,7 @@ class ProfileCard extends StatelessWidget {
                         Text(
                           developer3,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
@@ -172,7 +172,7 @@ class ProfileCard extends StatelessWidget {
                         Text(
                           developer4,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
