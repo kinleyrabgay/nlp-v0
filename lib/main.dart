@@ -1,6 +1,7 @@
 import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/splash/splash_screen.dart';
@@ -24,13 +25,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final englishState = Provider.of<EnglishState>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "DASR",
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: const Color.fromARGB(255, 15, 31, 65),
-        fontFamily: 'Roboto',
+        fontFamily: englishState.isEnglishSelected ? 'Roboto' : "Joyig",
       ),
       home: SplashScreen(),
     );
