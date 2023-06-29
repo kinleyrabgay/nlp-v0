@@ -56,7 +56,6 @@ dependencies:
   font_awesome_flutter: ^10.4.0
   flutter_switch: ^0.3.2
   provider: ^6.0.5
-  assets_audio_player: ^3.0.6
   just_audio: ^0.9.34
   wave: ^0.2.2
   audio_slider: ^0.0.1
