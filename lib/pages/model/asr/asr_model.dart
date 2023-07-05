@@ -182,9 +182,13 @@ class _TryModelState extends State<TryModel> {
                         color: Colors.white,
                         size: 20,
                       ),
-                      Text(
-                        "Upload Audio",
-                        style: TextStyle(fontSize: 14),
+                      Flexible(
+                        child: FittedBox(
+                          child: Text(
+                            "Upload Audio",
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
                       ),
                     ],
                   ),

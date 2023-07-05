@@ -28,8 +28,6 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
 
   StreamSubscription<RecordState>? _recordSub;
   RecordState _recordState = RecordState.stop;
-  StreamSubscription<Amplitude>? _amplitudeSub;
-  Amplitude? _amplitude;
 
   @override
   void initState() {
@@ -38,19 +36,8 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
         setState(() => _recordState = recordState);
       },
     );
-    _amplitudeSub = _audioRecorder
-        .onAmplitudeChanged(const Duration(milliseconds: 300))
-        .listen(
-          (amp) => setState(() => _amplitude = amp),
-        );
+
     super.initState();
-    if (widget.amplitudeStream != null) {
-      widget.amplitudeStream!.listen((double amplitude) {
-        setState(() {
-          _amplitudeValues.add(amplitude);
-        });
-      });
-    }
   }
 
   Future<void> _start() async {
@@ -67,8 +54,6 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
         await _audioRecorder.start(
             encoder: AudioEncoder.wav, samplingRate: 16000);
         _recordDuration = 0;
-
-        _startTimer();
       }
     } catch (e) {
       if (kDebugMode) {
@@ -92,7 +77,6 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
   void dispose() {
     _timer?.cancel();
     _recordSub?.cancel();
-    _amplitudeSub?.cancel();
     _audioRecorder.dispose();
     super.dispose();
   }
@@ -119,50 +103,17 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
-          Text(
-            (_recordState != RecordState.stop) ? "Recording" : "Record",
-            style: (_recordState != RecordState.stop)
-                ? TextStyle(fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                : TextStyle(fontSize: 14, color: Colors.black),
+          FittedBox(
+            child: Text(
+              (_recordState != RecordState.stop) ? "Recording" : "Record",
+              style: (_recordState != RecordState.stop)
+                  ? TextStyle(
+                      fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
+                  : TextStyle(fontSize: 14, color: Colors.black),
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildText() {
-    if (_recordState != RecordState.stop) {
-      return _buildTimer();
-    }
-    return Container();
-  }
-
-  Widget _buildTimer() {
-    final String minutes = _formatNumber(_recordDuration ~/ 60);
-    final String seconds = _formatNumber(_recordDuration % 60);
-
-    return Text(
-      '$minutes : $seconds',
-      style: const TextStyle(color: Colors.red),
-    );
-  }
-
-  String _formatNumber(int number) {
-    String numberStr = number.toString();
-    if (number < 10) {
-      numberStr = '0$numberStr';
-    }
-
-    return numberStr;
-  }
-
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(
-      const Duration(seconds: 1),
-      (Timer t) {
-        setState(() => _recordDuration++);
-      },
     );
   }
 
