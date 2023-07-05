@@ -4,6 +4,7 @@ import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
@@ -56,6 +57,19 @@ class _TryModelState extends State<TryModel> {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
           : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
+    }
+
+    void _showSnackbar(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
+
+    void _copyTextToClipboard() {
+      final String text = _predicted_text_controller.text;
+      Clipboard.setData(ClipboardData(text: text)).then((_) {
+        _showSnackbar('Text copied successfully');
+      });
     }
 
     return Scaffold(
@@ -125,7 +139,6 @@ class _TryModelState extends State<TryModel> {
             SizedBox(
               height: 30,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -141,10 +154,8 @@ class _TryModelState extends State<TryModel> {
                     children: [
                       ModelTestRecorder(
                         onStop: (String path) {
-                          if (kDebugMode) {
-                            ('Recorded file path: $path');
-                            transcribeAudio(path);
-                          }
+                          ('Recorded file path: $path');
+                          transcribeAudio(path);
                         },
                       ),
                     ],
@@ -200,6 +211,7 @@ class _TryModelState extends State<TryModel> {
             ),
             Expanded(
               child: Stack(
+                alignment: Alignment.bottomRight,
                 children: [
                   TextField(
                     controller: _predicted_text_controller,
@@ -212,6 +224,12 @@ class _TryModelState extends State<TryModel> {
                       fillColor: Colors.black12,
                     ),
                     style: const TextStyle(fontSize: 18, height: 2),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.copy),
+                    onPressed: () {
+                      _copyTextToClipboard();
+                    },
                   ),
                   if (isLoading) // conditionally render the spinner
                     Center(
@@ -226,46 +244,6 @@ class _TryModelState extends State<TryModel> {
             SizedBox(
               height: 40,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 50),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       const Icon(
-            //         Icons.copy,
-            //         color: Colors.black,
-            //         size: 20,
-            //       ),
-            //       ModelTestRecorder(
-            //         onStop: (String path) {
-            //           if (kDebugMode) {
-            //             ('Recorded file path: $path');
-            //             transcribeAudio(path);
-            //           }
-            //         },
-            //       ),
-            //       IconButton(
-            //         onPressed: () async {
-            //           FilePickerResult? result =
-            //               await FilePicker.platform.pickFiles(
-            //             type: FileType.audio,
-            //             allowMultiple: false,
-            //           );
-            //           if (result != null) {
-            //             PlatformFile file = result.files.first;
-            //             print(file.name);
-            //             print(file.bytes);
-            //             print(file.size);
-            //             print(file.extension);
-            //             print(file.path);
-            //             transcribeAudio(file.path);
-            //           }
-            //         },
-            //         icon: const Icon(Icons.upload),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),

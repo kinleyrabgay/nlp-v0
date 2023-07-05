@@ -1,10 +1,12 @@
 // ignore_for_file: unused_field, unused_local_variable, unused_element, avoid_unnecessary_containers
 
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:record/record.dart';
+// import 'package:record/record.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ModelTestRecorder extends StatefulWidget {
   const ModelTestRecorder(
@@ -19,39 +21,36 @@ class ModelTestRecorder extends StatefulWidget {
 class _ModelTestRecorderState extends State<ModelTestRecorder> {
   final List<double> _amplitudeValues = [];
 
-  int _recordDuration = 0;
-  Timer? _timer;
-  final _audioRecorder = Record();
+  FlutterSoundRecorder _audioRecorder = FlutterSoundRecorder();
 
-  StreamSubscription<RecordState>? _recordSub;
-  RecordState _recordState = RecordState.stop;
+  String audioFile = "";
+  bool _recordState = false;
 
   @override
   void initState() {
-    _recordSub = _audioRecorder.onStateChanged().listen(
-      (recordState) {
-        setState(() => _recordState = recordState);
-      },
-    );
-
+    initRecorder();
     super.initState();
+  }
+
+  Future initRecorder() async {
+    final status = await Permission.microphone.request();
+
+    if (status != PermissionStatus.granted) {
+      throw 'Microphone permission not granted';
+    }
+    await _audioRecorder.openRecorder();
   }
 
   Future<void> _start() async {
     try {
-      if (await _audioRecorder.hasPermission()) {
-        // We don't do anything with this but printing
-        final isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.vorbisOgg,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.vorbisOgg.name} supported: $isSupported');
-        }
+      setState(() {
+        _recordState = true;
+      });
 
-        await _audioRecorder.start(
-            encoder: AudioEncoder.wav, samplingRate: 16000);
-        _recordDuration = 0;
-      }
+      await _audioRecorder.startRecorder(
+        // codec: Codec.pcm16WAV,
+        toFile: 'audio.wav',
+      );
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -60,21 +59,24 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
   }
 
   Future<void> _stop() async {
-    _timer?.cancel();
-    _recordDuration = 0;
+    setState(() {
+      _recordState = false;
+    });
 
-    final path = await _audioRecorder.stop();
+    final path = await _audioRecorder.stopRecorder();
+    print("Recorded audio path askdfjaksjdf: $path");
 
     if (path != null) {
-      widget.onStop(path);
+      audioFile = File(path!).toString();
+      print("Recorded audio: $audioFile");
+      widget.onStop(audioFile);
     }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _recordSub?.cancel();
-    _audioRecorder.dispose();
+    _audioRecorder.closeRecorder();
+    super.dispose();
     super.dispose();
   }
 
@@ -82,7 +84,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
     late Icon icon;
     late Color color;
 
-    if (_recordState != RecordState.stop) {
+    if (_recordState) {
       icon = const Icon(Icons.stop, color: Colors.red, size: 20);
       color = Colors.red.withOpacity(0.1);
     } else {
@@ -93,7 +95,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
 
     return InkWell(
       onTap: () {
-        (_recordState != RecordState.stop) ? _stop() : _start();
+        (_recordState) ? _stop() : _start();
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -102,8 +104,8 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
           icon,
           FittedBox(
             child: Text(
-              (_recordState != RecordState.stop) ? "Recording" : "Record",
-              style: (_recordState != RecordState.stop)
+              (_recordState) ? "Recording" : "Record",
+              style: (_recordState)
                   ? TextStyle(
                       fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
                   : TextStyle(fontSize: 14, color: Colors.black),

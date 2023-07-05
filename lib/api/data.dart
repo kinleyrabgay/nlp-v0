@@ -37,6 +37,7 @@ class DataServices {
         Map jsonList = jsonDecode(responseString);
         return jsonList;
       } else {
+        print(response.statusCode);
         return {};
       }
     } catch (e, st) {
