@@ -63,6 +63,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(height: 20),
                     DashboardCard(
                       heading: englishState.isEnglishSelected
+                          ? "Dzongkha NMT"
+                          : "རྫོང་ཁའི་སྐད་སྒྱུར།།",
+                      subtitle: englishState.isEnglishSelected
+                          ? "Translate Dzongkha Text"
+                          : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
+                      imagepath: "assets/img/nmt_logo.png",
+                      cardcolor: Colors.white,
+                      onCardClick: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Nmt_model(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    DashboardCard(
+                      heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
                           : "རྫོང་ཁ་སྒྲ་ལས་ཡི་གུ།།",
                       subtitle: englishState.isEnglishSelected
@@ -94,25 +113,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const TTSModel(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    DashboardCard(
-                      heading: englishState.isEnglishSelected
-                          ? "Dzongkha NMT"
-                          : "རྫོང་ཁའི་སྐད་སྒྱུར།།",
-                      subtitle: englishState.isEnglishSelected
-                          ? "Translate Dzongkha Text"
-                          : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
-                      imagepath: "assets/img/nmt_logo.png",
-                      cardcolor: Colors.white,
-                      onCardClick: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const Nmt_model(),
                           ),
                         );
                       },

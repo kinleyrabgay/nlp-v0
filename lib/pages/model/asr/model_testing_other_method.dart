@@ -1,9 +1,6 @@
-// ignore_for_file: unused_field, unused_local_variable, unused_element, avoid_unnecessary_containers
-
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:record/record.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
