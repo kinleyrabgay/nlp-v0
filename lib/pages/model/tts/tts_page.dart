@@ -210,9 +210,7 @@ class _TTSModelState extends State<TTSModel> {
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
                           textStyle: const TextStyle(fontSize: 14.0),
-                          backgroundColor: englishState.isEnglishSelected
-                              ? Color.fromARGB(255, 37, 58, 107)
-                              : Color.fromARGB(255, 243, 181, 56),
+                          backgroundColor: Color.fromARGB(255, 235, 44, 76),
                           minimumSize: const Size(150.0, 48.0),
                         ),
                         child: Text(

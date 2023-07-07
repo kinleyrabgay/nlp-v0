@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
@@ -25,6 +27,7 @@ class _Nmt_modelState extends State<Nmt_model> {
   var originLanguage = 'From';
   var destinationLanguage = "To";
   var output = "";
+  bool isLoading = false;
   TextEditingController languageController = TextEditingController();
   TextEditingController _output_controller = TextEditingController();
 
@@ -55,6 +58,7 @@ class _Nmt_modelState extends State<Nmt_model> {
       final translatedText = jsonData['text'] as String;
       setState(() {
         _output_controller.text = translatedText;
+        isLoading = false;
         // output = translatedText;
       });
     } else {
@@ -67,10 +71,33 @@ class _Nmt_modelState extends State<Nmt_model> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
+    // Set the initial dropdown values based on the default language
+    if (originLanguage == 'From' && destinationLanguage == 'To') {
+      if (englishState.isEnglishSelected) {
+        originLanguage = 'English';
+        destinationLanguage = 'Dzongkha';
+      } else {
+        originLanguage = 'Dzongkha';
+        destinationLanguage = 'English';
+      }
+    }
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
           : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
+    }
+
+    void _showSnackbar(String message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
+
+    void _copyTextToClipboard() {
+      final String text = _output_controller.text;
+      Clipboard.setData(ClipboardData(text: text)).then((_) {
+        _showSnackbar('Text copied successfully');
+      });
     }
 
     return Scaffold(
@@ -107,6 +134,11 @@ class _Nmt_modelState extends State<Nmt_model> {
                   onChanged: (String? value) {
                     setState(() {
                       originLanguage = value!;
+                      if (originLanguage == destinationLanguage) {
+                        destinationLanguage = (originLanguage == 'English')
+                            ? 'Dzongkha'
+                            : 'English';
+                      }
                     });
                   },
                 ),
@@ -156,6 +188,11 @@ class _Nmt_modelState extends State<Nmt_model> {
                   onChanged: (String? value) {
                     setState(() {
                       destinationLanguage = value!;
+                      if (destinationLanguage == originLanguage) {
+                        originLanguage = (destinationLanguage == 'English')
+                            ? 'Dzongkha'
+                            : 'English';
+                      }
                     });
                   },
                 ),
@@ -198,39 +235,6 @@ class _Nmt_modelState extends State<Nmt_model> {
                 ),
               ),
             ),
-
-            // Expanded(
-            //   // constraints: BoxConstraints(maxHeight: 100),
-            //   child: TextFormField(
-            //     cursorColor: Colors.black,
-            //     autofocus: false,
-            //     expands: true,
-            //     maxLines: null,
-            //     textAlign: TextAlign.left,
-            //     textAlignVertical: TextAlignVertical.top,
-            //     style: const TextStyle(color: Colors.black),
-            //     decoration: const InputDecoration(
-            //       labelText: 'Enter your text',
-            //       labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-            //       border: OutlineInputBorder(
-            //         borderSide: BorderSide(
-            //             color: Color.fromARGB(255, 37, 58, 107), width: 1),
-            //       ),
-            //       enabledBorder: OutlineInputBorder(
-            //         borderSide: BorderSide(
-            //             color: Color.fromARGB(255, 37, 58, 107), width: 1),
-            //       ),
-            //       errorStyle: TextStyle(color: Colors.red, fontSize: 15),
-            //     ),
-            //     controller: languageController,
-            //     validator: (value) {
-            //       if (value == null || value.isEmpty) {
-            //         return 'Enter text to translate';
-            //       }
-            //       return null;
-            //     },
-            //   ),
-            // ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -244,6 +248,9 @@ class _Nmt_modelState extends State<Nmt_model> {
                         Size(150, 50), // Set the desired width and height
                   ),
                   onPressed: () {
+                    setState(() {
+                      isLoading = true;
+                    });
                     fetchDataFromAPI();
                   },
                   child: Text(
@@ -253,6 +260,9 @@ class _Nmt_modelState extends State<Nmt_model> {
                     style: const TextStyle(fontSize: 17),
                   ),
                 ),
+                if (isLoading)
+                  SpinKitFadingCircle(
+                      color: Color.fromARGB(255, 37, 58, 107), size: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary:
@@ -273,34 +283,42 @@ class _Nmt_modelState extends State<Nmt_model> {
             ),
             const SizedBox(height: 20),
             Expanded(
-              child: TextFormField(
-                controller: _output_controller,
-                cursorColor: Colors.black,
-                autofocus: false,
-                expands: true,
-                maxLines: null,
-                enabled: false,
-                textAlign: TextAlign.left,
-                textAlignVertical: TextAlignVertical.top,
-                style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  labelText: '',
-                  labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
+              child: Stack(alignment: Alignment.bottomRight, children: [
+                TextFormField(
+                  controller: _output_controller,
+                  cursorColor: Colors.black,
+                  autofocus: false,
+                  expands: true,
+                  maxLines: null,
+                  enabled: false,
+                  textAlign: TextAlign.left,
+                  textAlignVertical: TextAlignVertical.top,
+                  style: const TextStyle(color: Colors.black),
+                  decoration: const InputDecoration(
+                    labelText: '',
+                    labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10)), // Set border radius to 10
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(10)), // Set border radius to 10
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    ),
+                    errorStyle: TextStyle(color: Colors.red, fontSize: 15),
                   ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  ),
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
                 ),
-              ),
+                IconButton(
+                  icon: Icon(Icons.copy),
+                  onPressed: () {
+                    _copyTextToClipboard();
+                  },
+                ),
+              ]),
             ),
           ])),
     );
