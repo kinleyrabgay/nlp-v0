@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable, avoid_print, use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:io';
 import 'package:audioplayers/audioplayers.dart' as ap;
@@ -7,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
-
 import '../../../provider/state.dart';
 
 class AudioPlayer extends StatefulWidget {
@@ -24,7 +25,6 @@ class AudioPlayer extends StatefulWidget {
 
 class AudioPlayerState extends State<AudioPlayer> {
   static const double _controlSize = 56;
-
   final _audioPlayer = ap.AudioPlayer();
 
   late StreamSubscription<void> _playerStateChangedSubscription;
@@ -127,11 +127,11 @@ class AudioPlayerState extends State<AudioPlayer> {
     Color color;
 
     final theme = Theme.of(context);
-    icon = Icon(Icons.download_rounded, color: Colors.white, size: 24);
+    icon = const Icon(Icons.download_rounded, color: Colors.white, size: 24);
     // color = theme.primaryColor.withOpacity(0.1);
     color = englishState.isEnglishSelected
-        ? Color.fromARGB(255, 37, 58, 107)
-        : Color.fromARGB(255, 243, 181, 56);
+        ? const Color.fromARGB(255, 37, 58, 107)
+        : Colors.orange;
 
     // Color color;
     return ClipOval(
@@ -153,7 +153,7 @@ class AudioPlayerState extends State<AudioPlayer> {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final appDirPath = directory.path;
-      final fileName =
+      const fileName =
           'audio.mp3'; // Specify the desired file name and extension
       final filePath = path.join(appDirPath, fileName);
       final file = File(filePath);
@@ -165,7 +165,7 @@ class AudioPlayerState extends State<AudioPlayer> {
 
       print('Audio downloaded successfully: $filePath');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Audio downloaded successfully'),
         ),
       );
@@ -186,8 +186,8 @@ class AudioPlayerState extends State<AudioPlayer> {
       final theme = Theme.of(context);
       icon = Icon(Icons.play_arrow,
           color: englishState.isEnglishSelected
-              ? Color.fromARGB(255, 37, 58, 107)
-              : Color.fromARGB(255, 243, 181, 56),
+              ? const Color.fromARGB(255, 37, 58, 107)
+              : const Color.fromARGB(255, 243, 181, 56),
           size: 30);
       color = theme.primaryColor.withOpacity(0.1);
     }
@@ -228,13 +228,13 @@ class AudioPlayerState extends State<AudioPlayer> {
               width: MediaQuery.of(context).size.width * 0.7,
               child: SliderTheme(
                 data: const SliderThemeData(
-                  trackHeight: 2.0,
+                  trackHeight: 1.0,
                   trackShape: RoundedRectSliderTrackShape(),
                 ),
                 child: Slider(
                   activeColor: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 37, 58, 107)
-                      : Color.fromARGB(255, 243, 181, 56),
+                      ? const Color.fromARGB(255, 37, 58, 107)
+                      : const Color.fromARGB(255, 243, 181, 56),
                   inactiveColor: const Color.fromARGB(255, 92, 90, 90),
                   value: position?.inMilliseconds.toDouble() ?? 0.0,
                   min: 0.0,

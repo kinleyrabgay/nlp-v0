@@ -5,8 +5,6 @@ import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Developer extends StatelessWidget {
   const Developer({super.key});
@@ -29,8 +27,8 @@ class Developer extends StatelessWidget {
       ),
       body: Container(
         color: englishState.isEnglishSelected
-            ? Color.fromARGB(255, 37, 58, 107)
-            : Color.fromARGB(255, 243, 181, 56),
+            ? const Color.fromARGB(255, 37, 58, 107)
+            : Colors.orange,
         child: ListView(
           children: <Widget>[
             Padding(
@@ -38,7 +36,7 @@ class Developer extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
+                children: const [
                   ProfileCard(
                     developer1: "Pema Geley",
                     developer2: "Ngawang Samten Pelzang",

@@ -1,14 +1,12 @@
-import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
+// ignore_for_file: unused_local_variable
+
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/splash/splash_screen.dart';
 
 void main() {
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(
     MultiProvider(
       providers: [
@@ -33,9 +31,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: const Color.fromARGB(255, 15, 31, 65),
-        fontFamily: englishState.isEnglishSelected ? 'Roboto' : "Joyig",
+        // fontFamily: englishState.isEnglishSelected ? 'Roboto' : "Joyig",
+        fontFamily: "Roboto",
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -1,18 +1,12 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print
+// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print, camel_case_types, unused_element
 import 'dart:convert';
-
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
-import '../../../api/data.dart';
-
 import 'package:http/http.dart' as http;
 
 class Nmt_model extends StatefulWidget {
@@ -28,6 +22,7 @@ class _Nmt_modelState extends State<Nmt_model> {
   var destinationLanguage = "To";
   var output = "";
   bool isLoading = false;
+  bool isOutput = false;
   TextEditingController languageController = TextEditingController();
   TextEditingController _output_controller = TextEditingController();
 
@@ -41,8 +36,10 @@ class _Nmt_modelState extends State<Nmt_model> {
   }
 
   Future<dynamic> fetchDataFromAPI() async {
+    setState(() {
+      isLoading = true;
+    });
     final url = Uri.parse('https://nlp.cst.edu.bt/nmt/api/');
-
     var inputValue = languageController.text;
 
     final payload = {
@@ -59,14 +56,15 @@ class _Nmt_modelState extends State<Nmt_model> {
       setState(() {
         _output_controller.text = translatedText;
         isLoading = false;
-        // output = translatedText;
+        isOutput = true;
       });
     } else {
       throw Exception('Failed to fetch data from API');
     }
   }
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isButtonEnable = false;
+  String text = '';
 
   @override
   Widget build(BuildContext context) {
@@ -107,28 +105,25 @@ class _Nmt_modelState extends State<Nmt_model> {
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: _getAppBarText(englishState)),
       body: Container(
-          padding: EdgeInsets.all(8),
-          child: Column(children: [
-            const SizedBox(
-              height: 30,
-            ),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DropdownButton(
                   focusColor: Colors.black,
                   iconDisabledColor: Colors.black,
                   iconEnabledColor: Colors.black,
-                  hint: Text(
-                    originLanguage,
-                    style: const TextStyle(color: Colors.black),
-                  ),
+                  hint: Text(originLanguage,
+                      style: const TextStyle(color: Colors.black)),
                   dropdownColor: Colors.white,
                   icon: const Icon(Icons.keyboard_arrow_down),
                   items: languages.map((String dropDownStringItem) {
                     return DropdownMenuItem(
-                      child: Text(dropDownStringItem),
                       value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
                     );
                   }).toList(),
                   onChanged: (String? value) {
@@ -142,9 +137,6 @@ class _Nmt_modelState extends State<Nmt_model> {
                     });
                   },
                 ),
-                const SizedBox(
-                  width: 40,
-                ),
                 Column(
                   children: [
                     Row(
@@ -153,7 +145,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                           width: 1,
                           child: Icon(
                             CupertinoIcons.arrow_left,
-                            size: 16,
+                            size: 12,
                           ),
                         ),
                       ],
@@ -161,13 +153,11 @@ class _Nmt_modelState extends State<Nmt_model> {
                     Row(
                       children: const [
                         SizedBox(
-                            child: Icon(CupertinoIcons.arrow_right, size: 16)),
+                          child: Icon(CupertinoIcons.arrow_right, size: 12),
+                        ),
                       ],
                     ),
                   ],
-                ),
-                const SizedBox(
-                  width: 40,
                 ),
                 DropdownButton(
                   focusColor: Colors.black,
@@ -175,14 +165,14 @@ class _Nmt_modelState extends State<Nmt_model> {
                   iconEnabledColor: Colors.black,
                   hint: Text(
                     destinationLanguage,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   dropdownColor: Colors.white,
-                  icon: Icon(Icons.keyboard_arrow_down),
+                  icon: const Icon(Icons.keyboard_arrow_down),
                   items: languages.map((String dropDownStringItem) {
                     return DropdownMenuItem(
-                      child: Text(dropDownStringItem),
                       value: dropDownStringItem,
+                      child: Text(dropDownStringItem),
                     );
                   }).toList(),
                   onChanged: (String? value) {
@@ -198,81 +188,94 @@ class _Nmt_modelState extends State<Nmt_model> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Color.fromARGB(255, 37, 58, 107), width: 1),
-                  borderRadius: BorderRadius.circular(
-                      10), // Adjust the value to control the curve
-                ),
-                child: Form(
-                  child: TextFormField(
-                    cursorColor: Colors.black,
-                    autofocus: false,
-                    maxLines: null,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      hintText: 'Enter your text',
-                      hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                      border: InputBorder.none,
-                      errorStyle: TextStyle(color: Colors.red, fontSize: 15),
-                      contentPadding: EdgeInsets.symmetric(
-                          horizontal: 12), // Padding for the entered text
+            const SizedBox(height: 20),
+            Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: TextFormField(
+                cursorColor: Colors.black,
+                autofocus: false,
+                maxLines: null,
+                textAlign: TextAlign.left,
+                style: const TextStyle(color: Colors.black),
+                decoration: const InputDecoration(
+                  hintText: 'Enter your text',
+                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                  // border: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)), // Set border radius to 10
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 37, 58, 107),
+                      width: 1,
                     ),
-                    controller: languageController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Enter text to translate';
-                      }
-                      return null;
-                    },
                   ),
+
+                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                  contentPadding:
+                      EdgeInsets.all(10), // Padding for the entered text
                 ),
+                controller: languageController,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'This field cannot be empty!';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    text = value;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: englishState.isEnglishSelected
-                        ? Color.fromARGB(255, 37, 58, 107)
-                        : Color.fromARGB(255, 243, 181, 56),
-                    fixedSize:
-                        Size(150, 50), // Set the desired width and height
+                        ? const Color.fromARGB(255, 37, 58, 107)
+                        : Colors.orange,
+                    fixedSize: const Size(150, 50),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    fetchDataFromAPI();
-                  },
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          if (text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please enter text.'),
+                              ),
+                            );
+                          } else {
+                            fetchDataFromAPI();
+                          }
+                        }, // Set onPressed to null when the button is disabled
                   child: Text(
                     englishState.isEnglishSelected
-                        ? "Translate"
-                        : "སྐད་སྒྱུར་འབད།",
+                        ? 'Translate'
+                        : 'སྐད་སྒྱུར་འབད།',
                     style: const TextStyle(fontSize: 17),
                   ),
                 ),
                 if (isLoading)
-                  SpinKitFadingCircle(
+                  const SpinKitFadingCircle(
                       color: Color.fromARGB(255, 37, 58, 107), size: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary:
-                        Color.fromARGB(255, 235, 44, 76), //255, 42, 188, 108
+                    backgroundColor: const Color.fromARGB(
+                        255, 235, 44, 76), //255, 42, 188, 108
                     fixedSize:
-                        Size(150, 50), // Set the desired width and height
+                        const Size(150, 50), // Set the desired width and height
                   ),
                   onPressed: () {
-                    languageController.clear();
-                    _output_controller.clear();
+                    setState(() {
+                      languageController.clear();
+                      _output_controller.clear();
+                      isOutput = false; // Update the isOutput variable
+                      text = "";
+                    });
                   },
                   child: Text(
                     englishState.isEnglishSelected ? "Clear" : "གསལ།",
@@ -282,45 +285,55 @@ class _Nmt_modelState extends State<Nmt_model> {
               ],
             ),
             const SizedBox(height: 20),
-            Expanded(
-              child: Stack(alignment: Alignment.bottomRight, children: [
-                TextFormField(
-                  controller: _output_controller,
-                  cursorColor: Colors.black,
-                  autofocus: false,
-                  expands: true,
-                  maxLines: null,
-                  enabled: false,
-                  textAlign: TextAlign.left,
-                  textAlignVertical: TextAlignVertical.top,
-                  style: const TextStyle(color: Colors.black),
-                  decoration: const InputDecoration(
-                    labelText: '',
-                    labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(10)), // Set border radius to 10
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+            // if(isOutput) {}
+            Visibility(
+              visible: isOutput,
+              child: Expanded(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    TextFormField(
+                      controller: _output_controller,
+                      cursorColor: Colors.black,
+                      autofocus: false,
+                      expands: true,
+                      maxLines: null,
+                      enabled: false,
+                      textAlign: TextAlign.left,
+                      textAlignVertical: TextAlignVertical.top,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: const InputDecoration(
+                        labelText: '',
+                        labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 37, 58, 107),
+                            width: 1,
+                          ),
+                        ),
+                        errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                      ),
                     ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(10)), // Set border radius to 10
-                      borderSide: BorderSide(
-                          color: Color.fromARGB(255, 37, 58, 107), width: 1),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.black45,
+                      ),
+                      onPressed: () {
+                        _copyTextToClipboard();
+                      },
                     ),
-                    errorStyle: TextStyle(color: Colors.red, fontSize: 15),
-                  ),
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.copy),
-                  onPressed: () {
-                    _copyTextToClipboard();
-                  },
-                ),
-              ]),
+              ),
             ),
-          ])),
+            const SizedBox(height: 10),
+          ],
+        ),
+      ),
     );
   }
 }

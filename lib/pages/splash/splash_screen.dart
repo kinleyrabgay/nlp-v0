@@ -1,12 +1,12 @@
-import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api
 
-import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
 import 'package:dzongkha_nlp_mobile/pages/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -19,11 +19,11 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void initState() {
     _animationController = AnimationController(
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
     _animation = Tween<Offset>(
-      begin: Offset(0, -1.5),
+      begin: const Offset(0, -1.5),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -38,7 +38,6 @@ class _SplashScreenState extends State<SplashScreen>
         ),
       );
     });
-    ;
 
     super.initState();
   }
@@ -52,22 +51,20 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 37, 58, 107),
+      backgroundColor: const Color.fromARGB(255, 37, 58, 107),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             SlideTransition(
               position: _animation,
-              child: Container(
+              child: SizedBox(
                   height: 200,
                   width: 200,
                   child: Image.asset("assets/logo/app_logo_trans.png")),
             ),
-            SpinKitWaveSpinner(
+            const SpinKitWaveSpinner(
               color: Color.fromARGB(255, 228, 225, 67),
               trackColor: Color.fromARGB(255, 222, 100, 13),
               waveColor: Color.fromARGB(255, 224, 201, 55),
@@ -75,8 +72,8 @@ class _SplashScreenState extends State<SplashScreen>
               duration: Duration(milliseconds: 1000),
             ),
             Container(
-              padding: EdgeInsets.only(bottom: 10),
-              child: Text(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: const Text(
                 "powered by CST",
                 style: TextStyle(color: Color.fromARGB(255, 224, 201, 55)),
               ),

@@ -1,5 +1,4 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
-import 'package:dzongkha_nlp_mobile/pages/about/about_developer_card.dart';
 import 'package:dzongkha_nlp_mobile/pages/about/about_us.dart';
 import 'package:dzongkha_nlp_mobile/pages/about/developer.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/dashboardcard.dart';
@@ -10,8 +9,6 @@ import '../components/app_bar.dart';
 import '../model/asr/asr_model.dart';
 import '../model/nmt/nmt_model.dart';
 import '../model/tts/tts_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/services.dart';
 
 class DashboardScreen extends StatefulWidget implements PreferredSizeWidget {
   const DashboardScreen({super.key});
@@ -47,11 +44,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : 'ཁྱོད་ཀྱིས་རིན་གོང་ཆེ་བའི་བརྡ་སྟོན་ཚུ་ ང་བཅས་ལུ་གཏང་གནང་།',
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: double.infinity,
-        color: englishState.isEnglishSelected
-            ? Color.fromARGB(255, 37, 58, 107)
-            : Color.fromARGB(255, 243, 181, 56),
         child: Stack(
           children: [
             Padding(
@@ -128,8 +122,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       drawer: Drawer(
         child: Container(
           color: englishState.isEnglishSelected
-              ? Color.fromARGB(255, 37, 58, 107)
-              : Color.fromARGB(255, 243, 181, 56),
+              ? const Color.fromARGB(255, 37, 58, 107)
+              : const Color.fromARGB(255, 243, 181, 56),
           child: Column(
             children: <Widget>[
               Expanded(

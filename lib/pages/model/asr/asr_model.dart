@@ -1,11 +1,10 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print
+// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print, unnecessary_null_comparison
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
 import 'model_testing.dart';
@@ -43,12 +42,15 @@ class _TryModelState extends State<TryModel> {
                 setState(() {
                   _predicted_text_controller.text = value["transcription"];
                   isLoading = false; // stop the spinner
+                  isOutput = true; // display the output
                 })
               }
           }
       },
     );
   }
+
+  bool isOutput = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,74 +81,65 @@ class _TryModelState extends State<TryModel> {
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: _getAppBarText(englishState)),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                margin: EdgeInsets.symmetric(vertical: 10),
-                child: DropdownButtonFormField<String>(
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      currentmodel = newValue!;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Color.fromARGB(255, 0, 36, 66),
-                  ),
-                  style: const TextStyle(
-                    color: Color.fromARGB(255, 32, 32, 32),
-                    fontSize: 13,
-                  ),
-                  dropdownColor: Color.fromARGB(255, 255, 255, 255),
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                    filled: true,
-                    fillColor: Color.fromARGB(255, 235, 235, 235),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1.5, color: Color.fromARGB(255, 80, 80, 80)),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    hintText: 'Select Model',
-                    hintStyle: TextStyle(
-                      fontSize: 13,
-                      // color: Color.fromARGB(255, 199, 199, 199),
-                    ),
-                  ),
-                  // value: currentmodel,
-                  items: model.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                )),
-            SizedBox(
-              height: 30,
+            const SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              onChanged: (String? newValue) {
+                setState(() {
+                  currentmodel = newValue!;
+                });
+              },
+              icon: const Icon(
+                Icons.arrow_drop_down,
+                color: Color.fromARGB(255, 0, 36, 66),
+              ),
+              style: const TextStyle(
+                color: Color.fromARGB(255, 32, 32, 32),
+                fontSize: 13,
+              ),
+              dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+              decoration: InputDecoration(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                filled: true,
+                fillColor: const Color.fromARGB(255, 235, 235, 235),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                      width: 1.5, color: Color.fromARGB(255, 80, 80, 80)),
+                ),
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                hintText: 'Select Model',
+                hintStyle: const TextStyle(
+                  fontSize: 13,
+                ),
+              ),
+              // value: currentmodel,
+              items: model.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
             ),
-            Container(
-                child: Text(
+            const SizedBox(height: 30),
+            const Text(
               "Upload or Select Audio",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20),
-            )),
-            SizedBox(
-              height: 30,
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 16, color: Colors.black54),
             ),
+            const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                     fixedSize:
-                        Size(150, 50), // Set the desired width and height
+                        const Size(150, 50), // Set the desired width and height
                   ),
                   onPressed: () {},
                   child: Row(
@@ -154,6 +147,10 @@ class _TryModelState extends State<TryModel> {
                     children: [
                       ModelTestRecorder(
                         onStop: (String path) {
+                          setState(() {
+                            _predicted_text_controller.text = "";
+                            // isOutput = false;
+                          });
                           ('Recorded file path: $path');
                           transcribeAudio(path);
                         },
@@ -161,13 +158,18 @@ class _TryModelState extends State<TryModel> {
                     ],
                   ),
                 ),
+                if (isLoading)
+                  const Center(
+                    child: SpinKitFadingCircle(
+                        color: Color.fromARGB(255, 37, 58, 107), size: 40),
+                  ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: englishState.isEnglishSelected
-                        ? Color.fromARGB(255, 37, 58, 107)
-                        : Color.fromARGB(255, 243, 181, 56),
+                        ? const Color.fromARGB(255, 37, 58, 107)
+                        : const Color.fromARGB(255, 243, 181, 56),
                     fixedSize:
-                        Size(150, 50), // Set the desired width and height
+                        const Size(150, 50), // Set the desired width and height
                   ),
                   onPressed: () async {
                     FilePickerResult? result =
@@ -187,7 +189,7 @@ class _TryModelState extends State<TryModel> {
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
+                    children: const [
                       Icon(
                         Icons.upload,
                         color: Colors.white,
@@ -206,44 +208,50 @@ class _TryModelState extends State<TryModel> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.bottomRight,
-                children: [
-                  TextField(
-                    controller: _predicted_text_controller,
-                    textAlign: TextAlign.left,
-                    expands: true,
-                    maxLines: null,
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      filled: true,
-                      fillColor: Colors.black12,
-                    ),
-                    style: const TextStyle(fontSize: 18, height: 2),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.copy),
-                    onPressed: () {
-                      _copyTextToClipboard();
-                    },
-                  ),
-                  if (isLoading) // conditionally render the spinner
-                    Center(
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: const Color(0XFF0F1F41),
-                        size: 70.0,
+            Visibility(
+              visible: true,
+              child: Expanded(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    TextField(
+                      controller: _predicted_text_controller,
+                      textAlign: TextAlign.left,
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: true,
+                      maxLines: null,
+                      enabled: false,
+                      decoration: const InputDecoration(
+                        labelText: '',
+                        labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(10)), // Set border radius to 10
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 37, 58, 107),
+                            width: 1,
+                          ),
+                        ),
                       ),
+                      style: const TextStyle(fontSize: 18),
                     ),
-                ],
+                    IconButton(
+                      icon: const Icon(
+                        Icons.copy,
+                        color: Colors.black45,
+                      ),
+                      onPressed: () {
+                        _copyTextToClipboard();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),

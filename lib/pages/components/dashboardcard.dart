@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,7 +24,7 @@ class _DashboardCardState extends State<DashboardCard> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Card(
         color: widget.cardcolor,
@@ -33,7 +32,7 @@ class _DashboardCardState extends State<DashboardCard> {
           alignment: Alignment.centerRight,
           children: [
             Container(
-              padding: EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 10),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width * 0.3,
               child: Image.asset(
@@ -51,7 +50,7 @@ class _DashboardCardState extends State<DashboardCard> {
                       children: [
                         Text(
                           widget.heading,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color.fromARGB(222, 20, 20, 20),
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -60,7 +59,7 @@ class _DashboardCardState extends State<DashboardCard> {
                         const SizedBox(height: 10),
                         Text(
                           widget.subtitle,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Color.fromARGB(255, 26, 26, 26),
                             fontSize: 14,
                           ),
@@ -73,7 +72,7 @@ class _DashboardCardState extends State<DashboardCard> {
                             widget.onCardClick();
                           },
                           style: TextButton.styleFrom(
-                            backgroundColor: Color(0xFF0F1F41),
+                            backgroundColor: const Color(0xFF0F1F41),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),

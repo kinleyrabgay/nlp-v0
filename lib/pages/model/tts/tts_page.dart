@@ -1,33 +1,23 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print
+// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print, depend_on_referenced_packages, library_private_types_in_public_api
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:async';
-import 'dart:math';
-
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/pages/model/tts/audio_player.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import '../../../api/data.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 Future<Map> fetchAudioData(String text) async {
-  // TODO: Change the url to deployed when webapp is deployed
   final url = Uri.parse('https://nlp.cst.edu.bt/tts/');
   final headers = {'Content-Type': 'application/json'};
   final body = {'inputText': text};
 
   final response =
       await http.post(url, headers: headers, body: jsonEncode(body));
-
-  print('Respoinse from server: ================================');
-  print(response);
-  print(response.bodyBytes);
-  print("${response.body}");
 
   // return response;
   if (response.statusCode == 200) {
@@ -36,7 +26,6 @@ Future<Map> fetchAudioData(String text) async {
     var filePath = '${tempDir.path}/audio.wav';
     var file = File(filePath);
     await file.writeAsBytes(response.bodyBytes);
-
     return {'success': true, "filepath": filePath};
   } else {
     return {'success': false};
@@ -122,11 +111,6 @@ class _TTSModelState extends State<TTSModel> {
       });
     }
 
-    Future<void> playAudioFromTempDir() async {
-      var tempDir = await getTemporaryDirectory();
-      var filePath = '${tempDir.path}/audio.wav';
-    }
-
     return Scaffold(
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
@@ -134,102 +118,98 @@ class _TTSModelState extends State<TTSModel> {
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: _getAppBarText(englishState)),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              const SizedBox(height: 10),
+              TextFormField(
+                controller: text_controller,
+                maxLines: null,
+                decoration: const InputDecoration(
+                  hintText: 'Enter dzongkha text',
+                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                        Radius.circular(10)), // Set border radius to 10
+                    borderSide: BorderSide(
+                      color: Color.fromARGB(255, 37, 58, 107),
+                      width: 1,
+                    ),
+                  ),
+                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                  contentPadding: EdgeInsets.all(10), // Pad
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'This field cannot be empty!';
+                  }
+                  return null;
+                },
+                onChanged: (value) {
+                  setState(() {
+                    text = value;
+                  });
+                },
+                style: const TextStyle(fontSize: 15.0),
+              ),
+              const SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: 300.0,
-                    margin: const EdgeInsets.only(bottom: 10.0),
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: TextField(
-                      controller: text_controller,
-                      onChanged: (value) {
-                        setState(() {
-                          text = value;
-                        });
-                      },
-                      maxLines: null,
-                      decoration: const InputDecoration(
-                        hintText: 'Enter dzongkha text',
-                        border: InputBorder.none,
-                      ),
-                      style: const TextStyle(fontSize: 16.0),
-                    ),
-                  ),
-                  SizedBox(height: 16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: isLoading
-                            ? null
-                            : () {
-                                if (text.isEmpty) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Please enter text.'),
-                                    ),
-                                  );
-                                } else {
-                                  fetchAudioAndSave(text);
-                                }
-                              },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          textStyle: const TextStyle(fontSize: 14.0),
-                          backgroundColor: englishState.isEnglishSelected
-                              ? Color.fromARGB(255, 37, 58, 107)
-                              : Color.fromARGB(255, 243, 181, 56),
-                          minimumSize: const Size(150.0, 48.0),
-                        ),
-                        child: isLoading
-                            ? Center(
-                                child: LoadingAnimationWidget.staggeredDotsWave(
-                                  color: const Color(0XFF0F1F41),
-                                  size: 40.0,
+                  ElevatedButton(
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            if (text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please enter text.'),
                                 ),
-                              )
-                            : Text(englishState.isEnglishSelected
-                                ? 'Generate Audio'
-                                : 'སྒྲ་བཟོ་ནི།'),
-                      ),
-                      ElevatedButton(
-                        onPressed: text_controller.clear,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          textStyle: const TextStyle(fontSize: 14.0),
-                          backgroundColor: Color.fromARGB(255, 235, 44, 76),
-                          minimumSize: const Size(150.0, 48.0),
-                        ),
-                        child: Text(
-                            englishState.isEnglishSelected ? 'Clear' : 'གསལ།'),
-                      ),
-                    ],
+                              );
+                            } else {
+                              fetchAudioAndSave(text);
+                            }
+                          },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      textStyle: const TextStyle(fontSize: 14.0),
+                      backgroundColor: englishState.isEnglishSelected
+                          ? const Color.fromARGB(255, 37, 58, 107)
+                          : Colors.orange,
+                      // minimumSize: const Size(150.0, 48.0),
+                      fixedSize: const Size(150, 50),
+                    ),
+                    child: Text(englishState.isEnglishSelected
+                        ? 'Generate Audio'
+                        : 'སྒྲ་བཟོ་ནི།'),
                   ),
-                  SizedBox(height: 20.0),
-                  Column(
-                    children: [
-                      if (audioReceivedToLocal == true)
-                        AudioPlayer(
-                          source: audiofilepath,
-                        )
-                      else
-                        const Text(
-                            'Audio player will appear here after being loaded'),
-                    ],
+                  if (isLoading)
+                    const SpinKitFadingCircle(
+                        color: Color.fromARGB(255, 37, 58, 107), size: 40),
+                  ElevatedButton(
+                    onPressed: text_controller.clear,
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      textStyle: const TextStyle(fontSize: 14.0),
+                      backgroundColor: const Color.fromARGB(255, 235, 44, 76),
+                      fixedSize: const Size(150, 50),
+                    ),
+                    child:
+                        Text(englishState.isEnglishSelected ? 'Clear' : 'གསལ།'),
                   ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              Column(
+                children: [
+                  if (audioReceivedToLocal == true)
+                    AudioPlayer(
+                      source: audiofilepath,
+                    )
+                  else
+                    const Text(''),
                 ],
               ),
             ],

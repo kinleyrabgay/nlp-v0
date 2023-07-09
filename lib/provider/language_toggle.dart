@@ -25,7 +25,7 @@ class _LanguageToggleState extends State<LanguageToggle> {
           activeTextColor: Colors.white,
           activeColor: const Color.fromARGB(255, 80, 79, 79).withOpacity(0.5),
           inactiveText: 'DZO',
-          inactiveColor: Color.fromARGB(255, 212, 131, 0),
+          inactiveColor: const Color.fromARGB(255, 212, 131, 0),
           inactiveTextColor: Colors.white,
           padding: 1.5,
           showOnOff: true,

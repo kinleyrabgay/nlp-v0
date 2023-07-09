@@ -1,8 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../provider/state.dart';
 
 class ProfileCard extends StatelessWidget {
@@ -37,12 +37,11 @@ class ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     final englishState = Provider.of<EnglishState>(context);
     return InkWell(
       onTap: () => _launchURL("https://nlp.cst.edu.bt/"),
       child: Container(
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -71,8 +70,8 @@ class ProfileCard extends StatelessWidget {
                         fontSize: 25,
                         fontWeight: FontWeight.w600,
                         color: englishState.isEnglishSelected
-                            ? Color.fromARGB(255, 37, 58, 107)
-                            : Color.fromARGB(255, 0, 0, 0),
+                            ? const Color.fromARGB(255, 37, 58, 107)
+                            : const Color.fromARGB(255, 0, 0, 0),
                       ),
                       softWrap: true,
                       textAlign: TextAlign.center,
@@ -86,92 +85,92 @@ class ProfileCard extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     color: englishState.isEnglishSelected
-                        ? Color.fromARGB(255, 37, 58, 107)
-                        : Color.fromARGB(255, 243, 181, 56),
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                        ? const Color.fromARGB(255, 37, 58, 107)
+                        : const Color.fromARGB(255, 243, 181, 56),
+                    borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Color.fromARGB(255, 255, 119, 119),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 7,
                         ),
                         Text(
                           developer1,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Color.fromARGB(255, 144, 124, 255),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 7,
                         ),
                         Text(
                           developer2,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Color.fromARGB(255, 128, 209, 255),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 7,
                         ),
                         Text(
                           developer3,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.person,
                           color: Color.fromARGB(255, 117, 255, 163),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 7,
                         ),
                         Text(
                           developer4,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 255, 255, 255),
                           ),

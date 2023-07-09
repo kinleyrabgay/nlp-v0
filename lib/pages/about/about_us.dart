@@ -1,11 +1,9 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable
+// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable, deprecated_member_use
 
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
@@ -34,66 +32,66 @@ class _AboutPageState extends State<AboutPage> {
       ),
       body: Container(
         color: englishState.isEnglishSelected
-            ? Color.fromARGB(255, 37, 58, 107)
-            : Color.fromARGB(255, 243, 181, 56),
+            ? const Color.fromARGB(255, 37, 58, 107)
+            : Colors.orange,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               Text(
                 'Welcome to',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : Color.fromARGB(255, 0, 0, 0),
+                      ? const Color.fromARGB(255, 255, 255, 255)
+                      : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'NLP',
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 240, 25)
-                      : Color.fromARGB(
+                      ? const Color.fromARGB(255, 255, 240, 25)
+                      : const Color.fromARGB(
                           255, 0, 71, 165), // Replace with your desired color
                   fontFamily:
                       'Montserrat', // Replace with your desired font family
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'v1.0.0',
                 style: TextStyle(
                   fontSize: 18,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : Color.fromARGB(255, 0, 0, 0),
+                      ? const Color.fromARGB(255, 255, 255, 255)
+                      : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Text(
                 'Our App is a collaboration with',
                 style: TextStyle(
                   fontSize: 18,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : Color.fromARGB(255, 0, 0, 0),
+                      ? const Color.fromARGB(255, 255, 255, 255)
+                      : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
                             'assets/img/dd.png'), // Replace with your DDC logo asset
@@ -101,11 +99,11 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
                             'assets/img/cstlogo.png'), // Replace with your CST logo asset
@@ -115,13 +113,13 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               ElevatedButton.icon(
                 onPressed: () {
                   _launchURL(
                       'https://www.facebook.com'); // Replace the URL with your app's Facebook sharing link
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.share,
                   color: Colors.white,
                 ),
@@ -129,60 +127,61 @@ class _AboutPageState extends State<AboutPage> {
                   'Share App',
                   style: TextStyle(
                     color: englishState.isEnglishSelected
-                        ? Color.fromARGB(255, 255, 255, 255)
-                        : Color.fromARGB(255, 255, 255, 255),
+                        ? const Color.fromARGB(255, 255, 255, 255)
+                        : const Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 37, 58,
+                  backgroundColor: const Color.fromARGB(255, 37, 58,
                       107), // Replace with your desired button color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton.icon(
                 onPressed: () {
                   _launchURL(
                       'https://www.example.com'); // Replace the URL with your app's rating link
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.star,
                   color: Colors.white,
                 ),
-                label: Text(
+                label: const Text(
                   'Rate Us',
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.transparent, // Remove the background color
+                  backgroundColor:
+                      Colors.transparent, // Remove the background color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 'Contact CST: https://nlp.cst.edu.bt/',
                 style: TextStyle(
                   fontSize: 14,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : Color.fromARGB(255, 0, 0, 0),
+                      ? const Color.fromARGB(255, 255, 255, 255)
+                      : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 '© 2023 CST. All rights reserved.',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: englishState.isEnglishSelected
-                      ? Color.fromARGB(255, 255, 255, 255)
-                      : Color.fromARGB(255, 0, 0, 0),
+                      ? const Color.fromARGB(255, 255, 255, 255)
+                      : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ],

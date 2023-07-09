@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:flutter/foundation.dart';
 
@@ -104,9 +103,9 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
             child: Text(
               (_recordState != RecordState.stop) ? "Recording" : "Record",
               style: (_recordState != RecordState.stop)
-                  ? TextStyle(
+                  ? const TextStyle(
                       fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                  : TextStyle(fontSize: 14, color: Colors.black),
+                  : const TextStyle(fontSize: 14, color: Colors.black),
             ),
           ),
         ],
