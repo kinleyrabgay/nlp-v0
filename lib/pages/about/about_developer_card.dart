@@ -38,6 +38,8 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
+    final colorText =
+        englishState.isEnglishSelected ? Colors.white : Colors.black;
     return InkWell(
       onTap: () => _launchURL("https://nlp.cst.edu.bt/"),
       child: Container(
@@ -80,7 +82,7 @@ class ProfileCard extends StatelessWidget {
                   CircleAvatar(
                     radius: 50,
                     backgroundImage: AssetImage(projectlogo),
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.transparent,
                   ),
                 ],
               ),
@@ -90,7 +92,7 @@ class ProfileCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: englishState.isEnglishSelected
                         ? const Color.fromARGB(255, 37, 58, 107)
-                        : const Color.fromARGB(255, 243, 181, 56),
+                        : Colors.orange,
                     borderRadius: const BorderRadius.all(Radius.circular(10))),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -107,10 +109,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         Text(
                           developer1,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                          style: TextStyle(fontSize: 16, color: colorText),
                         ),
                       ],
                     ),
@@ -128,10 +127,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         Text(
                           developer2,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                          style: TextStyle(fontSize: 16, color: colorText),
                         ),
                       ],
                     ),
@@ -149,10 +145,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         Text(
                           developer3,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                          style: TextStyle(fontSize: 16, color: colorText),
                         ),
                       ],
                     ),
@@ -170,10 +163,7 @@ class ProfileCard extends StatelessWidget {
                         ),
                         Text(
                           developer4,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
+                          style: TextStyle(fontSize: 16, color: colorText),
                         ),
                       ],
                     ),

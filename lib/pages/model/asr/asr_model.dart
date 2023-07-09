@@ -167,7 +167,7 @@ class _TryModelState extends State<TryModel> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: englishState.isEnglishSelected
                         ? const Color.fromARGB(255, 37, 58, 107)
-                        : const Color.fromARGB(255, 243, 181, 56),
+                        : Colors.orange,
                     fixedSize:
                         const Size(150, 50), // Set the desired width and height
                   ),

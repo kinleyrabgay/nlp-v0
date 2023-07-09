@@ -123,7 +123,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Container(
           color: englishState.isEnglishSelected
               ? const Color.fromARGB(255, 37, 58, 107)
-              : const Color.fromARGB(255, 243, 181, 56),
+              : Colors.orange,
           child: Column(
             children: <Widget>[
               Expanded(

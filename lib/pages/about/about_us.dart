@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable, deprecated_member_use
+// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable, deprecated_member_use, avoid_unnecessary_containers
 
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
@@ -31,23 +31,23 @@ class _AboutPageState extends State<AboutPage> {
         text: _getAppBarText(englishState),
       ),
       body: Container(
-        color: englishState.isEnglishSelected
-            ? const Color.fromARGB(255, 37, 58, 107)
-            : Colors.orange,
+        // color: englishState.isEnglishSelected
+        //     ? const Color.fromARGB(255, 37, 58, 107)
+        //     : Colors.orange,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 'Welcome to',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 255, 255)
-                      : const Color.fromARGB(255, 0, 0, 0),
+                  // color: englishState.isEnglishSelected
+                  //     ? const Color.fromARGB(255, 255, 255, 255)
+                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 8),
@@ -57,7 +57,7 @@ class _AboutPageState extends State<AboutPage> {
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 240, 25)
+                      ? Colors.orange
                       : const Color.fromARGB(
                           255, 0, 71, 165), // Replace with your desired color
                   fontFamily:
@@ -65,26 +65,26 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 'v1.0.0',
                 style: TextStyle(
                   fontSize: 18,
-                  color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 255, 255)
-                      : const Color.fromARGB(255, 0, 0, 0),
+                  // color: englishState.isEnglishSelected
+                  //     ? const Color.fromARGB(255, 255, 255, 255)
+                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                'Our App is a collaboration with',
+              const Text(
+                'Our app is a collaboration between',
                 style: TextStyle(
                   fontSize: 18,
-                  color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 255, 255)
-                      : const Color.fromARGB(255, 0, 0, 0),
+                  // color: englishState.isEnglishSelected
+                  //     ? const Color.fromARGB(255, 255, 255, 255)
+                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -123,19 +123,15 @@ class _AboutPageState extends State<AboutPage> {
                   Icons.share,
                   color: Colors.white,
                 ),
-                label: Text(
+                label: const Text(
                   'Share App',
-                  style: TextStyle(
-                    color: englishState.isEnglishSelected
-                        ? const Color.fromARGB(255, 255, 255, 255)
-                        : const Color.fromARGB(255, 255, 255, 255),
-                  ),
+                  style: TextStyle(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 37, 58,
                       107), // Replace with your desired button color
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
               ),
@@ -156,32 +152,32 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      Colors.transparent, // Remove the background color
+                  // backgroundColor:
+                  //     Colors.transparent, // Remove the background color
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Contact CST: https://nlp.cst.edu.bt/',
                 style: TextStyle(
                   fontSize: 14,
-                  color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 255, 255)
-                      : const Color.fromARGB(255, 0, 0, 0),
+                  // color: englishState.isEnglishSelected
+                  //     ? const Color.fromARGB(255, 255, 255, 255)
+                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 8),
-              Text(
+              const Text(
                 '© 2023 CST. All rights reserved.',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: englishState.isEnglishSelected
-                      ? const Color.fromARGB(255, 255, 255, 255)
-                      : const Color.fromARGB(255, 0, 0, 0),
+                  // color: englishState.isEnglishSelected
+                  //     ? const Color.fromARGB(255, 255, 255, 255)
+                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ],
