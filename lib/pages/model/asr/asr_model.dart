@@ -172,24 +172,31 @@ class _TryModelState extends State<TryModel> {
                         const Size(150, 50), // Set the desired width and height
                   ),
                   onPressed: () async {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      type: FileType.audio,
-                      allowMultiple: false,
-                    );
-                    if (result != null) {
-                      PlatformFile file = result.files.first;
-                      print(file.name);
-                      print(file.bytes);
-                      print(file.size);
-                      print(file.extension);
-                      print(file.path);
-                      transcribeAudio(file.path);
+                    try {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles(
+                        type: FileType.audio,
+                        allowMultiple: false,
+                      );
+                      if (result != null) {
+                        PlatformFile file = result.files.first;
+                        print(file.name);
+                        print(file.bytes);
+                        print(file.size);
+                        print(file.extension);
+                        print(file.path);
+                        transcribeAudio(file.path);
+                      } else {
+                        // File selection canceled by the user
+                        print('File selection canceled');
+                      }
+                    } catch (e) {
+                      print("Permission denied $e");
                     }
                   },
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.upload,
                         color: Colors.white,
@@ -212,7 +219,7 @@ class _TryModelState extends State<TryModel> {
               height: 40,
             ),
             Visibility(
-              visible: true,
+              visible: isOutput,
               child: Expanded(
                 child: Stack(
                   alignment: Alignment.bottomRight,

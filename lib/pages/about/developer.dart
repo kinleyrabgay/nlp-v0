@@ -26,13 +26,13 @@ class Developer extends StatelessWidget {
         text: _getAppBarText(englishState),
       ),
       body: ListView(
-        children: <Widget>[
+        children: const <Widget>[
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+              children: [
                 ProfileCard(
                   developer1: "Pema Geley",
                   developer2: "Ngawang Samten Pelzang",

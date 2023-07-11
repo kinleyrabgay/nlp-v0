@@ -137,10 +137,10 @@ class _Nmt_modelState extends State<Nmt_model> {
                     });
                   },
                 ),
-                Column(
+                const Column(
                   children: [
                     Row(
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 1,
                           child: Icon(
@@ -151,7 +151,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                       ],
                     ),
                     Row(
-                      children: const [
+                      children: [
                         SizedBox(
                           child: Icon(CupertinoIcons.arrow_right, size: 12),
                         ),

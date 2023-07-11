@@ -1,9 +1,7 @@
 // ignore_for_file: unused_local_variable
-
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'pages/splash/splash_screen.dart';
 
 void main() {
@@ -20,7 +18,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
