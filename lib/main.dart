@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: const Color.fromARGB(255, 15, 31, 65),
-        // fontFamily: englishState.isEnglishSelected ? 'Roboto' : "Joyig",
-        fontFamily: "Roboto",
+        fontFamily: "Joyig",
       ),
       home: const SplashScreen(),
     );

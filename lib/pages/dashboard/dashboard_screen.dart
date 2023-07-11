@@ -40,7 +40,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ? "Dzongkha NLP"
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: englishState.isEnglishSelected
-              ? "Send us your valuable feedback"
+              ? "Please send us your valuable feedbacks"
               : 'ཁྱོད་ཀྱིས་རིན་གོང་ཆེ་བའི་བརྡ་སྟོན་ཚུ་ ང་བཅས་ལུ་གཏང་གནང་།',
         ),
       ),
@@ -58,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha NMT"
-                          : "རྫོང་ཁའི་སྐད་སྒྱུར།།",
+                          : "རྫོང་ཁའི་སྐད་སྒྱུར།",
                       subtitle: englishState.isEnglishSelected
                           ? "Translate Dzongkha Text"
                           : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
@@ -77,7 +77,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
-                          : "རྫོང་ཁ་སྒྲ་ལས་ཡི་གུ།།",
+                          : "རྫོང་ཁ་སྒྲ་ལས་ཡི་གུ།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Speech into Text"
                           : "ཕྲེང་ཁ་གི་གསུང་བཤད་འདི་ཡི་གུ་ནང་བྲི་བཅུག།",

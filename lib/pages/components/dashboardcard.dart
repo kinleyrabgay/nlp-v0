@@ -24,6 +24,17 @@ class _DashboardCardState extends State<DashboardCard> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
+    TextStyle headStyle = englishState.isEnglishSelected
+        ? const TextStyle(
+            color: Color.fromARGB(222, 20, 20, 20),
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          )
+        : const TextStyle(
+            color: Color.fromARGB(222, 20, 20, 20),
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          );
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Card(
@@ -35,9 +46,7 @@ class _DashboardCardState extends State<DashboardCard> {
               padding: const EdgeInsets.only(right: 10),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width * 0.3,
-              child: Image.asset(
-                widget.imagepath,
-              ),
+              child: Image.asset(widget.imagepath),
             ),
             Row(
               children: [
@@ -48,14 +57,7 @@ class _DashboardCardState extends State<DashboardCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.heading,
-                          style: const TextStyle(
-                            color: Color.fromARGB(222, 20, 20, 20),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
-                        ),
+                        Text(widget.heading, style: headStyle),
                         const SizedBox(height: 10),
                         Text(
                           widget.subtitle,
