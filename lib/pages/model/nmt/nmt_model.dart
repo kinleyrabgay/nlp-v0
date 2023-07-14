@@ -9,6 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../api/data.dart';
+
 class Nmt_model extends StatefulWidget {
   const Nmt_model({super.key});
 
@@ -35,32 +37,45 @@ class _Nmt_modelState extends State<Nmt_model> {
     return "--";
   }
 
-  Future<dynamic> fetchDataFromAPI() async {
+  void translate() {
     setState(() {
       isLoading = true;
     });
-    final url = Uri.parse('https://nlp.cst.edu.bt/nmt/api/');
-    var inputValue = languageController.text;
 
-    final payload = {
-      'text': inputValue,
-      'src_lang': getLanguageCode(originLanguage),
-      'tgt_lang': getLanguageCode(destinationLanguage),
-    };
+    String inputValue = languageController.text;
+    String src_lang = getLanguageCode(originLanguage);
+    String tgt_lang = getLanguageCode(destinationLanguage);
 
-    final response = await http.post(url, body: json.encode(payload));
-
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      final translatedText = jsonData['text'] as String;
-      setState(() {
-        _output_controller.text = translatedText;
-        isLoading = false;
-        isOutput = true;
-      });
-    } else {
-      throw Exception('Failed to fetch data from API');
-    }
+    DataServices.translateText(inputValue, src_lang, tgt_lang).then(
+      (value) => {
+        print(value),
+        if (value['status'] == "success")
+          {
+            setState(() {
+              _output_controller.text = value['data'];
+              isLoading = false;
+              isOutput = true;
+            })
+          }
+        else if (value['status' == 'failed'])
+          {
+            setState(() {
+              _output_controller.text = value['data'];
+              isLoading = false;
+              isOutput = true;
+            })
+          }
+        else
+          {
+            setState(() {
+              _output_controller.text =
+                  "We apologize for the inconvenience caused. An unexpected error has occurred. Please try again at a later time. Thank you for your understanding and patience.";
+              isLoading = false;
+              isOutput = true;
+            })
+          }
+      },
+    );
   }
 
   bool isButtonEnable = false;
@@ -249,7 +264,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                               ),
                             );
                           } else {
-                            fetchDataFromAPI();
+                            translate();
                           }
                         }, // Set onPressed to null when the button is disabled
                   child: Text(
