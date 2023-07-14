@@ -26,7 +26,7 @@ class Developer extends StatelessWidget {
         text: _getAppBarText(englishState),
       ),
       body: ListView(
-        children: const <Widget>[
+        children: <Widget>[
           Padding(
             padding: EdgeInsets.all(10.0),
             child: Column(
