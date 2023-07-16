@@ -41,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: englishState.isEnglishSelected
               ? "Please send us your valuable feedbacks"
-              : 'ཁྱོད་ཀྱིས་རིན་གོང་ཆེ་བའི་བརྡ་སྟོན་ཚུ་ ང་བཅས་ལུ་གཏང་གནང་།',
+              : 'ཁྱོད་རའི་ཕན་ཐོགས་ཅན་གྱི་བསམ་ལན་ ང་བཅས་ལུ་གཏང་་གནང་།',
         ),
       ),
       body: SizedBox(
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       title: Text(
                         englishState.isEnglishSelected
                             ? 'Developer'
-                            : 'གོང་འཕེལ་གྱི་ལས་འགན།',
+                            : 'བཟོ་མི།',
                         style:
                             const TextStyle(fontSize: 16, color: Colors.white),
                       ),

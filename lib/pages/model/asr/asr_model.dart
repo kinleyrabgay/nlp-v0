@@ -81,7 +81,7 @@ class _TryModelState extends State<TryModel> {
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
               ? "Dzongkha ASR"
-              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+              : 'རྫོང་ཁའི་རང་བཞིན་བློ་འཛིན།',
           text: _getAppBarText(englishState)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

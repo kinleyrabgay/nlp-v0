@@ -82,7 +82,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 100),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
                           pageBuilder:
@@ -109,14 +109,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 15, 31, 65),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(100),
                       ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Padding(
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(7),
                           child: Text(
                             "Get Started",
                             style: TextStyle(fontSize: 20),
@@ -133,7 +133,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   )
                 ],
               ),
@@ -173,7 +173,7 @@ class Onboard {
 final List<Onboard> data = [
   Onboard(
       image: "assets/img/onboarding_1.png",
-      title: "Dzongkha Automatic Speech Recognition",
+      title: "Dzongkha Speech Recognition",
       description:
           "Empower Your Voice: Experience Seamless Speech Recognition Automation."),
   Onboard(

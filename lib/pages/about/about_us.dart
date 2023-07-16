@@ -23,6 +23,23 @@ class _AboutPageState extends State<AboutPage> {
           : 'འབྲེལ་བ་འཐབ་སྟེ་ རིམ་ལུགས་བཟོ་མི་དང་འཕྱད།';
     }
 
+    String copyText = englishState.isEnglishSelected
+        ? '© 2023 CST. All rights reserved.'
+        : "© 2023 CST. དབང་ཆ་ཧྲིལ་བུམ་ཡོད།.";
+
+    String devText = englishState.isEnglishSelected
+        ? 'Our app is a collaboration between'
+        : "རིམ་ལུགས་འདི་ སྲོལ་འཛིན་དང་རྫོང་ཁ་གོང་འཕེལ་ལས་ཁུངས་དང་མཉམ་འབྲེལ་ཐོག་ལས་བཟོ་བཟོཝ་ཨིན།";
+
+    String shareText =
+        englishState.isEnglishSelected ? 'Share App' : "རིམ་ལུགས་སྤེལ།";
+
+    String welcomeText =
+        englishState.isEnglishSelected ? 'Welcome to' : "བྱོན་པ་ལེགས་སོ།";
+
+    String nlpText =
+        englishState.isEnglishSelected ? 'NLP' : "སྐད་སྦྱོར་རིག་པ།";
+
     return Scaffold(
       appBar: AppbarWidget(
         title: englishState.isEnglishSelected
@@ -37,25 +54,22 @@ class _AboutPageState extends State<AboutPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 32),
-              const Text(
-                'Welcome to',
-                style: TextStyle(
+              Text(
+                welcomeText,
+                style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
-                'NLP',
+                nlpText,
                 style: TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: englishState.isEnglishSelected
                       ? Colors.orange
-                      : const Color.fromARGB(
-                          255, 0, 71, 165), // Replace with your desired color
-                  fontFamily:
-                      'Montserrat', // Replace with your desired font family
+                      : const Color.fromARGB(255, 0, 71, 165),
                 ),
               ),
               const SizedBox(height: 8),
@@ -66,10 +80,13 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'Our app is a collaboration between',
-                style: TextStyle(
-                  fontSize: 18,
+              Center(
+                child: Text(
+                  devText,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 10),
@@ -111,9 +128,9 @@ class _AboutPageState extends State<AboutPage> {
                   Icons.share,
                   color: Colors.white,
                 ),
-                label: const Text(
-                  'Share App',
-                  style: TextStyle(color: Colors.white),
+                label: Text(
+                  shareText,
+                  style: const TextStyle(color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 37, 58,
@@ -123,49 +140,20 @@ class _AboutPageState extends State<AboutPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: () {
-                  _launchURL(
-                      'https://www.example.com'); // Replace the URL with your app's rating link
-                },
-                icon: const Icon(
-                  Icons.star,
-                  color: Colors.white,
-                ),
-                label: const Text(
-                  'Rate Us',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  // backgroundColor:
-                  //     Colors.transparent, // Remove the background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 20),
               const SizedBox(height: 16),
               const Text(
                 'Contact CST: https://nlp.cst.edu.bt/',
                 style: TextStyle(
                   fontSize: 14,
-                  // color: englishState.isEnglishSelected
-                  //     ? const Color.fromARGB(255, 255, 255, 255)
-                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                '© 2023 CST. All rights reserved.',
-                style: TextStyle(
+              Text(
+                copyText,
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  // color: englishState.isEnglishSelected
-                  //     ? const Color.fromARGB(255, 255, 255, 255)
-                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             ],

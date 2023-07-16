@@ -48,10 +48,10 @@ class Developer extends StatelessWidget {
                         projecturl: "http://127.0.0.1:8000/asr/",
                       )
                     : const ProfileCard(
-                        developer1: "Pema Geley",
-                        developer2: "Ngawang Samten Pelzang",
-                        developer3: "Kinley Rabgay",
-                        developer4: "Khentshe Dorji",
+                        developer1: "པད་མ་དགེ་ལེགས།",
+                        developer2: "དབང་བསམ་གཏན་དཔལ་བཟང།",
+                        developer3: "ཀུན་ལེགས་རབ་རྒྱས།",
+                        developer4: "མཁྱེན་བརྩེ་རྡོ་རྗེ།",
                         projectname: "རྫོང་ཁའི་རང་བཞིན་བློ་འཛིན་བཟོ་མི།",
                         projectlogo: 'assets/img/splash.png',
                         projecturl: "http://127.0.0.1:8000/asr/",
@@ -68,10 +68,10 @@ class Developer extends StatelessWidget {
                         projecturl: "http://127.0.0.1:8000/nmt/",
                       )
                     : const ProfileCard(
-                        developer1: "Karma Wangchuk",
-                        developer2: "Dodrup Wangchuk Sherpa",
-                        developer3: "Thinley Norbu",
-                        developer4: "Sonam Yangchen",
+                        developer1: "ཀརྨ་དབང་ཕྱུག།",
+                        developer2: "རྡོ་གྲུབ་དབང་ཕྱུག་ཤེར་པཱ།",
+                        developer3: "འཕྲིན་ལས་ནོར་བུ།",
+                        developer4: "བསོད་ནམས་དབྱངས་ཅན།",
                         projectname: "རྫོང་ཁའི་སྐད་སྒྱུར་བཟོ་མི།",
                         projectlogo: 'assets/img/nmt_logo.png',
                         projecturl: "http://127.0.0.1:8000/nmt/",
@@ -88,10 +88,10 @@ class Developer extends StatelessWidget {
                         projecturl: "http://127.0.0.1:8000/tts/",
                       )
                     : const ProfileCard(
-                        developer1: "Yeshi Jamtsho",
-                        developer2: "Kamal Archarya",
-                        developer3: "Sangay Tenzin",
-                        developer4: "Sonam Rabgay",
+                        developer1: "ཡེ་ཤེས་རྒྱ་མཚོ།",
+                        developer2: "ཀཱ་མཱལ་ཨར་ཅ་ཡཱ།",
+                        developer3: "བསོད་ནམས་རབ་རྒྱས།",
+                        developer4: "སངས་རྒྱས་བསྟན་འཛིན།",
                         projectname: "རྫོང་ཁའི་ཚིག་ཡིག་ལས་ངག་ཚིག་བཟོ་མི།",
                         projectlogo: 'assets/img/tts-logo.png',
                         projecturl: "http://127.0.0.1:8000/tts/",

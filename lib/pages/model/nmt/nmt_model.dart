@@ -118,7 +118,7 @@ class _Nmt_modelState extends State<Nmt_model> {
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
               ? "Dzongkha Translation"
-              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+              : 'རྫོང་ཁ་སྐད་སྒྱུར།',
           text: _getAppBarText(englishState)),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

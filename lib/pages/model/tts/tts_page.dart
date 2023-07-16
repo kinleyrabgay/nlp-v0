@@ -118,7 +118,7 @@ class _TTSModelState extends State<TTSModel> {
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
               ? "Dzongkha TTS"
-              : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
+              : 'རྫོང་ཁའི་ཚིག་ཡིག་ལས་ངག་ཚིག།',
           text: _getAppBarText(englishState)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

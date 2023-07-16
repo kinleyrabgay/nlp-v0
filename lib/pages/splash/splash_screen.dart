@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> checkFirstTimeUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isFirstTime = prefs.getBool('isFirstTime') ?? true;
-
     if (isFirstTime) {
       // First time user, navigate to onboarding screen
       prefs.setBool('isFirstTime',
@@ -87,15 +86,15 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             const SpinKitWave(
-              color: Color.fromARGB(255, 228, 225, 67),
-              size: 60,
+              color: Colors.orange,
+              size: 35,
               duration: Duration(milliseconds: 1000),
             ),
             Container(
               padding: const EdgeInsets.only(bottom: 10),
               child: const Text(
                 "powered by CST",
-                style: TextStyle(color: Color.fromARGB(255, 224, 201, 55)),
+                style: TextStyle(color: Colors.orange),
               ),
             )
           ],
