@@ -90,13 +90,22 @@ class _Nmt_modelState extends State<Nmt_model> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
-    setState(() {
+    // setState(() {
+    //   if (englishState.isEnglishSelected) {
+    //     setEgnlishToDzongkha();
+    //   } else {
+    //     setDzongkhaToEnglish();
+    //   }
+    // });
+    if (originLanguage == 'From' && destinationLanguage == 'To') {
       if (englishState.isEnglishSelected) {
-        setEgnlishToDzongkha();
+        originLanguage = 'English';
+        destinationLanguage = 'Dzongkha';
       } else {
-        setDzongkhaToEnglish();
+        originLanguage = 'Dzongkha';
+        destinationLanguage = 'English';
       }
-    });
+    }
 
     String hint =
         englishState.isEnglishSelected ? 'Enter text' : "ཚིག་ཡིག་བཙུགས།";
