@@ -2,8 +2,11 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:flutter/foundation.dart';
+
+import '../../../provider/state.dart';
 
 class ModelTestRecorder extends StatefulWidget {
   const ModelTestRecorder(
@@ -77,7 +80,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
     super.dispose();
   }
 
-  Widget _buildRecordStopControl() {
+  Widget _buildRecordStopControl(EnglishState englishState) {
     late Icon icon;
     late Color color;
 
@@ -99,15 +102,27 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           icon,
-          FittedBox(
-            child: Text(
-              (_recordState != RecordState.stop) ? "Recording" : "Record",
-              style: (_recordState != RecordState.stop)
-                  ? const TextStyle(
-                      fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                  : const TextStyle(fontSize: 14, color: Colors.black),
-            ),
-          ),
+          englishState.isEnglishSelected
+              ? FittedBox(
+                  child: Text(
+                    (_recordState != RecordState.stop) ? "Recording" : "Record",
+                    style: (_recordState != RecordState.stop)
+                        ? const TextStyle(
+                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
+                        : const TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                )
+              : FittedBox(
+                  child: Text(
+                    (_recordState != RecordState.stop)
+                        ? "སྒྲ་ཟུངས་དོ།"
+                        : "སྒྲ་ཟུངས།",
+                    style: (_recordState != RecordState.stop)
+                        ? const TextStyle(
+                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
+                        : const TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                ),
         ],
       ),
     );
@@ -115,8 +130,13 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
 
   @override
   Widget build(BuildContext context) {
+    final englishState = Provider.of<EnglishState>(context);
+
+    String hint =
+        englishState.isEnglishSelected ? 'Record' : "རྫོང་ཁིའི་ཚིག་ཡིག་བཙུགས།";
+
     return Container(
-      child: _buildRecordStopControl(),
+      child: _buildRecordStopControl(englishState),
     );
   }
 }

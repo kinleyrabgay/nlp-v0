@@ -20,7 +20,7 @@ class _AboutPageState extends State<AboutPage> {
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? 'Contact and meet app developers instantly'
-          : 'འབྲེལ་མཐུད་དང་གློག་རིག་བཟོ་སྐྲུན་པ་ཚུ་འཕྲལ་ར་འཕྱད།';
+          : 'འབྲེལ་བ་འཐབ་སྟེ་ རིམ་ལུགས་བཟོ་མི་དང་འཕྱད།';
     }
 
     return Scaffold(
@@ -31,9 +31,6 @@ class _AboutPageState extends State<AboutPage> {
         text: _getAppBarText(englishState),
       ),
       body: Container(
-        // color: englishState.isEnglishSelected
-        //     ? const Color.fromARGB(255, 37, 58, 107)
-        //     : Colors.orange,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -45,9 +42,6 @@ class _AboutPageState extends State<AboutPage> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  // color: englishState.isEnglishSelected
-                  //     ? const Color.fromARGB(255, 255, 255, 255)
-                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 8),
@@ -69,9 +63,6 @@ class _AboutPageState extends State<AboutPage> {
                 'v1.0.0',
                 style: TextStyle(
                   fontSize: 18,
-                  // color: englishState.isEnglishSelected
-                  //     ? const Color.fromARGB(255, 255, 255, 255)
-                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 24),
@@ -79,9 +70,6 @@ class _AboutPageState extends State<AboutPage> {
                 'Our app is a collaboration between',
                 style: TextStyle(
                   fontSize: 18,
-                  // color: englishState.isEnglishSelected
-                  //     ? const Color.fromARGB(255, 255, 255, 255)
-                  //     : const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
               const SizedBox(height: 10),

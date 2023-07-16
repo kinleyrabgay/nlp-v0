@@ -59,11 +59,14 @@ class _TTSModelState extends State<TTSModel> {
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
+    String hint = englishState.isEnglishSelected
+        ? 'Enter dzongkha text'
+        : "རྫོང་ཁིའི་ཚིག་ཡིག་བཙུགས།";
 
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
-          : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
+          : "ང་བཅས་ཀྱི་དཔེ་གཞིའི་ནུས་ཤུགས་ཚུ་འཚོལ་ཏེ་སྤྲོ་བ་བཏོན།";
     }
 
     Future<void> fetchAudioAndSave(String text) async {
@@ -127,10 +130,10 @@ class _TTSModelState extends State<TTSModel> {
               TextFormField(
                 controller: text_controller,
                 maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Enter dzongkha text',
-                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                  border: OutlineInputBorder(
+                decoration: InputDecoration(
+                  hintText: hint,
+                  hintStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                         Radius.circular(10)), // Set border radius to 10
                     borderSide: BorderSide(
@@ -138,8 +141,8 @@ class _TTSModelState extends State<TTSModel> {
                       width: 1,
                     ),
                   ),
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
-                  contentPadding: EdgeInsets.all(10), // Pad
+                  errorStyle: const TextStyle(color: Colors.red, fontSize: 15),
+                  contentPadding: const EdgeInsets.all(10), // Pad
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -183,7 +186,7 @@ class _TTSModelState extends State<TTSModel> {
                     ),
                     child: Text(englishState.isEnglishSelected
                         ? 'Generate Audio'
-                        : 'སྒྲ་བཟོ་ནི།'),
+                        : 'ཐོས་སྒྲ་བཟོ།'),
                   ),
                   if (isLoading)
                     const SpinKitFadingCircle(
@@ -197,7 +200,7 @@ class _TTSModelState extends State<TTSModel> {
                       fixedSize: const Size(150, 50),
                     ),
                     child:
-                        Text(englishState.isEnglishSelected ? 'Clear' : 'གསལ།'),
+                        Text(englishState.isEnglishSelected ? 'Clear' : 'བསལ།'),
                   ),
                 ],
               ),

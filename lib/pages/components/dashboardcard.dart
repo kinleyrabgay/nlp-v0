@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/state.dart';
 
 class DashboardCard extends StatefulWidget {
@@ -28,12 +27,21 @@ class _DashboardCardState extends State<DashboardCard> {
         ? const TextStyle(
             color: Color.fromARGB(222, 20, 20, 20),
             fontWeight: FontWeight.bold,
-            fontSize: 22,
+            fontSize: 18,
           )
         : const TextStyle(
             color: Color.fromARGB(222, 20, 20, 20),
             fontWeight: FontWeight.bold,
+            fontSize: 20,
+          );
+    TextStyle bodyStyle = englishState.isEnglishSelected
+        ? const TextStyle(
+            color: Color.fromARGB(222, 20, 20, 20),
             fontSize: 14,
+          )
+        : const TextStyle(
+            color: Color.fromARGB(222, 20, 20, 20),
+            fontSize: 16,
           );
     return SizedBox(
       width: MediaQuery.of(context).size.width,
@@ -61,52 +69,85 @@ class _DashboardCardState extends State<DashboardCard> {
                         const SizedBox(height: 10),
                         Text(
                           widget.subtitle,
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 26, 26, 26),
-                            fontSize: 14,
-                          ),
+                          style: bodyStyle,
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            widget.onCardClick();
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: const Color(0xFF0F1F41),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                englishState.isEnglishSelected
-                                    ? 'Get Started'
-                                    : 'འགོ་བཙུགས་ད།',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
+                        const SizedBox(height: 25),
+                        englishState.isEnglishSelected
+                            ? TextButton(
+                                onPressed: () {
+                                  widget.onCardClick();
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor: const Color(0xFF0F1F41),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Color.fromARGB(255, 255, 136, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'Get Started',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color.fromARGB(255, 255, 136, 0),
+                                      ),
+                                      padding: const EdgeInsets.all(1),
+                                      child: const Icon(Icons.chevron_right,
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255)),
+                                    )
+                                  ],
                                 ),
-                                padding: const EdgeInsets.all(1),
-                                child: const Icon(Icons.chevron_right,
-                                    color: Color.fromARGB(255, 255, 255, 255)),
                               )
-                            ],
-                          ),
-                        ),
+                            : TextButton(
+                                onPressed: () {
+                                  widget.onCardClick();
+                                },
+                                style: TextButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(255, 255, 136, 0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      'གོ་བཙུགས།',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Container(
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Color(0xFF0F1F41),
+                                      ),
+                                      padding: const EdgeInsets.all(1),
+                                      child: const Icon(Icons.chevron_right,
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255)),
+                                    )
+                                  ],
+                                ),
+                              ),
                         const SizedBox(
                           height: 15,
                         ),

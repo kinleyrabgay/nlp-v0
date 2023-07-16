@@ -58,8 +58,11 @@ class _TryModelState extends State<TryModel> {
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
-          : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
+          : "ང་བཅས་ཀྱི་དཔེ་གཞིའི་ནུས་ཤུགས་ཚུ་འཚོལ་ཏེ་སྤྲོ་བ་བཏོན།";
     }
+
+    String hint =
+        englishState.isEnglishSelected ? 'Select Model' : "པེ་གཞི་གདམ་ཁ་རྐྱབ།";
 
     void _showSnackbar(String message) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -112,7 +115,7 @@ class _TryModelState extends State<TryModel> {
                 ),
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                hintText: 'Select Model',
+                hintText: hint,
                 hintStyle: const TextStyle(
                   fontSize: 13,
                 ),
@@ -126,11 +129,17 @@ class _TryModelState extends State<TryModel> {
               }).toList(),
             ),
             const SizedBox(height: 30),
-            const Text(
-              "Upload or Select Audio",
-              textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 16, color: Colors.black54),
-            ),
+            englishState.isEnglishSelected
+                ? const Text(
+                    "Upload or Select Audio",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  )
+                : const Text(
+                    "ཐོས་སྒྲ་བཙུགས་ ཡངན་ གདམ་ཁ་རྐྱབ།",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -197,19 +206,28 @@ class _TryModelState extends State<TryModel> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.upload,
                         color: Colors.white,
                         size: 20,
                       ),
-                      Flexible(
-                        child: FittedBox(
-                          child: Text(
-                            "Upload Audio",
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
+                      englishState.isEnglishSelected
+                          ? const Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  "Upload Audio",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            )
+                          : const Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  "ཐོས་སྒྲ་བཙུགས།",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
                     ],
                   ),
                 ),
@@ -224,13 +242,14 @@ class _TryModelState extends State<TryModel> {
                 child: Stack(
                   alignment: Alignment.bottomRight,
                   children: [
-                    TextField(
+                    TextFormField(
                       controller: _predicted_text_controller,
                       textAlign: TextAlign.left,
                       textAlignVertical: TextAlignVertical.top,
                       expands: true,
                       maxLines: null,
                       enabled: false,
+                      style: const TextStyle(color: Colors.black54),
                       decoration: const InputDecoration(
                         labelText: '',
                         labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
@@ -243,7 +262,6 @@ class _TryModelState extends State<TryModel> {
                           ),
                         ),
                       ),
-                      style: const TextStyle(fontSize: 18),
                     ),
                     IconButton(
                       icon: const Icon(

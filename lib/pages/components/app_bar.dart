@@ -23,11 +23,9 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
         MediaQuery.of(context).size.height * 0.15,
       ),
       child: AppBar(
-        // backgroundColor: const Color(0XFF0F1F41),
         backgroundColor: englishState.isEnglishSelected
             ? const Color(0xFF0F1F41)
             : Colors.orange,
-
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomRight: Radius.circular(30),
@@ -73,34 +71,36 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
                               text,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                  color: Color.fromARGB(255, 236, 236, 236),
-                                  fontSize: 15),
+                                color: Color.fromARGB(255, 236, 236, 236),
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ),
                         Container(
-                            // width: 35,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+                          // width: 35,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: IconButton(
+                            iconSize: 20,
+                            padding: EdgeInsets.zero,
+                            icon: const Icon(
+                              Icons.mail_outline,
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
-                            child: IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.zero,
-                              icon: const Icon(
-                                Icons.mail_outline,
-                                color: Color.fromARGB(255, 255, 255, 255),
-                              ),
-                              onPressed: () async {
-                                String email =
-                                    Uri.encodeComponent("nlp.cst@rub.edu.bt");
-                                Uri mail = Uri.parse("mailto:$email?");
-                                if (await launchUrl(mail)) {
-                                  //email app opened
-                                } else {
-                                  //email app is not opened
-                                }
-                              },
-                            )),
+                            onPressed: () async {
+                              String email =
+                                  Uri.encodeComponent("nlp.cst@rub.edu.bt");
+                              Uri mail = Uri.parse("mailto:$email?");
+                              if (await launchUrl(mail)) {
+                                //email app opened
+                              } else {
+                                //email app is not opened
+                              }
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

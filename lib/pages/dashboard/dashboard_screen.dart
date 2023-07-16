@@ -77,10 +77,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
-                          : "རྫོང་ཁ་སྒྲ་ལས་ཡི་གུ།",
+                          : "རྫོང་ཁའི་རང་བཞིན་བློ་འཛིན།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Speech into Text"
-                          : "ཕྲེང་ཁ་གི་གསུང་བཤད་འདི་ཡི་གུ་ནང་བྲི་བཅུག།",
+                          : "རྫོང་ཁའི་ངག་ཚིག་ ཚིག་ཡིག་ནང་ཕབ།",
                       imagepath: "assets/img/splash_1.png",
                       cardcolor: Colors.white,
                       onCardClick: () {

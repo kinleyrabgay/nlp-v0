@@ -1,5 +1,4 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print, camel_case_types, unused_element
-import 'dart:convert';
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-
 import '../../../api/data.dart';
 
 class Nmt_model extends StatefulWidget {
@@ -94,10 +91,14 @@ class _Nmt_modelState extends State<Nmt_model> {
         destinationLanguage = 'English';
       }
     }
+
+    String hint =
+        englishState.isEnglishSelected ? 'Enter text' : "ཚིག་ཡིག་བཙུགས།";
+
     String _getAppBarText(EnglishState englishState) {
       return englishState.isEnglishSelected
           ? "Discover and enjoy our model's capabilities"
-          : 'སྤྱི་བསྟོད་ཀྱི་གཟུགས་ཆོག་འབྲུ་གཡུགས་དང་།';
+          : "ང་བཅས་ཀྱི་དཔེ་གཞིའི་ནུས་ཤུགས་ཚུ་འཚོལ་ཏེ་སྤྲོ་བ་བཏོན།";
     }
 
     void _showSnackbar(String message) {
@@ -152,7 +153,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                     });
                   },
                 ),
-                Column(
+                const Column(
                   children: [
                     Row(
                       children: [
@@ -207,27 +208,24 @@ class _Nmt_modelState extends State<Nmt_model> {
             Form(
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: TextFormField(
-                cursorColor: Colors.black,
                 autofocus: false,
                 maxLines: null,
                 textAlign: TextAlign.left,
                 style: const TextStyle(color: Colors.black),
-                decoration: const InputDecoration(
-                  hintText: 'Enter your text',
-                  hintStyle: TextStyle(fontSize: 15, color: Colors.grey),
-                  // border: InputBorder.none,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
+                decoration: InputDecoration(
+                  hintText: hint,
+                  hintStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+                  border: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(
                       color: Color.fromARGB(255, 37, 58, 107),
                       width: 1,
                     ),
                   ),
 
-                  errorStyle: TextStyle(color: Colors.red, fontSize: 15),
+                  errorStyle: const TextStyle(color: Colors.red, fontSize: 15),
                   contentPadding:
-                      EdgeInsets.all(10), // Padding for the entered text
+                      const EdgeInsets.all(10), // Padding for the entered text
                 ),
                 controller: languageController,
                 validator: (value) {
@@ -293,7 +291,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                     });
                   },
                   child: Text(
-                    englishState.isEnglishSelected ? "Clear" : "གསལ།",
+                    englishState.isEnglishSelected ? "Clear" : "བསལ།",
                     style: const TextStyle(fontSize: 17),
                   ),
                 ),
@@ -316,7 +314,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                       enabled: false,
                       textAlign: TextAlign.left,
                       textAlignVertical: TextAlignVertical.top,
-                      style: const TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black54),
                       decoration: const InputDecoration(
                         labelText: '',
                         labelStyle: TextStyle(fontSize: 15, color: Colors.grey),
