@@ -132,7 +132,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                   iconDisabledColor: Colors.black,
                   iconEnabledColor: Colors.black,
                   hint: Text(originLanguage,
-                      style: const TextStyle(color: Colors.black)),
+                      style: const TextStyle(color: Colors.black54)),
                   dropdownColor: Colors.white,
                   icon: const Icon(Icons.keyboard_arrow_down),
                   items: languages.map((String dropDownStringItem) {
@@ -180,7 +180,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                   iconEnabledColor: Colors.black,
                   hint: Text(
                     destinationLanguage,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black54),
                   ),
                   dropdownColor: Colors.white,
                   icon: const Icon(Icons.keyboard_arrow_down),
