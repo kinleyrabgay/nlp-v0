@@ -77,30 +77,19 @@ class _Nmt_modelState extends State<Nmt_model> {
     );
   }
 
-  void setEgnlishToDzongkha() {
-    if (originLanguage == "From" && destinationLanguage == "To") {
-      originLanguage = 'English';
-      destinationLanguage = 'Dzongkha';
-    }
-  }
-
-  void setDzongkhaToEnglish() {
-    if (originLanguage == "From" && destinationLanguage == "To") {
-      originLanguage = 'Dzongkha';
-      destinationLanguage = 'English';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
-    setState(() {
+
+    if (originLanguage == 'From' && destinationLanguage == 'To') {
       if (englishState.isEnglishSelected) {
-        setEgnlishToDzongkha();
+        originLanguage = 'English';
+        destinationLanguage = 'Dzongkha';
       } else {
-        setDzongkhaToEnglish();
+        originLanguage = 'Dzongkha';
+        destinationLanguage = 'English';
       }
-    });
+    }
 
     String hint =
         englishState.isEnglishSelected ? 'Enter text' : "ཚིག་ཡིག་བཙུགས།";

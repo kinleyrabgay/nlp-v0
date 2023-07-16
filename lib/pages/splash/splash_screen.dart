@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: SizedBox(
                 height: 200,
                 width: 200,
-                child: Image.asset("assets/logo/app_logo_trans.png"),
+                child: Image.asset("assets/logo/logo.png"),
               ),
             ),
             const SpinKitWave(
