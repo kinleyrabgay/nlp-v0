@@ -22,6 +22,8 @@ class _Nmt_modelState extends State<Nmt_model> {
   var output = "";
   bool isLoading = false;
   bool isOutput = false;
+  bool isButtonEnable = false;
+  String text = '';
   TextEditingController languageController = TextEditingController();
   TextEditingController _output_controller = TextEditingController();
 
@@ -75,22 +77,26 @@ class _Nmt_modelState extends State<Nmt_model> {
     );
   }
 
-  bool isButtonEnable = false;
-  String text = '';
+  void setEgnlishToDzongkha() {
+    originLanguage = 'English';
+    destinationLanguage = 'Dzongkha';
+  }
+
+  void setDzongkhaToEnglish() {
+    originLanguage = 'Dzongkha';
+    destinationLanguage = 'English';
+  }
 
   @override
   Widget build(BuildContext context) {
     final englishState = Provider.of<EnglishState>(context);
-    // Set the initial dropdown values based on the default language
-    if (originLanguage == 'From' && destinationLanguage == 'To') {
+    setState(() {
       if (englishState.isEnglishSelected) {
-        originLanguage = 'English';
-        destinationLanguage = 'Dzongkha';
+        setEgnlishToDzongkha();
       } else {
-        originLanguage = 'Dzongkha';
-        destinationLanguage = 'English';
+        setDzongkhaToEnglish();
       }
-    }
+    });
 
     String hint =
         englishState.isEnglishSelected ? 'Enter text' : "ཚིག་ཡིག་བཙུགས།";
