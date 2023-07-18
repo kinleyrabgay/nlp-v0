@@ -109,7 +109,9 @@ class _Nmt_modelState extends State<Nmt_model> {
     void _copyTextToClipboard() {
       final String text = _output_controller.text;
       Clipboard.setData(ClipboardData(text: text)).then((_) {
-        _showSnackbar('Text copied successfully');
+        _showSnackbar(englishState.isEnglishSelected
+            ? 'Text copied successfully'
+            : 'ཚིག་ཡིག་འདྲ་བཤུས་ལེགས་ཤོམ་སྦེ་རྐྱབ་ཅི།');
       });
     }
 
@@ -152,7 +154,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                     });
                   },
                 ),
-                const Column(
+                Column(
                   children: [
                     Row(
                       children: [
@@ -229,7 +231,9 @@ class _Nmt_modelState extends State<Nmt_model> {
                 controller: languageController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'This field cannot be empty!';
+                    return englishState.isEnglishSelected
+                        ? 'This field cannot be empty!'
+                        : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
                   }
                   return null;
                 },
@@ -256,8 +260,10 @@ class _Nmt_modelState extends State<Nmt_model> {
                       : () {
                           if (text.isEmpty) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Please enter text.'),
+                              SnackBar(
+                                content: Text(englishState.isEnglishSelected
+                                    ? 'Please enter text.'
+                                    : 'ཚིག་ཡིག་བཙུགས་གནང་།'),
                               ),
                             );
                           } else {

@@ -73,7 +73,9 @@ class _TryModelState extends State<TryModel> {
     void _copyTextToClipboard() {
       final String text = _predicted_text_controller.text;
       Clipboard.setData(ClipboardData(text: text)).then((_) {
-        _showSnackbar('Text copied successfully');
+        _showSnackbar(englishState.isEnglishSelected
+            ? 'Text copied successfully'
+            : 'ཚིག་ཡིག་འདྲ་བཤུས་ལེགས་ཤོམ་སྦེ་རྐྱབ་ཅི།');
       });
     }
 

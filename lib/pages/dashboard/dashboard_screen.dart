@@ -61,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           : "རྫོང་ཁའི་སྐད་སྒྱུར།",
                       subtitle: englishState.isEnglishSelected
                           ? "Translate Dzongkha Text"
-                          : "རྗོང་ཁ་ཡི་གུ་སྐད་སྒྱུར་འབད།",
+                          : "རྫོང་ཁིའི་ཚིག་ཡིག་སྐད་སྒྱུར་འབད།",
                       imagepath: "assets/img/nmt_logo.png",
                       cardcolor: Colors.white,
                       onCardClick: () {
@@ -99,7 +99,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           : "རྫོང་ཁ་ཡི་གུ་ལས་སྒྲ།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Text into Speech"
-                          : "ཕྲིན་ལས་ཀྱི་ཡིག་ཆ་འདི་ཁ་སློང་ནང་ལུ་བྲི་བཅུག།",
+                          : "རྫོང་ཁའི་ཚིག་ཡིག་ ངག་ཚིག་ནང་ཕབ།",
                       imagepath: "assets/img/tts-logo.png",
                       cardcolor: Colors.white,
                       onCardClick: () {

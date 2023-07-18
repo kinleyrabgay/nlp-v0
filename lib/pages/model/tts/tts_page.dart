@@ -146,7 +146,9 @@ class _TTSModelState extends State<TTSModel> {
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'This field cannot be empty!';
+                    return englishState.isEnglishSelected
+                        ? 'This field cannot be empty!'
+                        : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
                   }
                   return null;
                 },
@@ -167,8 +169,10 @@ class _TTSModelState extends State<TTSModel> {
                         : () {
                             if (text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please enter text.'),
+                                SnackBar(
+                                  content: Text(englishState.isEnglishSelected
+                                      ? 'Please enter text.'
+                                      : 'ཚིག་ཡིག་བཙུགས་གནང་།'),
                                 ),
                               );
                             } else {
