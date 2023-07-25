@@ -19,8 +19,8 @@ class TryModel extends StatefulWidget {
 class _TryModelState extends State<TryModel> {
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
-  var model = ['Wav2Vac2XLR', 'Wav2Vac2XLR with LM'];
-  var currentmodel = 'Wav2Vac2XLR with LM';
+  // var model = ['Wav2Vac2XLR', 'Wav2Vac2XLR with LM'];
+  // var currentmodel = 'Wav2Vac2XLR with LM';
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _TryModelState extends State<TryModel> {
     setState(() {
       isLoading = true; // start the spinner
     });
-    DataServices.transcribeAudio(file, model.indexOf(currentmodel) + 1).then(
+    DataServices.transcribeAudio(file, 2).then(
       (value) => {
         print(value),
         if (value != null)
@@ -61,8 +61,8 @@ class _TryModelState extends State<TryModel> {
           : "ང་བཅས་ཀྱི་དཔེ་གཞིའི་ནུས་ཤུགས་ཚུ་འཚོལ་ཏེ་སྤྲོ་བ་བཏོན།";
     }
 
-    String hint =
-        englishState.isEnglishSelected ? 'Select Model' : "པེ་གཞི་གདམ་ཁ་རྐྱབ།";
+    // String hint =
+    //     englishState.isEnglishSelected ? 'Select Model' : "པེ་གཞི་གདམ་ཁ་རྐྱབ།";
 
     void _showSnackbar(String message) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -90,50 +90,50 @@ class _TryModelState extends State<TryModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // const SizedBox(height: 10),
+            // DropdownButtonFormField<String>(
+            //   onChanged: (String? newValue) {
+            //     setState(() {
+            //       currentmodel = newValue!;
+            //     });
+            //   },
+            //   icon: const Icon(
+            //     Icons.arrow_drop_down,
+            //     color: Color.fromARGB(255, 0, 36, 66),
+            //   ),
+            //   style: const TextStyle(
+            //     color: Color.fromARGB(255, 32, 32, 32),
+            //     fontSize: 13,
+            //   ),
+            //   dropdownColor: const Color.fromARGB(255, 255, 255, 255),
+            //   decoration: InputDecoration(
+            //     contentPadding:
+            //         const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            //     filled: true,
+            //     fillColor: const Color.fromARGB(255, 235, 235, 235),
+            //     focusedBorder: const OutlineInputBorder(
+            //       borderSide: BorderSide(
+            //           width: 1.5, color: Color.fromARGB(255, 80, 80, 80)),
+            //     ),
+            //     border:
+            //         OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+            //     hintText: hint,
+            //     hintStyle: const TextStyle(
+            //       fontSize: 13,
+            //     ),
+            //   ),
+            //   // value: currentmodel,
+            //   items: model.map<DropdownMenuItem<String>>((String value) {
+            //     return DropdownMenuItem<String>(
+            //       value: value,
+            //       child: Text(value),
+            //     );
+            //   }).toList(),
+            // ),
             const SizedBox(height: 10),
-            DropdownButtonFormField<String>(
-              onChanged: (String? newValue) {
-                setState(() {
-                  currentmodel = newValue!;
-                });
-              },
-              icon: const Icon(
-                Icons.arrow_drop_down,
-                color: Color.fromARGB(255, 0, 36, 66),
-              ),
-              style: const TextStyle(
-                color: Color.fromARGB(255, 32, 32, 32),
-                fontSize: 13,
-              ),
-              dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-              decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                filled: true,
-                fillColor: const Color.fromARGB(255, 235, 235, 235),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 1.5, color: Color.fromARGB(255, 80, 80, 80)),
-                ),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                hintText: hint,
-                hintStyle: const TextStyle(
-                  fontSize: 13,
-                ),
-              ),
-              // value: currentmodel,
-              items: model.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 30),
             englishState.isEnglishSelected
                 ? const Text(
-                    "Upload or Select Audio",
+                    "Record or Upload Audio",
                     textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 16, color: Colors.black54),
                   )
