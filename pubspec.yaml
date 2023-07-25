@@ -105,6 +105,9 @@ flutter:
     - family: Joyig
       fonts:
         - asset: assets/fonts/Joyig.ttf
+    - family: DDC_Uchen
+      fonts:
+        - asset: assets/fonts/DDC_Uchen.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

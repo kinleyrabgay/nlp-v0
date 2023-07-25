@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: const Color.fromARGB(255, 15, 31, 65),
-        fontFamily: "Joyig",
+        fontFamily: "DDC_Uchen",
       ),
       home: const SplashScreen(),
     );
