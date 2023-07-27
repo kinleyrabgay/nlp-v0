@@ -132,7 +132,7 @@ class ProfileCard extends StatelessWidget {
                     ),
                   ),
                   CircleAvatar(
-                    radius: 50,
+                    radius: 40,
                     backgroundImage: AssetImage(projectlogo),
                     backgroundColor: Colors.transparent,
                   ),
