@@ -19,8 +19,8 @@ class TryModel extends StatefulWidget {
 class _TryModelState extends State<TryModel> {
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
-  // var model = ['Wav2Vac2XLR', 'Wav2Vac2XLR with LM'];
-  // var currentmodel = 'Wav2Vac2XLR with LM';
+  bool isGeneratingOutput = false;
+  bool isOutput = false;
 
   @override
   void initState() {
@@ -31,6 +31,8 @@ class _TryModelState extends State<TryModel> {
   void transcribeAudio(file) {
     setState(() {
       isLoading = true; // start the spinner
+      isGeneratingOutput = true;
+      isOutput = false;
     });
     DataServices.transcribeAudio(file, 2).then(
       (value) => {
@@ -43,14 +45,13 @@ class _TryModelState extends State<TryModel> {
                   _predicted_text_controller.text = value["transcription"];
                   isLoading = false; // stop the spinner
                   isOutput = true; // display the output
+                  isGeneratingOutput = false; // enable the button again
                 })
               }
           }
       },
     );
   }
-
-  bool isOutput = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,46 +91,6 @@ class _TryModelState extends State<TryModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // const SizedBox(height: 10),
-            // DropdownButtonFormField<String>(
-            //   onChanged: (String? newValue) {
-            //     setState(() {
-            //       currentmodel = newValue!;
-            //     });
-            //   },
-            //   icon: const Icon(
-            //     Icons.arrow_drop_down,
-            //     color: Color.fromARGB(255, 0, 36, 66),
-            //   ),
-            //   style: const TextStyle(
-            //     color: Color.fromARGB(255, 32, 32, 32),
-            //     fontSize: 13,
-            //   ),
-            //   dropdownColor: const Color.fromARGB(255, 255, 255, 255),
-            //   decoration: InputDecoration(
-            //     contentPadding:
-            //         const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            //     filled: true,
-            //     fillColor: const Color.fromARGB(255, 235, 235, 235),
-            //     focusedBorder: const OutlineInputBorder(
-            //       borderSide: BorderSide(
-            //           width: 1.5, color: Color.fromARGB(255, 80, 80, 80)),
-            //     ),
-            //     border:
-            //         OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-            //     hintText: hint,
-            //     hintStyle: const TextStyle(
-            //       fontSize: 13,
-            //     ),
-            //   ),
-            //   // value: currentmodel,
-            //   items: model.map<DropdownMenuItem<String>>((String value) {
-            //     return DropdownMenuItem<String>(
-            //       value: value,
-            //       child: Text(value),
-            //     );
-            //   }).toList(),
-            // ),
             const SizedBox(height: 10),
             englishState.isEnglishSelected
                 ? const Text(
@@ -148,24 +109,32 @@ class _TryModelState extends State<TryModel> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    backgroundColor: isGeneratingOutput
+                        ? Colors.grey // Set the color to indicate it's disabled
+                        : const Color.fromARGB(255, 255, 255, 255),
                     fixedSize:
                         const Size(150, 50), // Set the desired width and height
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    isOutput = false;
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ModelTestRecorder(
-                        onStop: (String path) {
-                          setState(() {
-                            _predicted_text_controller.text = "";
-                            // isOutput = false;
-                          });
-                          ('Recorded file path: $path');
-                          transcribeAudio(path);
-                        },
-                      ),
+                      isGeneratingOutput
+                          ? const Text(
+                              'Generating...',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          : ModelTestRecorder(
+                              onStop: (String path) {
+                                setState(() {
+                                  _predicted_text_controller.text = "";
+                                });
+                                ('Recorded file path: $path');
+                                transcribeAudio(path);
+                              },
+                            )
                     ],
                   ),
                 ),
@@ -235,9 +204,7 @@ class _TryModelState extends State<TryModel> {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 40,
-            ),
+            const SizedBox(height: 20),
             Visibility(
               visible: isOutput,
               child: Expanded(

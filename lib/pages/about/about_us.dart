@@ -1,4 +1,4 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable, deprecated_member_use, avoid_unnecessary_containers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable, deprecated_member_use, avoid_unnecessary_containers, unused_element
 
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
