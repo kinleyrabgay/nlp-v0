@@ -50,6 +50,8 @@ class _TTSModelState extends State<TTSModel> {
   bool audioReceivedToLocal = false;
   String audiofilepath = "";
 
+  bool isGeneratingOutput = false;
+
   @override
   void initState() {
     super.initState();
@@ -73,6 +75,7 @@ class _TTSModelState extends State<TTSModel> {
       bool fasle_storage = false;
       setState(() {
         isLoading = true;
+        isGeneratingOutput = true;
       });
 
       setState(() {
@@ -83,6 +86,7 @@ class _TTSModelState extends State<TTSModel> {
       print(text);
       Map audioGenerated = await fetchAudioData(text);
       bool audioIsReceivedStatus = audioGenerated['success'];
+
       if (audioIsReceivedStatus) {
         audiofilepath = audioGenerated['filepath'];
       }
@@ -96,6 +100,8 @@ class _TTSModelState extends State<TTSModel> {
 
           print('Setting state =============================');
           print(audioReceivedToLocal);
+
+          isGeneratingOutput = false;
         });
 
         print('Audio synthesized and saved');
@@ -107,10 +113,12 @@ class _TTSModelState extends State<TTSModel> {
           audioReceivedToLocal = false;
           print('Setting state =============================');
           print(audioReceivedToLocal);
+          isGeneratingOutput = false;
         });
       }
       setState(() {
         isLoading = false;
+        isGeneratingOutput = false;
       });
     }
 
@@ -188,9 +196,13 @@ class _TTSModelState extends State<TTSModel> {
                       // minimumSize: const Size(150.0, 48.0),
                       fixedSize: const Size(150, 50),
                     ),
-                    child: Text(englishState.isEnglishSelected
-                        ? 'Generate Audio'
-                        : 'ཐོས་སྒྲ་བཟོ།'),
+                    child: isGeneratingOutput
+                        ? Text(englishState.isEnglishSelected
+                            ? 'Generating...'
+                            : 'ཐོས་སྒྲ་བཟོ།')
+                        : Text(englishState.isEnglishSelected
+                            ? 'Generate Audio'
+                            : 'ཐོས་སྒྲ་བཟོ།'),
                   ),
                   if (isLoading)
                     const SpinKitFadingCircle(

@@ -24,6 +24,8 @@ class _Nmt_modelState extends State<Nmt_model> {
   bool isOutput = false;
   bool isButtonEnable = false;
   String text = '';
+  bool isGeneratingOutput = false;
+
   TextEditingController languageController = TextEditingController();
   TextEditingController _output_controller = TextEditingController();
 
@@ -39,6 +41,8 @@ class _Nmt_modelState extends State<Nmt_model> {
   void translate() {
     setState(() {
       isLoading = true;
+      isOutput = false;
+      isGeneratingOutput = true;
     });
 
     String inputValue = languageController.text;
@@ -54,6 +58,7 @@ class _Nmt_modelState extends State<Nmt_model> {
               _output_controller.text = value['data'];
               isLoading = false;
               isOutput = true;
+              isGeneratingOutput = false;
             })
           }
         else if (value['status' == 'failed'])
@@ -62,6 +67,7 @@ class _Nmt_modelState extends State<Nmt_model> {
               _output_controller.text = value['data'];
               isLoading = false;
               isOutput = true;
+              isGeneratingOutput = false;
             })
           }
         else
@@ -270,12 +276,19 @@ class _Nmt_modelState extends State<Nmt_model> {
                             translate();
                           }
                         }, // Set onPressed to null when the button is disabled
-                  child: Text(
-                    englishState.isEnglishSelected
-                        ? 'Translate'
-                        : 'སྐད་སྒྱུར་འབད།',
-                    style: const TextStyle(fontSize: 17),
-                  ),
+                  child: isGeneratingOutput
+                      ? Text(
+                          englishState.isEnglishSelected
+                              ? 'Generating...'
+                              : 'སྐད་སྒྱུར་འབད།',
+                          style: const TextStyle(fontSize: 17),
+                        )
+                      : Text(
+                          englishState.isEnglishSelected
+                              ? 'Translate'
+                              : 'སྐད་སྒྱུར་འབད།',
+                          style: const TextStyle(fontSize: 17),
+                        ),
                 ),
                 if (isLoading)
                   const SpinKitFadingCircle(
