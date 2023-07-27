@@ -12,6 +12,11 @@ class ProfileCard extends StatelessWidget {
     required this.developer2,
     required this.developer3,
     required this.developer4,
+    required this.developer5,
+    required this.developer6,
+    required this.developer7,
+    required this.developer8,
+    required this.developer9,
     required this.projectname,
     required this.projectlogo,
     required this.projecturl,
@@ -21,27 +26,74 @@ class ProfileCard extends StatelessWidget {
   final String developer2;
   final String developer3;
   final String developer4;
+  final String developer5;
+  final String developer6;
+  final String developer7;
+  final String developer8;
+  final String developer9;
   final String projectname;
   final String projectlogo;
   final String projecturl;
 
-  void _launchURL(String url) async {
-    // const url = 'https://nlp.cst.edu.bt/'; // Replace with your desired URL
-
-    if (await canLaunch(url)) {
-      await launch(url);
+  void _launchURL(String projecturl) async {
+    if (await canLaunch(projecturl)) {
+      await launch(projecturl);
     } else {
-      throw 'Could not launch $url';
+      throw 'Could not launch $projecturl';
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> developers = [
+      {
+        'name': developer1,
+        'iconColor': const Color.fromARGB(255, 255, 119, 119),
+      },
+      {
+        'name': developer2,
+        'iconColor': const Color.fromARGB(255, 144, 124, 255),
+      },
+      {
+        'name': developer3,
+        'iconColor': const Color.fromARGB(255, 128, 209, 255),
+      },
+      {
+        'name': developer4,
+        'iconColor': const Color.fromARGB(255, 117, 255, 163),
+      },
+      if (developer5.isNotEmpty)
+        {
+          'name': developer5,
+          'iconColor': const Color.fromARGB(255, 255, 161, 118),
+        },
+      if (developer6.isNotEmpty)
+        {
+          'name': developer6,
+          'iconColor': const Color.fromARGB(255, 192, 64, 234),
+        },
+      if (developer7.isNotEmpty)
+        {
+          'name': developer7,
+          'iconColor': const Color.fromARGB(255, 112, 186, 255),
+        },
+      if (developer8.isNotEmpty)
+        {
+          'name': developer8,
+          'iconColor': const Color.fromARGB(255, 255, 199, 109),
+        },
+      if (developer9.isNotEmpty)
+        {
+          'name': developer9,
+          'iconColor': const Color.fromARGB(255, 128, 222, 234),
+        },
+    ];
+
     final englishState = Provider.of<EnglishState>(context);
     final colorText =
         englishState.isEnglishSelected ? Colors.white : Colors.black;
     return InkWell(
-      onTap: () => _launchURL("https://nlp.cst.edu.bt/"),
+      onTap: () => _launchURL(projecturl),
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         width: MediaQuery.of(context).size.width,
@@ -90,83 +142,37 @@ class ProfileCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 margin: const EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
-                    color: englishState.isEnglishSelected
-                        ? const Color.fromARGB(255, 37, 58, 107)
-                        : Colors.orange,
-                    borderRadius: const BorderRadius.all(Radius.circular(10))),
+                  color: englishState.isEnglishSelected
+                      ? const Color.fromARGB(255, 37, 58, 107)
+                      : Colors.orange,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 255, 119, 119),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Text(
-                          developer1,
-                          style: TextStyle(fontSize: 16, color: colorText),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 144, 124, 255),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Text(
-                          developer2,
-                          style: TextStyle(fontSize: 16, color: colorText),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 128, 209, 255),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Text(
-                          developer3,
-                          style: TextStyle(fontSize: 16, color: colorText),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: Color.fromARGB(255, 117, 255, 163),
-                        ),
-                        const SizedBox(
-                          width: 7,
-                        ),
-                        Text(
-                          developer4,
-                          style: TextStyle(fontSize: 16, color: colorText),
-                        ),
-                      ],
-                    ),
+                    for (var developer in developers) ...[
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: developer['iconColor'],
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            developer['name'],
+                            style: TextStyle(fontSize: 16, color: colorText),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                    ],
                   ],
                 ),
               )
