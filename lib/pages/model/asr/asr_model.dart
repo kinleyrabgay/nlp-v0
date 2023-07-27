@@ -62,9 +62,6 @@ class _TryModelState extends State<TryModel> {
           : "ང་བཅས་ཀྱི་དཔེ་གཞིའི་ནུས་ཤུགས་ཚུ་འཚོལ་ཏེ་སྤྲོ་བ་བཏོན།";
     }
 
-    // String hint =
-    //     englishState.isEnglishSelected ? 'Select Model' : "པེ་གཞི་གདམ་ཁ་རྐྱབ།";
-
     void _showSnackbar(String message) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
