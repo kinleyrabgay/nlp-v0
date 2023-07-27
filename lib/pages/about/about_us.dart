@@ -5,6 +5,7 @@ import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -120,9 +121,10 @@ class _AboutPageState extends State<AboutPage> {
               ),
               const SizedBox(height: 32),
               ElevatedButton.icon(
-                onPressed: () {
-                  _launchURL(
-                      'https://www.facebook.com'); // Replace the URL with your app's Facebook sharing link
+                onPressed: () async {
+                  await Share.share(
+                      'Download Dzongkha NLP from: https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
+                      subject: 'DCDD');
                 },
                 icon: const Icon(
                   Icons.share,
