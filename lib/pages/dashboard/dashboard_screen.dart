@@ -6,6 +6,7 @@ import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/app_bar.dart';
+import '../limitations/limitation.dart';
 import '../model/asr/asr_model.dart';
 import '../model/nmt/nmt_model.dart';
 import '../model/tts/tts_page.dart';
@@ -21,14 +22,47 @@ class DashboardScreen extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  String state = "dashboard";
+
   @override
   void initState() {
     super.initState();
   }
 
+  void _showLimitationDialog(String state, BuildContext context) {
+    List<Map<String, String>> limitations = [
+      {
+        "header": "Small Training Dataset",
+        "description":
+            "The model was trained on a limited dataset, which may impact its understanding of complex patterns and accuracy.",
+      },
+      {
+        "header": "Low-Spec Training",
+        "description":
+            "Due to processing constraints during training, the model's performance may not match larger, more sophisticated AI models."
+      },
+      {
+        "header": "Potential Inaccuracies",
+        "description":
+            "The AI model could make mistakes and provide incorrect inferences, making it important to exercise caution in critical decision-making."
+      },
+      {
+        "header": "Limited Generalization",
+        "description":
+            "he model might not effectively adapt to new, unseen data, leading to suboptimal predictions in novel scenarios.",
+      },
+      {
+        "header": "Continuous Improvements",
+        "description":
+            "The development team is committed to improving the AI model within mobile constraints and welcomes user feedback for enhancement."
+      }
+    ];
+    LimitationDialog.show(context, limitations, state);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     final englishState = Provider.of<EnglishState>(context);
 
     return Scaffold(
@@ -118,6 +152,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
             )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showLimitationDialog(state, context);
+        },
+        backgroundColor: englishState.isEnglishSelected
+            ? const Color.fromARGB(255, 37, 58, 107)
+            : Colors.orange,
+        child: const Icon(Icons.info),
       ),
       drawer: Drawer(
         child: Container(

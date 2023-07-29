@@ -6,12 +6,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class DataServices {
+  // URL
   static const TRANSCRIBE_AUDIO =
       'https://nlp.cst.edu.bt/asr/transcribe-audio/';
   static const GENERATE_AUDIO = 'https://nlp.cst.edu.bt/tts/';
   static const TRANSLATE_TEXT = 'https://nlp.cst.edu.bt/nmt/api/';
-  // static const TRANSCRIBE_AUDIO =
-  //     'http://10.2.4.138:8000/asr/transcribe-audio/';
 
   //ASR Service
   static Future<Map> transcribeAudio(file, modelid) async {
@@ -50,7 +49,6 @@ class DataServices {
   //ASR Service =================
 
   // TTS Services
-
   static Future<Map> generateAudio(text) async {
     try {
       final body = {'inputText': text};
@@ -70,11 +68,9 @@ class DataServices {
       return {"status": 'failed', 'data': "Unexpected error"};
     }
   }
-
   // TTS END =======================================================
 
   // NMT Services
-
   static Future<Map> translateText(text, src_lang, tgt_lang) async {
     try {
       final data = {
@@ -100,8 +96,6 @@ class DataServices {
       return {"status": 'failed', 'data': "Unexpected error"};
     }
   }
-
   // NMT END =======================================================
-
 //services (End) _______________________________________________________________________________
 }

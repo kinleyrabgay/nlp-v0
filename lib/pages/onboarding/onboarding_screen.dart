@@ -1,7 +1,8 @@
-import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'dart:async';
+import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
+import "dart:async";
+
+import "../limitations/limitation.dart";
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -14,6 +15,41 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   late PageController _pageController;
   int _pageIndex = 0;
   late Timer _timer;
+  String state = "onboarding";
+
+  // Inside your SplashScreen or any other screen where you want to show the dialog
+
+  void _showLimitationDialog(String state, BuildContext context) {
+    List<Map<String, String>> limitations = [
+      {
+        "header": "Small Training Dataset",
+        "description":
+            "The model was trained on a limited dataset, which may impact its understanding of complex patterns and accuracy.",
+      },
+      {
+        "header": "Low-Spec Training",
+        "description":
+            "Due to processing constraints during training, the model's performance may not match larger, more sophisticated AI models."
+      },
+      {
+        "header": "Potential Inaccuracies",
+        "description":
+            "The AI model could make mistakes and provide incorrect inferences, making it important to exercise caution in critical decision-making."
+      },
+      {
+        "header": "Limited Generalization",
+        "description":
+            "he model might not effectively adapt to new, unseen data, leading to suboptimal predictions in novel scenarios.",
+      },
+      {
+        "header": "Continuous Improvements",
+        "description":
+            "The development team is committed to improving the AI model within mobile constraints and welcomes user feedback for enhancement."
+      }
+    ];
+
+    LimitationDialog.show(context, limitations, state);
+  }
 
   @override
   void initState() {
@@ -82,29 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 100),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  const DashboardScreen(),
-                          transitionDuration:
-                              const Duration(milliseconds: 1000),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            var begin = const Offset(1.0, 0.0);
-                            var end = Offset.zero;
-                            var curve = Curves.ease;
-                            var tween = Tween(begin: begin, end: end).chain(
-                              CurveTween(curve: curve),
-                            );
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
-                        ),
-                      );
+                      _showLimitationDialog(state, context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 15, 31, 65),
