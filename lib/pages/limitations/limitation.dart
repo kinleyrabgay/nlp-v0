@@ -36,13 +36,13 @@ class LimitationDialog extends StatelessWidget {
                       limitation['header'] ?? '',
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 14,
+                        fontSize: 16,
                       ),
                     ),
                     Text(
                       limitation['description'] ?? '',
                       style:
-                          const TextStyle(fontSize: 13, color: Colors.black45),
+                          const TextStyle(fontSize: 14, color: Colors.black45),
                     ),
                     const SizedBox(height: 20),
                   ],

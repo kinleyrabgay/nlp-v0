@@ -18,7 +18,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   String state = "onboarding";
 
   // Inside your SplashScreen or any other screen where you want to show the dialog
-
   void _showLimitationDialog(String state, BuildContext context) {
     List<Map<String, String>> limitations = [
       {
