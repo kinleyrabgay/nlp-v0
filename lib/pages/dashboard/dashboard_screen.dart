@@ -50,7 +50,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       {
         "header": "Limited Generalization",
         "description":
-            "he model might not effectively adapt to new, unseen data, leading to suboptimal predictions in novel scenarios.",
+            "The model might not effectively adapt to new, unseen data, leading to suboptimal predictions in novel scenarios.",
       },
       {
         "header": "Continuous Improvements",

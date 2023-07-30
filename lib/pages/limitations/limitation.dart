@@ -1,7 +1,6 @@
 import 'package:dzongkha_nlp_mobile/pages/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../provider/state.dart';
 
 class LimitationDialog extends StatelessWidget {
