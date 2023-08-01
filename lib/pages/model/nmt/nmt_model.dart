@@ -212,42 +212,48 @@ class _Nmt_modelState extends State<Nmt_model> {
               ],
             ),
             const SizedBox(height: 20),
-            Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              child: TextFormField(
-                autofocus: false,
-                maxLines: null,
-                textAlign: TextAlign.left,
-                style: const TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: const TextStyle(fontSize: 15, color: Colors.grey),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 37, 58, 107),
-                      width: 1,
+            SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.25),
+                child: Form(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  child: TextFormField(
+                    autofocus: false,
+                    maxLines: null,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: hint,
+                      hintStyle:
+                          const TextStyle(fontSize: 15, color: Colors.grey),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107),
+                          width: 1,
+                        ),
+                      ),
+                      errorStyle:
+                          const TextStyle(color: Colors.red, fontSize: 15),
+                      contentPadding: const EdgeInsets.all(10),
                     ),
+                    controller: languageController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return englishState.isEnglishSelected
+                            ? 'This field cannot be empty!'
+                            : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        text = value;
+                      });
+                    },
                   ),
-
-                  errorStyle: const TextStyle(color: Colors.red, fontSize: 15),
-                  contentPadding:
-                      const EdgeInsets.all(10), // Padding for the entered text
                 ),
-                controller: languageController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return englishState.isEnglishSelected
-                        ? 'This field cannot be empty!'
-                        : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    text = value;
-                  });
-                },
               ),
             ),
             const SizedBox(height: 20),
@@ -316,7 +322,6 @@ class _Nmt_modelState extends State<Nmt_model> {
               ],
             ),
             const SizedBox(height: 20),
-            // if(isOutput) {}
             Visibility(
               visible: isOutput,
               child: Expanded(

@@ -25,6 +25,7 @@ Future<Map> fetchAudioData(String text) async {
     var tempDir = await getTemporaryDirectory();
     var filePath = '${tempDir.path}/audio.wav';
     var file = File(filePath);
+    print(file);
     await file.writeAsBytes(response.bodyBytes);
     return {'success': true, "filepath": filePath};
   } else {
