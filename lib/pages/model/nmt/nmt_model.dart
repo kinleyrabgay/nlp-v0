@@ -8,14 +8,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../../api/data.dart';
 
-class Nmt_model extends StatefulWidget {
-  const Nmt_model({super.key});
+class NmtModel extends StatefulWidget {
+  const NmtModel({super.key});
 
   @override
-  State<Nmt_model> createState() => _Nmt_modelState();
+  State<NmtModel> createState() => _Nmt_modelState();
 }
 
-class _Nmt_modelState extends State<Nmt_model> {
+class _Nmt_modelState extends State<NmtModel> {
   var languages = ['Dzongkha', 'English'];
   var originLanguage = 'From';
   var destinationLanguage = "To";
@@ -139,8 +139,13 @@ class _Nmt_modelState extends State<Nmt_model> {
                   focusColor: Colors.black,
                   iconDisabledColor: Colors.black,
                   iconEnabledColor: Colors.black,
-                  hint: Text(originLanguage,
-                      style: const TextStyle(color: Colors.black54)),
+                  hint: Text(
+                    originLanguage,
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
+                  ),
                   dropdownColor: Colors.white,
                   icon: const Icon(Icons.keyboard_arrow_down),
                   items: languages.map((String dropDownStringItem) {
@@ -188,7 +193,10 @@ class _Nmt_modelState extends State<Nmt_model> {
                   iconEnabledColor: Colors.black,
                   hint: Text(
                     destinationLanguage,
-                    style: const TextStyle(color: Colors.black54),
+                    style: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
                   ),
                   dropdownColor: Colors.white,
                   icon: const Icon(Icons.keyboard_arrow_down),
@@ -222,11 +230,16 @@ class _Nmt_modelState extends State<Nmt_model> {
                     autofocus: false,
                     maxLines: null,
                     textAlign: TextAlign.left,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                    ),
                     decoration: InputDecoration(
                       hintText: hint,
-                      hintStyle:
-                          const TextStyle(fontSize: 15, color: Colors.grey),
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                         borderSide: BorderSide(
@@ -234,8 +247,10 @@ class _Nmt_modelState extends State<Nmt_model> {
                           width: 1,
                         ),
                       ),
-                      errorStyle:
-                          const TextStyle(color: Colors.red, fontSize: 15),
+                      errorStyle: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                      ),
                       contentPadding: const EdgeInsets.all(10),
                     ),
                     controller: languageController,
@@ -281,19 +296,19 @@ class _Nmt_modelState extends State<Nmt_model> {
                           } else {
                             translate();
                           }
-                        }, // Set onPressed to null when the button is disabled
+                        },
                   child: isGeneratingOutput
                       ? Text(
                           englishState.isEnglishSelected
                               ? 'Translating...'
                               : 'སྐད་སྒྱུར་འབད།',
-                          style: const TextStyle(fontSize: 17),
+                          style: const TextStyle(fontSize: 14),
                         )
                       : Text(
                           englishState.isEnglishSelected
                               ? 'Translate'
                               : 'སྐད་སྒྱུར་འབད།',
-                          style: const TextStyle(fontSize: 17),
+                          style: const TextStyle(fontSize: 14),
                         ),
                 ),
                 if (isLoading)
@@ -301,22 +316,20 @@ class _Nmt_modelState extends State<Nmt_model> {
                       color: Color.fromARGB(255, 37, 58, 107), size: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(
-                        255, 235, 44, 76), //255, 42, 188, 108
-                    fixedSize:
-                        const Size(150, 50), // Set the desired width and height
+                    backgroundColor: const Color.fromARGB(255, 235, 44, 76),
+                    fixedSize: const Size(150, 50),
                   ),
                   onPressed: () {
                     setState(() {
                       languageController.clear();
                       _output_controller.clear();
-                      isOutput = false; // Update the isOutput variable
+                      isOutput = false;
                       text = "";
                     });
                   },
                   child: Text(
                     englishState.isEnglishSelected ? "Clear" : "བསལ།",
-                    style: const TextStyle(fontSize: 17),
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
               ],

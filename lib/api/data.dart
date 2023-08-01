@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
 
 class DataServices {
   // URL
@@ -49,24 +50,27 @@ class DataServices {
   }
   //ASR Service =================
 
-  // TTS Services
-  static Future<Map> generateAudio(text) async {
+  // // TTS Services
+  static Future<Map> generateAudio(String text) async {
+    final headers = {'Content-Type': 'application/json'};
+    final body = {'inputText': text};
     try {
-      final body = {'inputText': text};
+      final response = await http.post(Uri.parse(GENERATE_AUDIO),
+          headers: headers, body: jsonEncode(body));
 
-      final response =
-          await http.post(Uri.parse(GENERATE_AUDIO), body: jsonEncode(body));
-
-      // return response;
       if (response.statusCode == 200) {
-        return {'status': 'success', "data": response.bodyBytes};
+        var tempDir = await getTemporaryDirectory();
+        var filePath = '${tempDir.path}/audio.wav';
+        var file = File(filePath);
+        print(file);
+        await file.writeAsBytes(response.bodyBytes);
+        return {'success': true, "filepath": filePath};
       } else {
-        print(response.statusCode);
-        return {"status": 'failed', 'data': "server error"};
+        return {'success': false};
       }
-    } catch (e, st) {
-      print('error >>' + st.toString());
-      return {"status": 'failed', 'data': "Unexpected error"};
+    } catch (e) {
+      print('Error fetching audio data: $e');
+      return {'success': false};
     }
   }
   // TTS END =======================================================

@@ -9,18 +9,19 @@ import 'package:provider/provider.dart';
 import '../../../api/data.dart';
 import 'model_testing.dart';
 
-class TryModel extends StatefulWidget {
-  const TryModel({super.key});
+class AsrModel extends StatefulWidget {
+  const AsrModel({super.key});
 
   @override
-  State<TryModel> createState() => _TryModelState();
+  State<AsrModel> createState() => _AsrModelState();
 }
 
-class _TryModelState extends State<TryModel> {
+class _AsrModelState extends State<AsrModel> {
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
   bool isGeneratingOutput = false;
   bool isOutput = false;
+  bool isUploadGenerating = false;
 
   @override
   void initState() {
@@ -28,11 +29,11 @@ class _TryModelState extends State<TryModel> {
     _predicted_text_controller.text = "";
   }
 
-  void transcribeAudio(file) {
+  void transcribeAudio(file, record) {
     setState(() {
-      isLoading = true; // start the spinner
-      isGeneratingOutput = true;
+      isLoading = true;
       isOutput = false;
+      record ? isGeneratingOutput = true : isUploadGenerating = true;
     });
     DataServices.transcribeAudio(file, 2).then(
       (value) => {
@@ -42,10 +43,12 @@ class _TryModelState extends State<TryModel> {
             if (value["transcription"].length > 0)
               {
                 setState(() {
-                  _predicted_text_controller.text = value["transcription"];
-                  isLoading = false; // stop the spinner
-                  isOutput = true; // display the output
-                  isGeneratingOutput = false; // enable the button again
+                  _predicted_text_controller.text =
+                      value["transcription"].replaceAll(' ', '');
+                  isLoading = false;
+                  isOutput = true;
+                  isGeneratingOutput = false;
+                  isUploadGenerating = false;
                 })
               }
           }
@@ -75,6 +78,17 @@ class _TryModelState extends State<TryModel> {
             ? 'Text copied successfully'
             : 'ཚིག་ཡིག་འདྲ་བཤུས་ལེགས་ཤོམ་སྦེ་རྐྱབ་ཅི།');
       });
+    }
+
+    String getUploadButtonText(
+        EnglishState englishState, bool isUploadGenerating) {
+      if (isUploadGenerating) {
+        return englishState.isEnglishSelected
+            ? "Uploading..."
+            : "ཐོས་སྒྲ་བཙུགས།";
+      } else {
+        return englishState.isEnglishSelected ? "Upload" : "ཐོས་སྒྲ་བཙུགས།";
+      }
     }
 
     return Scaffold(
@@ -113,7 +127,7 @@ class _TryModelState extends State<TryModel> {
                           _predicted_text_controller.text = "";
                         });
                         ('Recorded file path: $path');
-                        transcribeAudio(path);
+                        transcribeAudio(path, true);
                       },
                       isGeneratingOutput: isGeneratingOutput,
                     )
@@ -146,9 +160,8 @@ class _TryModelState extends State<TryModel> {
                         print(file.size);
                         print(file.extension);
                         print(file.path);
-                        transcribeAudio(file.path);
+                        transcribeAudio(file.path, false);
                       } else {
-                        // File selection canceled by the user
                         print('File selection canceled');
                       }
                     } catch (e) {
@@ -163,23 +176,17 @@ class _TryModelState extends State<TryModel> {
                         color: Colors.white,
                         size: 16,
                       ),
-                      englishState.isEnglishSelected
-                          ? const Flexible(
-                              child: FittedBox(
-                                child: Text(
-                                  "Upload",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            )
-                          : const Flexible(
-                              child: FittedBox(
-                                child: Text(
-                                  "ཐོས་སྒྲ་བཙུགས།",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                              ),
+                      Flexible(
+                        child: FittedBox(
+                          child: Text(
+                            getUploadButtonText(
+                              englishState,
+                              isUploadGenerating,
                             ),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

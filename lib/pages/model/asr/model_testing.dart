@@ -106,9 +106,9 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
                   : const Color.fromARGB(255, 255, 255, 255),
               fixedSize: const Size(150, 50),
             ),
-            child: const Text(
-              'Generating...',
-              style: TextStyle(
+            child: Text(
+              englishState.isEnglishSelected ? 'Generating...' : 'སྒྲ་ཟུངས་དོ།',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14,
               ),
@@ -126,36 +126,23 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon,
-                englishState.isEnglishSelected
-                    ? FittedBox(
-                        child: Text(
-                          (_recordState != RecordState.stop)
-                              ? "Recording"
-                              : "Record",
-                          style: (_recordState != RecordState.stop)
-                              ? const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 255, 0, 0))
-                              : const TextStyle(
-                                  fontSize: 14, color: Colors.black),
-                        ),
-                      )
-                    : FittedBox(
-                        child: Text(
-                          (_recordState != RecordState.stop)
-                              ? "སྒྲ་ཟུངས་དོ།"
-                              : "སྒྲ་ཟུངས།",
-                          style: (_recordState != RecordState.stop)
-                              ? const TextStyle(
-                                  fontSize: 14,
-                                  color: Color.fromARGB(255, 255, 0, 0),
-                                )
-                              : const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                ),
-                        ),
-                      ),
+                FittedBox(
+                  child: Text(
+                    englishState.isEnglishSelected
+                        ? (_recordState != RecordState.stop)
+                            ? "Recording"
+                            : "Record"
+                        : (_recordState != RecordState.stop)
+                            ? "སྒྲ་ཟུངས་དོ།"
+                            : "སྒྲ་ཟུངས།",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: (_recordState != RecordState.stop)
+                          ? const Color.fromARGB(255, 255, 0, 0)
+                          : Colors.black,
+                    ),
+                  ),
+                ),
               ],
             ),
           );

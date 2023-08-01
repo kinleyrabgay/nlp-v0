@@ -1,49 +1,21 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names, prefer_final_fields, avoid_print, depend_on_referenced_packages, library_private_types_in_public_api
-import 'dart:convert';
 import 'dart:async';
+import 'package:dzongkha_nlp_mobile/api/data.dart';
 import 'package:dzongkha_nlp_mobile/pages/components/app_bar.dart';
 import 'package:dzongkha_nlp_mobile/pages/model/tts/audio_player.dart';
 import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
-Future<Map> fetchAudioData(String text) async {
-  final url = Uri.parse('https://nlp.cst.edu.bt/tts/');
-  final headers = {'Content-Type': 'application/json'};
-  final body = {'inputText': text};
-
-  try {
-    final response =
-        await http.post(url, headers: headers, body: jsonEncode(body));
-
-    if (response.statusCode == 200) {
-      var tempDir = await getTemporaryDirectory();
-      var filePath = '${tempDir.path}/audio.wav';
-      var file = File(filePath);
-      print(file);
-      await file.writeAsBytes(response.bodyBytes);
-      return {'success': true, "filepath": filePath};
-    } else {
-      return {'success': false};
-    }
-  } catch (e) {
-    print('Error fetching audio data: $e');
-    return {'success': false};
-  }
-}
-
-class TTSModel extends StatefulWidget {
-  const TTSModel({super.key});
+class TtsModel extends StatefulWidget {
+  const TtsModel({super.key});
 
   @override
-  _TTSModelState createState() => _TTSModelState();
+  _TtsModelState createState() => _TtsModelState();
 }
 
-class _TTSModelState extends State<TTSModel> {
+class _TtsModelState extends State<TtsModel> {
   bool isLoading = false;
   var _predicted_text_controller = TextEditingController();
   var text_controller = TextEditingController();
@@ -89,7 +61,7 @@ class _TTSModelState extends State<TTSModel> {
       try {
         print('Fetch audio data called');
         print(text);
-        Map audioGenerated = await fetchAudioData(text);
+        Map audioGenerated = await DataServices.generateAudio(text);
         bool audioIsReceivedStatus = audioGenerated['success'];
 
         if (audioIsReceivedStatus) {
@@ -150,17 +122,16 @@ class _TTSModelState extends State<TTSModel> {
                 maxLines: null,
                 decoration: InputDecoration(
                   hintText: hint,
-                  hintStyle: const TextStyle(fontSize: 15, color: Colors.grey),
+                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
                   border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                        Radius.circular(10)), // Set border radius to 10
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     borderSide: BorderSide(
                       color: Color.fromARGB(255, 37, 58, 107),
                       width: 1,
                     ),
                   ),
-                  errorStyle: const TextStyle(color: Colors.red, fontSize: 15),
-                  contentPadding: const EdgeInsets.all(10), // Pad
+                  errorStyle: const TextStyle(color: Colors.red, fontSize: 14),
+                  contentPadding: const EdgeInsets.all(10),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -203,16 +174,18 @@ class _TTSModelState extends State<TTSModel> {
                       backgroundColor: englishState.isEnglishSelected
                           ? const Color.fromARGB(255, 37, 58, 107)
                           : Colors.orange,
-                      // minimumSize: const Size(150.0, 48.0),
                       fixedSize: const Size(150, 50),
                     ),
-                    child: isGeneratingOutput
-                        ? Text(englishState.isEnglishSelected
-                            ? 'Generating...'
-                            : 'ཐོས་སྒྲ་བཟོ།')
-                        : Text(englishState.isEnglishSelected
-                            ? 'Generate Audio'
-                            : 'ཐོས་སྒྲ་བཟོ།'),
+                    child: Text(
+                      isGeneratingOutput
+                          ? (englishState.isEnglishSelected
+                              ? 'Generating...'
+                              : 'ཐོས་སྒྲ་བཟོ།')
+                          : (englishState.isEnglishSelected
+                              ? 'Generate Audio'
+                              : 'ཐོས་སྒྲ་བཟོ།'),
+                      style: const TextStyle(fontSize: 14),
+                    ),
                   ),
                   if (isLoading)
                     const SpinKitFadingCircle(

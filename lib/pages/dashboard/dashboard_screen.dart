@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../components/app_bar.dart';
 import '../limitations/limitation.dart';
-import '../model/asr/asr_model.dart';
-import '../model/nmt/nmt_model.dart';
-import '../model/tts/tts_page.dart';
+import '../model/export.dart' show AsrModel, NmtModel, TtsModel;
 
 class DashboardScreen extends StatefulWidget implements PreferredSizeWidget {
   const DashboardScreen({super.key});
@@ -102,7 +100,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Nmt_model(),
+                            builder: (context) => const NmtModel(),
                           ),
                         );
                       },
@@ -121,7 +119,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TryModel(),
+                            builder: (context) => const AsrModel(),
                           ),
                         );
                       },
@@ -140,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const TTSModel(),
+                            builder: (context) => const TtsModel(),
                           ),
                         );
                       },
