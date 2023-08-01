@@ -26,7 +26,7 @@ class _AboutPageState extends State<AboutPage> {
 
     String copyText = englishState.isEnglishSelected
         ? '© 2023 CST. All rights reserved.'
-        : "© 2023 CST. དབང་ཆ་ཧྲིལ་བུམ་ཡོད།.";
+        : "© སྤྱི་ལོ་༢༠༢༣ CST. དབང་ཆ་ཧྲིལ་བུམ་ཡོད།";
 
     String devText = englishState.isEnglishSelected
         ? 'Our app is a collaboration between'
@@ -40,6 +40,8 @@ class _AboutPageState extends State<AboutPage> {
 
     String nlpText =
         englishState.isEnglishSelected ? 'NLP' : "སྐད་སྦྱོར་རིག་པ།";
+
+    String vText = englishState.isEnglishSelected ? 'V1.0.0' : 'v༡.༠.༠';
 
     return Scaffold(
       appBar: AppbarWidget(
@@ -74,9 +76,9 @@ class _AboutPageState extends State<AboutPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'v1.0.0',
-                style: TextStyle(
+              Text(
+                vText,
+                style: const TextStyle(
                   fontSize: 18,
                 ),
               ),
@@ -84,9 +86,7 @@ class _AboutPageState extends State<AboutPage> {
               Center(
                 child: Text(
                   devText,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
+                  style: const TextStyle(fontSize: 18),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -123,12 +123,13 @@ class _AboutPageState extends State<AboutPage> {
               ElevatedButton.icon(
                 onPressed: () async {
                   await Share.share(
-                      'Download Dzongkha NLP from: https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
+                      'https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
                       subject: 'DCDD');
                 },
                 icon: const Icon(
                   Icons.share,
                   color: Colors.white,
+                  size: 16,
                 ),
                 label: Text(
                   shareText,

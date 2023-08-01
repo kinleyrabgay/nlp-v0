@@ -285,7 +285,7 @@ class _Nmt_modelState extends State<Nmt_model> {
                   child: isGeneratingOutput
                       ? Text(
                           englishState.isEnglishSelected
-                              ? 'Generating...'
+                              ? 'Translating...'
                               : 'སྐད་སྒྱུར་འབད།',
                           style: const TextStyle(fontSize: 17),
                         )

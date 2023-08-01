@@ -74,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ? "Dzongkha NLP"
               : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
           text: englishState.isEnglishSelected
-              ? "Please send us your valuable feedbacks"
+              ? "Send us your valuable feedbacks & concerns"
               : 'ཁྱོད་རའི་ཕན་ཐོགས་ཅན་གྱི་བསམ་ལན་ ང་བཅས་ལུ་གཏང་་གནང་།',
         ),
       ),
