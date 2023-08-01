@@ -41,8 +41,6 @@ class _AboutPageState extends State<AboutPage> {
     String nlpText =
         englishState.isEnglishSelected ? 'NLP' : "སྐད་སྦྱོར་རིག་པ།";
 
-    String vText = englishState.isEnglishSelected ? 'V1.0.0' : 'v༡.༠.༠';
-
     return Scaffold(
       appBar: AppbarWidget(
         title: englishState.isEnglishSelected
@@ -77,10 +75,10 @@ class _AboutPageState extends State<AboutPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                vText,
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+                'v1.0.0',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: englishState.isEnglishSelected ? '' : 'Joyig'),
               ),
               const SizedBox(height: 24),
               Center(
