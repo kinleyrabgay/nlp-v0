@@ -24,7 +24,7 @@ class AudioPlayer extends StatefulWidget {
 }
 
 class AudioPlayerState extends State<AudioPlayer> {
-  static const double _controlSize = 56;
+  static const double _controlSize = 50;
   final _audioPlayer = ap.AudioPlayer();
 
   late StreamSubscription<void> _playerStateChangedSubscription;
@@ -77,7 +77,6 @@ class AudioPlayerState extends State<AudioPlayer> {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Container(
-          height: 200,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -90,31 +89,21 @@ class AudioPlayerState extends State<AudioPlayer> {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      _buildSlider(constraints.maxWidth),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          _buildControl(),
-                          _buildDownload(),
-                        ],
-                      ),
-                    ],
-                  ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildSlider(),
+                Row(
+                  children: [
+                    _buildControl(),
+                    const SizedBox(width: 10),
+                    _buildDownload(),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -128,7 +117,6 @@ class AudioPlayerState extends State<AudioPlayer> {
 
     final theme = Theme.of(context);
     icon = const Icon(Icons.download_rounded, color: Colors.white, size: 24);
-    // color = theme.primaryColor.withOpacity(0.1);
     color = englishState.isEnglishSelected
         ? const Color.fromARGB(255, 37, 58, 107)
         : Colors.orange;
@@ -141,7 +129,6 @@ class AudioPlayerState extends State<AudioPlayer> {
           child:
               SizedBox(width: _controlSize, height: _controlSize, child: icon),
           onTap: () {
-            //download audio
             downloadAudio();
           },
         ),
@@ -159,9 +146,6 @@ class AudioPlayerState extends State<AudioPlayer> {
       final file = File(filePath);
 
       await file.writeAsBytes(await File(widget.source).readAsBytes());
-
-      // Perform any necessary actions with the downloaded file
-      // For example, you can store the file path or update the UI
 
       print('Audio downloaded successfully: $filePath');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -187,7 +171,7 @@ class AudioPlayerState extends State<AudioPlayer> {
       icon = Icon(Icons.play_arrow,
           color: englishState.isEnglishSelected
               ? const Color.fromARGB(255, 37, 58, 107)
-              : const Color.fromARGB(255, 243, 181, 56),
+              : Colors.orange,
           size: 30);
       color = theme.primaryColor.withOpacity(0.1);
     }
@@ -210,13 +194,13 @@ class AudioPlayerState extends State<AudioPlayer> {
     );
   }
 
-  Widget _buildSlider(double widgetWidth) {
+  Widget _buildSlider() {
     final englishState = Provider.of<EnglishState>(context);
     final duration = _duration;
     final position = _position;
 
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery.of(context).size.width * 0.5,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
@@ -225,7 +209,7 @@ class AudioPlayerState extends State<AudioPlayer> {
         child: Row(
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.7,
+              width: MediaQuery.of(context).size.width * 0.4,
               child: SliderTheme(
                 data: const SliderThemeData(
                   trackHeight: 1.0,
@@ -265,7 +249,10 @@ class AudioPlayerState extends State<AudioPlayer> {
               padding: const EdgeInsets.only(right: 10),
               child: Text(
                 '${position?.inMinutes ?? 0}:${(position?.inSeconds ?? 0) % 60}',
-                style: const TextStyle(
+                style: TextStyle(
+                  color: englishState.isEnglishSelected
+                      ? const Color.fromARGB(255, 37, 58, 107)
+                      : Colors.orange,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -277,13 +264,17 @@ class AudioPlayerState extends State<AudioPlayer> {
     );
   }
 
-  Future<void> play() {
-    return _audioPlayer.play(
+  Future<void> play() async {
+    await _audioPlayer.play(
       kIsWeb ? ap.UrlSource(widget.source) : ap.DeviceFileSource(widget.source),
     );
+    setState(() {});
   }
 
-  Future<void> pause() => _audioPlayer.pause();
+  Future<void> pause() async {
+    await _audioPlayer.pause();
+    setState(() {});
+  }
 
   Future<void> stop() => _audioPlayer.stop();
 }
