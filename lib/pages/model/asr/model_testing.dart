@@ -85,11 +85,11 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
     late Color color;
 
     if (_recordState != RecordState.stop) {
-      icon = const Icon(Icons.stop, color: Colors.red, size: 20);
+      icon = const Icon(Icons.stop, color: Colors.red, size: 16);
       color = Colors.red.withOpacity(0.1);
     } else {
       final theme = Theme.of(context);
-      icon = Icon(Icons.mic, color: theme.primaryColor, size: 20);
+      icon = Icon(Icons.mic, color: theme.primaryColor, size: 16);
       color = theme.primaryColor.withOpacity(0.1);
     }
 
@@ -108,8 +108,8 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
                     (_recordState != RecordState.stop) ? "Recording" : "Record",
                     style: (_recordState != RecordState.stop)
                         ? const TextStyle(
-                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                        : const TextStyle(fontSize: 14, color: Colors.black),
+                            fontSize: 16, color: Color.fromARGB(255, 255, 0, 0))
+                        : const TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 )
               : FittedBox(

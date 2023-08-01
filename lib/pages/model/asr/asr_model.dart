@@ -177,7 +177,7 @@ class _TryModelState extends State<TryModel> {
                       const Icon(
                         Icons.upload,
                         color: Colors.white,
-                        size: 20,
+                        size: 16,
                       ),
                       englishState.isEnglishSelected
                           ? const Flexible(
