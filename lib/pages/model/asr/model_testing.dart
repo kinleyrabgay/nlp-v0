@@ -108,8 +108,8 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
                     (_recordState != RecordState.stop) ? "Recording" : "Record",
                     style: (_recordState != RecordState.stop)
                         ? const TextStyle(
-                            fontSize: 16, color: Color.fromARGB(255, 255, 0, 0))
-                        : const TextStyle(fontSize: 16, color: Colors.black),
+                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
+                        : const TextStyle(fontSize: 14, color: Colors.black),
                   ),
                 )
               : FittedBox(
