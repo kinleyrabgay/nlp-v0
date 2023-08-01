@@ -121,7 +121,10 @@ class _TryModelState extends State<TryModel> {
                       isGeneratingOutput
                           ? const Text(
                               'Generating...',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                             )
                           : ModelTestRecorder(
                               onStop: (String path) {
