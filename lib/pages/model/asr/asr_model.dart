@@ -172,7 +172,7 @@ class _TryModelState extends State<TryModel> {
                     }
                   },
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.upload,
