@@ -5,10 +5,8 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path/path.dart' as path;
 import '../../../provider/state.dart';
 
 class AudioPlayer extends StatefulWidget {
@@ -62,13 +60,6 @@ class AudioPlayerState extends State<AudioPlayer> {
     _durationChangedSubscription.cancel();
     _audioPlayer.dispose();
     super.dispose();
-  }
-
-  // update the progress value in the SharedPreferences
-  void incrementProgress() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int progressValue = ((prefs.getInt('progress') ?? 0) + 1);
-    await prefs.setInt('progress', progressValue);
   }
 
   @override
@@ -137,23 +128,27 @@ class AudioPlayerState extends State<AudioPlayer> {
   }
 
   Future<void> downloadAudio() async {
-    try {
-      final directory = await getApplicationDocumentsDirectory();
-      final appDirPath = directory.path;
-      const fileName = 'audio.mp3';
-      final filePath = path.join(appDirPath, fileName);
-      final file = File(filePath);
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
 
-      await file.writeAsBytes(await File(widget.source).readAsBytes());
+    if (statuses[Permission.storage]!.isGranted) {
+      try {
+        var time = DateTime.now().millisecondsSinceEpoch;
+        var downloadPath = "/storage/emulated/0/Download/audio-$time.wav";
+        final file = File(downloadPath);
 
-      print('Audio downloaded successfully: $filePath');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Audio downloaded successfully'),
-        ),
-      );
-    } catch (e) {
-      print('Failed to download audio: $e');
+        await file.writeAsBytes(await File(widget.source).readAsBytes());
+
+        print('Audio downloaded successfully: $downloadPath');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Audio downloaded successfully'),
+          ),
+        );
+      } catch (e) {
+        print('Failed to download audio: $e');
+      }
     }
   }
 
@@ -230,13 +225,11 @@ class AudioPlayerState extends State<AudioPlayer> {
                     });
                   },
                   onChangeStart: (double value) {
-                    // Pause the player when dragging starts
                     if (_audioPlayer.state == ap.PlayerState.playing) {
                       _audioPlayer.pause();
                     }
                   },
                   onChangeEnd: (double value) async {
-                    // Restore previous player state after dragging ends
                     if (_audioPlayer.state == ap.PlayerState.playing) {
                       await _audioPlayer.resume();
                     }

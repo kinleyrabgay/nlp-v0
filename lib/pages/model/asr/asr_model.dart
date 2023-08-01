@@ -107,7 +107,7 @@ class _AsrModelState extends State<AsrModel> {
                 ? const Text(
                     "Record or Upload Audio",
                     textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+                    style: TextStyle(fontSize: 14, color: Colors.black87),
                   )
                 : const Text(
                     "ཐོས་སྒྲ་བཙུགས་ ཡངན་ གདམ་ཁ་རྐྱབ།",

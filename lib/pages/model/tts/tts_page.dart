@@ -182,7 +182,7 @@ class _TtsModelState extends State<TtsModel> {
                               ? 'Generating...'
                               : 'ཐོས་སྒྲ་བཟོ།')
                           : (englishState.isEnglishSelected
-                              ? 'Generate Audio'
+                              ? 'Generate'
                               : 'ཐོས་སྒྲ་བཟོ།'),
                       style: const TextStyle(
                         fontSize: 14,
