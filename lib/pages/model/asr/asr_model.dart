@@ -101,18 +101,6 @@ class _TryModelState extends State<TryModel> {
                     style: TextStyle(fontSize: 16, color: Colors.black54),
                   ),
             const SizedBox(height: 10),
-
-            // ElevatedButton(
-            //       style: ElevatedButton.styleFrom(
-            //         backgroundColor: isGeneratingOutput
-            //             ? Colors.grey // Set the color to indicate it's disabled
-            //             : const Color.fromARGB(255, 255, 255, 255),
-            //         fixedSize:
-            //             const Size(150, 50), // Set the desired width and height
-            //       ),
-            //       onPressed: () {
-            //         isOutput = false;
-            //       },
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

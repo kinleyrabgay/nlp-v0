@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:record/record.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../../provider/state.dart';
 
 class ModelTestRecorder extends StatefulWidget {
