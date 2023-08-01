@@ -137,25 +137,25 @@ class AudioPlayerState extends State<AudioPlayer> {
   }
 
   Future<void> downloadAudio() async {
-    // try {
-    //   final directory = await getApplicationDocumentsDirectory();
-    //   final appDirPath = directory.path;
-    //   const fileName =
-    //       'audio.mp3'; // Specify the desired file name and extension
-    //   final filePath = path.join(appDirPath, fileName);
-    //   final file = File(filePath);
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final appDirPath = directory.path;
+      const fileName =
+          'audio.mp3'; // Specify the desired file name and extension
+      final filePath = path.join(appDirPath, fileName);
+      final file = File(filePath);
 
-    //   await file.writeAsBytes(await File(widget.source).readAsBytes());
+      await file.writeAsBytes(await File(widget.source).readAsBytes());
 
-    //   print('Audio downloaded successfully: $filePath');
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //       content: Text('Audio downloaded successfully'),
-    //     ),
-    //   );
-    // } catch (e) {
-    //   print('Failed to download audio: $e');
-    // }
+      print('Audio downloaded successfully: $filePath');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Audio downloaded successfully'),
+        ),
+      );
+    } catch (e) {
+      print('Failed to download audio: $e');
+    }
   }
 
   Widget _buildControl() {
