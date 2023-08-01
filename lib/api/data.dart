@@ -39,6 +39,7 @@ class DataServices {
         return jsonList;
       } else {
         print(response.statusCode);
+        print(response);
         return {};
       }
     } catch (e, st) {

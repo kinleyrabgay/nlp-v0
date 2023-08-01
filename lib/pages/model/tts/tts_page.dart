@@ -16,19 +16,22 @@ Future<Map> fetchAudioData(String text) async {
   final headers = {'Content-Type': 'application/json'};
   final body = {'inputText': text};
 
-  final response =
-      await http.post(url, headers: headers, body: jsonEncode(body));
+  try {
+    final response =
+        await http.post(url, headers: headers, body: jsonEncode(body));
 
-  // return response;
-  if (response.statusCode == 200) {
-    // Save the audio to the phone.
-    var tempDir = await getTemporaryDirectory();
-    var filePath = '${tempDir.path}/audio.wav';
-    var file = File(filePath);
-    print(file);
-    await file.writeAsBytes(response.bodyBytes);
-    return {'success': true, "filepath": filePath};
-  } else {
+    if (response.statusCode == 200) {
+      var tempDir = await getTemporaryDirectory();
+      var filePath = '${tempDir.path}/audio.wav';
+      var file = File(filePath);
+      print(file);
+      await file.writeAsBytes(response.bodyBytes);
+      return {'success': true, "filepath": filePath};
+    } else {
+      return {'success': false};
+    }
+  } catch (e) {
+    print('Error fetching audio data: $e');
     return {'success': false};
   }
 }
@@ -83,40 +86,46 @@ class _TTSModelState extends State<TTSModel> {
         audioReceivedToLocal = fasle_storage;
       });
 
-      print('Fetch audio data called');
-      print(text);
-      Map audioGenerated = await fetchAudioData(text);
-      bool audioIsReceivedStatus = audioGenerated['success'];
+      try {
+        print('Fetch audio data called');
+        print(text);
+        Map audioGenerated = await fetchAudioData(text);
+        bool audioIsReceivedStatus = audioGenerated['success'];
 
-      if (audioIsReceivedStatus) {
-        audiofilepath = audioGenerated['filepath'];
-      }
+        if (audioIsReceivedStatus) {
+          audiofilepath = audioGenerated['filepath'];
+        }
 
-      print('Audio is Received Status ===================================');
-      print(audioIsReceivedStatus);
-      // ignore: unrelated_type_equality_checks
-      if (audioIsReceivedStatus == true) {
-        setState(() {
-          audioReceivedToLocal = true;
+        print('Audio is Received Status ===================================');
+        print(audioIsReceivedStatus);
 
-          print('Setting state =============================');
-          print(audioReceivedToLocal);
-
-          isGeneratingOutput = false;
-        });
-
-        print('Audio synthesized and saved');
-        print('Now enable the play button and play it.');
-      } else {
-        print(
-            'Failed to get audio from server and save on temporary directory');
+        if (audioIsReceivedStatus) {
+          setState(() {
+            audioReceivedToLocal = true;
+            print('Setting state =============================');
+            print(audioReceivedToLocal);
+            isGeneratingOutput = false;
+          });
+          print('Audio synthesized and saved');
+          print('Now enable the play button and play it.');
+        } else {
+          print(
+              'Failed to get audio from server and save on temporary directory');
+          setState(() {
+            audioReceivedToLocal = false;
+            print('Setting state =============================');
+            print(audioReceivedToLocal);
+            isGeneratingOutput = false;
+          });
+        }
+      } catch (e) {
+        print('Error fetching or saving audio: $e');
         setState(() {
           audioReceivedToLocal = false;
-          print('Setting state =============================');
-          print(audioReceivedToLocal);
           isGeneratingOutput = false;
         });
       }
+
       setState(() {
         isLoading = false;
         isGeneratingOutput = false;

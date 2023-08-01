@@ -183,7 +183,7 @@ class _TryModelState extends State<TryModel> {
                           ? const Flexible(
                               child: FittedBox(
                                 child: Text(
-                                  "Upload Audio",
+                                  "Upload",
                                   style: TextStyle(fontSize: 14),
                                 ),
                               ),
