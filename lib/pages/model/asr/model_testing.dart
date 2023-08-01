@@ -9,10 +9,15 @@ import 'package:flutter/foundation.dart';
 import '../../../provider/state.dart';
 
 class ModelTestRecorder extends StatefulWidget {
-  const ModelTestRecorder(
-      {super.key, required this.onStop, this.amplitudeStream});
   final void Function(String path) onStop;
   final Stream<double>? amplitudeStream;
+  final bool isGeneratingOutput;
+
+  const ModelTestRecorder(
+      {super.key,
+      required this.onStop,
+      this.amplitudeStream,
+      required this.isGeneratingOutput});
 
   @override
   State<ModelTestRecorder> createState() => _ModelTestRecorderState();
@@ -93,39 +98,68 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
       color = theme.primaryColor.withOpacity(0.1);
     }
 
-    return InkWell(
-      onTap: () {
-        (_recordState != RecordState.stop) ? _stop() : _start();
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          icon,
-          englishState.isEnglishSelected
-              ? FittedBox(
-                  child: Text(
-                    (_recordState != RecordState.stop) ? "Recording" : "Record",
-                    style: (_recordState != RecordState.stop)
-                        ? const TextStyle(
-                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                        : const TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                )
-              : FittedBox(
-                  child: Text(
-                    (_recordState != RecordState.stop)
-                        ? "སྒྲ་ཟུངས་དོ།"
-                        : "སྒྲ་ཟུངས།",
-                    style: (_recordState != RecordState.stop)
-                        ? const TextStyle(
-                            fontSize: 14, color: Color.fromARGB(255, 255, 0, 0))
-                        : const TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                ),
-        ],
-      ),
-    );
+    return widget.isGeneratingOutput
+        ? ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: widget.isGeneratingOutput
+                  ? Colors.grey
+                  : const Color.fromARGB(255, 255, 255, 255),
+              fixedSize: const Size(150, 50),
+            ),
+            child: const Text(
+              'Generating...',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+          )
+        : ElevatedButton(
+            onPressed: () {
+              (_recordState != RecordState.stop) ? _stop() : _start();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+              fixedSize: const Size(150, 50),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon,
+                englishState.isEnglishSelected
+                    ? FittedBox(
+                        child: Text(
+                          (_recordState != RecordState.stop)
+                              ? "Recording"
+                              : "Record",
+                          style: (_recordState != RecordState.stop)
+                              ? const TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 255, 0, 0))
+                              : const TextStyle(
+                                  fontSize: 14, color: Colors.black),
+                        ),
+                      )
+                    : FittedBox(
+                        child: Text(
+                          (_recordState != RecordState.stop)
+                              ? "སྒྲ་ཟུངས་དོ།"
+                              : "སྒྲ་ཟུངས།",
+                          style: (_recordState != RecordState.stop)
+                              ? const TextStyle(
+                                  fontSize: 14,
+                                  color: Color.fromARGB(255, 255, 0, 0),
+                                )
+                              : const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                ),
+                        ),
+                      ),
+              ],
+            ),
+          );
   }
 
   @override

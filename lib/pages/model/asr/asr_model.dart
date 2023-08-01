@@ -101,42 +101,35 @@ class _TryModelState extends State<TryModel> {
                     style: TextStyle(fontSize: 16, color: Colors.black54),
                   ),
             const SizedBox(height: 10),
+
+            // ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //         backgroundColor: isGeneratingOutput
+            //             ? Colors.grey // Set the color to indicate it's disabled
+            //             : const Color.fromARGB(255, 255, 255, 255),
+            //         fixedSize:
+            //             const Size(150, 50), // Set the desired width and height
+            //       ),
+            //       onPressed: () {
+            //         isOutput = false;
+            //       },
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: isGeneratingOutput
-                        ? Colors.grey // Set the color to indicate it's disabled
-                        : const Color.fromARGB(255, 255, 255, 255),
-                    fixedSize:
-                        const Size(150, 50), // Set the desired width and height
-                  ),
-                  onPressed: () {
-                    isOutput = false;
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      isGeneratingOutput
-                          ? const Text(
-                              'Generating...',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                              ),
-                            )
-                          : ModelTestRecorder(
-                              onStop: (String path) {
-                                setState(() {
-                                  _predicted_text_controller.text = "";
-                                });
-                                ('Recorded file path: $path');
-                                transcribeAudio(path);
-                              },
-                            )
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ModelTestRecorder(
+                      onStop: (String path) {
+                        setState(() {
+                          _predicted_text_controller.text = "";
+                        });
+                        ('Recorded file path: $path');
+                        transcribeAudio(path);
+                      },
+                      isGeneratingOutput: isGeneratingOutput,
+                    )
+                  ],
                 ),
                 if (isLoading)
                   const Center(
