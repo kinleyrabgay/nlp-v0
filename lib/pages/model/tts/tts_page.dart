@@ -146,7 +146,7 @@ class _TtsModelState extends State<TtsModel> {
                     text = value;
                   });
                 },
-                style: const TextStyle(fontSize: 15.0),
+                style: const TextStyle(fontSize: 14.0),
               ),
               const SizedBox(height: 20.0),
               Row(
@@ -184,7 +184,10 @@ class _TtsModelState extends State<TtsModel> {
                           : (englishState.isEnglishSelected
                               ? 'Generate Audio'
                               : 'ཐོས་སྒྲ་བཟོ།'),
-                      style: const TextStyle(fontSize: 14),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: "DDC_Uchen",
+                      ),
                     ),
                   ),
                   if (isLoading)
@@ -198,8 +201,13 @@ class _TtsModelState extends State<TtsModel> {
                       backgroundColor: const Color.fromARGB(255, 235, 44, 76),
                       fixedSize: const Size(150, 50),
                     ),
-                    child:
-                        Text(englishState.isEnglishSelected ? 'Clear' : 'བསལ།'),
+                    child: Text(
+                      englishState.isEnglishSelected ? 'Clear' : 'བསལ།',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: "DDC_Uchen",
+                      ),
+                    ),
                   ),
                 ],
               ),

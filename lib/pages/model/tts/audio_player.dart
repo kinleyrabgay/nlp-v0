@@ -140,8 +140,7 @@ class AudioPlayerState extends State<AudioPlayer> {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final appDirPath = directory.path;
-      const fileName =
-          'audio.mp3'; // Specify the desired file name and extension
+      const fileName = 'audio.mp3';
       final filePath = path.join(appDirPath, fileName);
       final file = File(filePath);
 
@@ -212,7 +211,7 @@ class AudioPlayerState extends State<AudioPlayer> {
               width: MediaQuery.of(context).size.width * 0.4,
               child: SliderTheme(
                 data: const SliderThemeData(
-                  trackHeight: 1.0,
+                  trackHeight: 0.7,
                   trackShape: RoundedRectSliderTrackShape(),
                 ),
                 child: Slider(
@@ -253,8 +252,8 @@ class AudioPlayerState extends State<AudioPlayer> {
                   color: englishState.isEnglishSelected
                       ? const Color.fromARGB(255, 37, 58, 107)
                       : Colors.orange,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 14.0,
+                  fontFamily: englishState.isEnglishSelected ? '' : 'Joyig',
                 ),
               ),
             ),
