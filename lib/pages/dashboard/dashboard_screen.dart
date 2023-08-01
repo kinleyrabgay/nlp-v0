@@ -92,7 +92,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ? "Dzongkha NMT"
                           : "རྫོང་ཁའི་སྐད་སྒྱུར།",
                       subtitle: englishState.isEnglishSelected
-                          ? "Translate Dzongkha Text"
+                          ? "Translate Dzongkha and English Text"
                           : "རྫོང་ཁིའི་ཚིག་ཡིག་སྐད་སྒྱུར་འབད།",
                       imagepath: "assets/img/nmt_logo.png",
                       cardcolor: Colors.white,
