@@ -120,7 +120,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-              fixedSize: const Size(150, 50),
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 50),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
