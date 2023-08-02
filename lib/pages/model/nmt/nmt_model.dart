@@ -165,7 +165,7 @@ class _Nmt_modelState extends State<NmtModel> {
                     });
                   },
                 ),
-                Column(
+                const Column(
                   children: [
                     Row(
                       children: [
