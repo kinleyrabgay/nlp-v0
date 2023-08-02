@@ -110,119 +110,135 @@ class _TtsModelState extends State<TtsModel> {
               ? "Dzongkha TTS"
               : 'རྫོང་ཁའི་ཚིག་ཡིག་ལས་ངག་ཚིག།',
           text: _getAppBarText(englishState)),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              TextFormField(
-                controller: text_controller,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    borderSide: BorderSide(
-                      color: Color.fromARGB(255, 37, 58, 107),
-                      width: 1,
-                    ),
-                  ),
-                  errorStyle: const TextStyle(color: Colors.red, fontSize: 14),
-                  contentPadding: const EdgeInsets.all(10),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return englishState.isEnglishSelected
-                        ? 'This field cannot be empty!'
-                        : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    text = value;
-                  });
-                },
-                style: const TextStyle(fontSize: 14.0),
-              ),
-              const SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed: isLoading
-                        ? null
-                        : () {
-                            if (text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(englishState.isEnglishSelected
-                                      ? 'Please enter text.'
-                                      : 'ཚིག་ཡིག་བཙུགས་གནང་།'),
-                                ),
-                              );
-                            } else {
-                              fetchAudioAndSave(text);
-                            }
-                          },
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        textStyle: const TextStyle(fontSize: 14.0),
-                        backgroundColor: englishState.isEnglishSelected
-                            ? const Color.fromARGB(255, 37, 58, 107)
-                            : Colors.orange,
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.35, 50)),
-                    child: Text(
-                      isGeneratingOutput
-                          ? (englishState.isEnglishSelected
-                              ? 'Generating...'
-                              : 'ཐོས་སྒྲ་བཟོ།')
-                          : (englishState.isEnglishSelected
-                              ? 'Generate'
-                              : 'ཐོས་སྒྲ་བཟོ།'),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: "DDC_Uchen",
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: text_controller,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                      hintText: hint,
+                      hintStyle:
+                          const TextStyle(fontSize: 14, color: Colors.grey),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(
+                          color: Color.fromARGB(255, 37, 58, 107),
+                          width: 1,
+                        ),
                       ),
+                      errorStyle:
+                          const TextStyle(color: Colors.red, fontSize: 14),
+                      contentPadding: const EdgeInsets.all(10),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return englishState.isEnglishSelected
+                            ? 'This field cannot be empty!'
+                            : 'འདི་ས་གོ་སྟོངམ་མ་བཞག།';
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        text = value;
+                      });
+                    },
+                    style: const TextStyle(fontSize: 14.0),
                   ),
-                  if (isLoading)
-                    const SpinKitFadingCircle(
-                        color: Color.fromARGB(255, 37, 58, 107), size: 40),
-                  ElevatedButton(
-                    onPressed: text_controller.clear,
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
-                        textStyle: const TextStyle(fontSize: 14.0),
-                        backgroundColor: const Color.fromARGB(255, 235, 44, 76),
-                        fixedSize:
-                            Size(MediaQuery.of(context).size.width * 0.35, 50)),
-                    child: Text(
-                      englishState.isEnglishSelected ? 'Clear' : 'བསལ།',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontFamily: "DDC_Uchen",
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: isLoading
+                            ? null
+                            : () {
+                                if (text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                          englishState.isEnglishSelected
+                                              ? 'Please enter text.'
+                                              : 'ཚིག་ཡིག་བཙུགས་གནང་།'),
+                                    ),
+                                  );
+                                } else {
+                                  fetchAudioAndSave(text);
+                                }
+                              },
+                        style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            textStyle: const TextStyle(fontSize: 14.0),
+                            backgroundColor: englishState.isEnglishSelected
+                                ? const Color.fromARGB(255, 37, 58, 107)
+                                : Colors.orange,
+                            fixedSize: Size(
+                                MediaQuery.of(context).size.width * 0.35, 50)),
+                        child: Text(
+                          isGeneratingOutput
+                              ? (englishState.isEnglishSelected
+                                  ? 'Generating...'
+                                  : 'ཐོས་སྒྲ་བཟོ།')
+                              : (englishState.isEnglishSelected
+                                  ? 'Generate'
+                                  : 'ཐོས་སྒྲ་བཟོ།'),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "DDC_Uchen",
+                          ),
+                        ),
                       ),
-                    ),
+                      if (isLoading)
+                        const SpinKitFadingCircle(
+                            color: Color.fromARGB(255, 37, 58, 107), size: 40),
+                      ElevatedButton(
+                        onPressed: text_controller.clear,
+                        style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            textStyle: const TextStyle(fontSize: 14.0),
+                            backgroundColor:
+                                const Color.fromARGB(255, 235, 44, 76),
+                            fixedSize: Size(
+                                MediaQuery.of(context).size.width * 0.35, 50)),
+                        child: Text(
+                          englishState.isEnglishSelected ? 'Clear' : 'བསལ།',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontFamily: "DDC_Uchen",
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20.0),
+                  Column(
+                    children: [
+                      if (audioReceivedToLocal == true)
+                        AudioPlayer(
+                          source: audiofilepath,
+                        )
+                      else
+                        const Text(''),
+                    ],
                   ),
                 ],
               ),
-              const SizedBox(height: 20.0),
-              Column(
-                children: [
-                  if (audioReceivedToLocal == true)
-                    AudioPlayer(
-                      source: audiofilepath,
-                    )
-                  else
-                    const Text(''),
-                ],
-              ),
-            ],
+            ),
           ),
         ),
       ),
