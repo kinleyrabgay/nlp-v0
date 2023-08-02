@@ -48,116 +48,119 @@ class _AboutPageState extends State<AboutPage> {
             : 'རྗོང་ཁ་ ཨེན་ཨེལ་པི།',
         text: _getAppBarText(englishState),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 32),
-              Text(
-                welcomeText,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 32),
+                Text(
+                  welcomeText,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                nlpText,
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: englishState.isEnglishSelected
-                      ? Colors.orange
-                      : const Color.fromARGB(255, 0, 71, 165),
+                const SizedBox(height: 8),
+                Text(
+                  nlpText,
+                  style: TextStyle(
+                    fontSize: 48,
+                    fontWeight: FontWeight.bold,
+                    color: englishState.isEnglishSelected
+                        ? Colors.orange
+                        : const Color.fromARGB(255, 0, 71, 165),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'v1.0.0',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: englishState.isEnglishSelected ? '' : 'Joyig'),
-              ),
-              const SizedBox(height: 24),
-              Center(
-                child: Text(
-                  devText,
-                  style: const TextStyle(fontSize: 18),
-                  textAlign: TextAlign.center,
+                const SizedBox(height: 8),
+                Text(
+                  'v1.0.0',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontFamily:
+                          englishState.isEnglishSelected ? '' : 'Joyig'),
                 ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/img/dd.png'), // Replace with your DDC logo asset
-                        fit: BoxFit.contain,
+                const SizedBox(height: 24),
+                Center(
+                  child: Text(
+                    devText,
+                    style: const TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/img/dd.png'), // Replace with your DDC logo asset
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/img/cstlogo.png'), // Replace with your CST logo asset
-                        fit: BoxFit.contain,
+                    const SizedBox(width: 16),
+                    Container(
+                      width: 80,
+                      height: 80,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/img/cstlogo.png'), // Replace with your CST logo asset
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 32),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    await Share.share(
+                        'https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
+                        subject: 'DCDD');
+                  },
+                  icon: const Icon(
+                    Icons.share,
+                    color: Colors.white,
+                    size: 16,
                   ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  await Share.share(
-                      'https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
-                      subject: 'DCDD');
-                },
-                icon: const Icon(
-                  Icons.share,
-                  color: Colors.white,
-                  size: 16,
-                ),
-                label: Text(
-                  shareText,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 37, 58,
-                      107), // Replace with your desired button color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+                  label: Text(
+                    shareText,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 37, 58,
+                        107), // Replace with your desired button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 16),
-              const Text(
-                'Contact CST: https://nlp.cst.edu.bt/',
-                style: TextStyle(
-                  fontSize: 14,
+                const SizedBox(height: 20),
+                const SizedBox(height: 16),
+                const Text(
+                  'Contact CST: https://nlp.cst.edu.bt/',
+                  style: TextStyle(
+                    fontSize: 14,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                copyText,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 8),
+                Text(
+                  copyText,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
