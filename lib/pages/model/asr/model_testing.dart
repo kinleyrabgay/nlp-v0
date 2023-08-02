@@ -104,7 +104,7 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
               backgroundColor: widget.isGeneratingOutput
                   ? Colors.grey
                   : const Color.fromARGB(255, 255, 255, 255),
-              fixedSize: const Size(150, 50),
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.35, 50),
             ),
             child: Text(
               englishState.isEnglishSelected ? 'Generating...' : 'སྒྲ་ཟུངས་དོ།',

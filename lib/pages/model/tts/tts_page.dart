@@ -169,13 +169,13 @@ class _TtsModelState extends State<TtsModel> {
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      textStyle: const TextStyle(fontSize: 14.0),
-                      backgroundColor: englishState.isEnglishSelected
-                          ? const Color.fromARGB(255, 37, 58, 107)
-                          : Colors.orange,
-                      fixedSize: const Size(150, 50),
-                    ),
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        textStyle: const TextStyle(fontSize: 14.0),
+                        backgroundColor: englishState.isEnglishSelected
+                            ? const Color.fromARGB(255, 37, 58, 107)
+                            : Colors.orange,
+                        fixedSize:
+                            Size(MediaQuery.of(context).size.width * 0.35, 50)),
                     child: Text(
                       isGeneratingOutput
                           ? (englishState.isEnglishSelected
@@ -196,11 +196,11 @@ class _TtsModelState extends State<TtsModel> {
                   ElevatedButton(
                     onPressed: text_controller.clear,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      textStyle: const TextStyle(fontSize: 14.0),
-                      backgroundColor: const Color.fromARGB(255, 235, 44, 76),
-                      fixedSize: const Size(150, 50),
-                    ),
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        textStyle: const TextStyle(fontSize: 14.0),
+                        backgroundColor: const Color.fromARGB(255, 235, 44, 76),
+                        fixedSize:
+                            Size(MediaQuery.of(context).size.width * 0.35, 50)),
                     child: Text(
                       englishState.isEnglishSelected ? 'Clear' : 'བསལ།',
                       style: const TextStyle(

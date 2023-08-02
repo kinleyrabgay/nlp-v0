@@ -165,7 +165,7 @@ class _Nmt_modelState extends State<NmtModel> {
                     });
                   },
                 ),
-                const Column(
+                Column(
                   children: [
                     Row(
                       children: [
@@ -277,11 +277,11 @@ class _Nmt_modelState extends State<NmtModel> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: englishState.isEnglishSelected
-                        ? const Color.fromARGB(255, 37, 58, 107)
-                        : Colors.orange,
-                    fixedSize: const Size(150, 50),
-                  ),
+                      backgroundColor: englishState.isEnglishSelected
+                          ? const Color.fromARGB(255, 37, 58, 107)
+                          : Colors.orange,
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.35, 50)),
                   onPressed: isLoading
                       ? null
                       : () {
@@ -316,9 +316,9 @@ class _Nmt_modelState extends State<NmtModel> {
                       color: Color.fromARGB(255, 37, 58, 107), size: 40),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 235, 44, 76),
-                    fixedSize: const Size(150, 50),
-                  ),
+                      backgroundColor: const Color.fromARGB(255, 235, 44, 76),
+                      fixedSize:
+                          Size(MediaQuery.of(context).size.width * 0.35, 50)),
                   onPressed: () {
                     setState(() {
                       languageController.clear();

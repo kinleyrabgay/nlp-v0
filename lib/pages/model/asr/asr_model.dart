@@ -140,12 +140,12 @@ class _AsrModelState extends State<AsrModel> {
                   ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: englishState.isEnglishSelected
-                        ? const Color.fromARGB(255, 37, 58, 107)
-                        : Colors.orange,
-                    fixedSize:
-                        const Size(150, 50), // Set the desired width and height
-                  ),
+                      backgroundColor: englishState.isEnglishSelected
+                          ? const Color.fromARGB(255, 37, 58, 107)
+                          : Colors.orange,
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.35,
+                          50) // Set the desired width and height
+                      ),
                   onPressed: () async {
                     try {
                       FilePickerResult? result =
