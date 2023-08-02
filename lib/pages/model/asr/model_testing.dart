@@ -48,10 +48,10 @@ class _ModelTestRecorderState extends State<ModelTestRecorder> {
       if (await _audioRecorder.hasPermission()) {
         // We don't do anything with this but printing
         final isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.vorbisOgg,
+          AudioEncoder.wav,
         );
         if (kDebugMode) {
-          print('${AudioEncoder.vorbisOgg.name} supported: $isSupported');
+          print('${AudioEncoder.wav.name} supported: $isSupported');
         }
 
         await _audioRecorder.start(
