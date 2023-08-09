@@ -117,7 +117,7 @@ class _TtsModelState extends State<TtsModel> {
             currentFocus.unfocus();
           }
         },
-        child: Container(
+        child: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Padding(
             padding:

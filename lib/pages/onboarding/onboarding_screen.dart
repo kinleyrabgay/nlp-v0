@@ -114,7 +114,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 100),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                   ElevatedButton(
                     onPressed: () {
                       _showLimitationDialog(state, context);
@@ -122,7 +122,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 15, 31, 65),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(100),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: Row(
@@ -217,7 +217,7 @@ class OnboardingContent extends StatelessWidget {
       children: [
         Image.asset(
           image,
-          height: 350,
+          height: MediaQuery.of(context).size.height * 0.45,
         ),
         Text(
           title,
@@ -227,7 +227,7 @@ class OnboardingContent extends StatelessWidget {
               .headlineSmall!
               .copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         Text(
           description,
           textAlign: TextAlign.center,

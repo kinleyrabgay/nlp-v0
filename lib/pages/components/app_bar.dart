@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../provider/language_toggle.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String text;
@@ -31,19 +32,35 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
             bottomRight: Radius.circular(30),
           ),
         ),
-        title: Padding(
-          padding: const EdgeInsets.only(right: 3),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(color: Colors.white),
-              ),
-              const LanguageToggle(),
-            ],
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(color: Colors.white),
+            ),
+            const LanguageToggle(),
+          ],
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 6.0),
+            child: IconButton(
+              iconSize: 23,
+              padding: EdgeInsets.zero,
+              icon: const Icon(
+                Icons.share,
+                color: Color.fromARGB(255, 255, 255, 255),
+              ),
+              onPressed: () async {
+                await Share.share(
+                  'https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
+                  subject: 'DCDD',
+                );
+              },
+            ),
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),
           child: Column(
@@ -77,29 +94,23 @@ class AppbarWidget extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          // width: 35,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
+                        IconButton(
+                          iconSize: 20,
+                          padding: EdgeInsets.zero,
+                          icon: const Icon(
+                            Icons.mail_outline,
+                            color: Color.fromARGB(255, 255, 255, 255),
                           ),
-                          child: IconButton(
-                            iconSize: 20,
-                            padding: EdgeInsets.zero,
-                            icon: const Icon(
-                              Icons.mail_outline,
-                              color: Color.fromARGB(255, 255, 255, 255),
-                            ),
-                            onPressed: () async {
-                              String email =
-                                  Uri.encodeComponent("nlp.cst@rub.edu.bt");
-                              Uri mail = Uri.parse("mailto:$email?");
-                              if (await launchUrl(mail)) {
-                                //email app opened
-                              } else {
-                                //email app is not opened
-                              }
-                            },
-                          ),
+                          onPressed: () async {
+                            String email =
+                                Uri.encodeComponent("nlp.cst@rub.edu.bt");
+                            Uri mail = Uri.parse("mailto:$email?");
+                            if (await launchUrl(mail)) {
+                              //email app opened
+                            } else {
+                              //email app is not opened
+                            }
+                          },
                         ),
                       ],
                     ),

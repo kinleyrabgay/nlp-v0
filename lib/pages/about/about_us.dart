@@ -5,7 +5,6 @@ import 'package:dzongkha_nlp_mobile/provider/state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:share_plus/share_plus.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -31,9 +30,6 @@ class _AboutPageState extends State<AboutPage> {
     String devText = englishState.isEnglishSelected
         ? 'Our app is a collaboration between'
         : "རིམ་ལུགས་འདི་ སྲོལ་འཛིན་དང་རྫོང་ཁ་གོང་འཕེལ་ལས་ཁུངས་དང་མཉམ་འབྲེལ་ཐོག་ལས་བཟོ་བཟོཝ་ཨིན།";
-
-    String shareText =
-        englishState.isEnglishSelected ? 'Share App' : "རིམ་ལུགས་སྤེལ།";
 
     String welcomeText =
         englishState.isEnglishSelected ? 'Welcome to' : "བྱོན་པ་ལེགས་སོ།";
@@ -99,52 +95,25 @@ class _AboutPageState extends State<AboutPage> {
                       height: 80,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                              'assets/img/dd.png'), // Replace with your DDC logo asset
+                          image: AssetImage('assets/img/dd.png'),
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 20),
                     Container(
                       width: 80,
                       height: 80,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(
-                              'assets/img/cstlogo.png'), // Replace with your CST logo asset
+                          image: AssetImage('assets/img/cstlogo.png'),
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 32),
-                ElevatedButton.icon(
-                  onPressed: () async {
-                    await Share.share(
-                        'https://play.google.com/store/apps/details?id=ddc.cst.dzongkhanlp',
-                        subject: 'DCDD');
-                  },
-                  icon: const Icon(
-                    Icons.share,
-                    color: Colors.white,
-                    size: 16,
-                  ),
-                  label: Text(
-                    shareText,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 37, 58,
-                        107), // Replace with your desired button color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const SizedBox(height: 16),
+                const SizedBox(height: 30),
                 const Text(
                   'Contact CST: https://nlp.cst.edu.bt/',
                   style: TextStyle(
