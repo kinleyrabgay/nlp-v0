@@ -72,12 +72,14 @@ class _Nmt_modelState extends State<NmtModel> {
           }
         else
           {
-            setState(() {
-              _output_controller.text =
-                  "We apologize for the inconvenience caused. An unexpected error has occurred. Please try again at a later time. Thank you for your understanding and patience.";
-              isLoading = false;
-              isOutput = true;
-            })
+            setState(
+              () {
+                _output_controller.text =
+                    "We apologize for the inconvenience caused. An unexpected error has occurred. Please try again at a later time. Thank you for your understanding and patience.";
+                isLoading = false;
+                isOutput = true;
+              },
+            )
           }
       },
     );
@@ -114,17 +116,19 @@ class _Nmt_modelState extends State<NmtModel> {
 
     void _copyTextToClipboard() {
       final String text = _output_controller.text;
-      Clipboard.setData(ClipboardData(text: text)).then((_) {
-        _showSnackbar(englishState.isEnglishSelected
-            ? 'Text copied successfully'
-            : 'ཚིག་ཡིག་འདྲ་བཤུས་ལེགས་ཤོམ་སྦེ་རྐྱབ་ཅི།');
-      });
+      Clipboard.setData(ClipboardData(text: text)).then(
+        (_) {
+          _showSnackbar(englishState.isEnglishSelected
+              ? 'Text copied successfully'
+              : 'ཚིག་ཡིག་འདྲ་བཤུས་ལེགས་ཤོམ་སྦེ་རྐྱབ་ཅི།');
+        },
+      );
     }
 
     return Scaffold(
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
-              ? "Dzongkha Translation"
+              ? "Dzongkha NMT"
               : 'རྫོང་ཁ་སྐད་སྒྱུར།',
           text: _getAppBarText(englishState)),
       body: GestureDetector(

@@ -109,7 +109,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha ASR"
-                          : "རྫོང་ཁའི་རང་བཞིན་བློ་འཛིན།",
+                          : "རྫོང་ཁའི་སྒྲ་ལས་ཡི་གུ།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Speech into Text"
                           : "རྫོང་ཁའི་ངག་ཚིག་ ཚིག་ཡིག་ནང་ཕབ།",
@@ -128,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     DashboardCard(
                       heading: englishState.isEnglishSelected
                           ? "Dzongkha TTS"
-                          : "རྫོང་ཁ་ཡི་གུ་ལས་སྒྲ།",
+                          : "རྫོང་ཁའི་ཡི་གུ་ལས་སྒྲ།",
                       subtitle: englishState.isEnglishSelected
                           ? "Transcribe Dzongkha Text into Speech"
                           : "རྫོང་ཁའི་ཚིག་ཡིག་ ངག་ཚིག་ནང་ཕབ།",

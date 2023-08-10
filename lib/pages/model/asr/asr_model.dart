@@ -95,7 +95,7 @@ class _AsrModelState extends State<AsrModel> {
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
               ? "Dzongkha ASR"
-              : 'རྫོང་ཁའི་རང་བཞིན་བློ་འཛིན།',
+              : 'རྫོང་ཁའི་སྒྲ་ལས་ཡི་གུ།',
           text: _getAppBarText(englishState)),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),

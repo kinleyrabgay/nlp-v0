@@ -108,7 +108,7 @@ class _TtsModelState extends State<TtsModel> {
       appBar: AppbarWidget(
           title: englishState.isEnglishSelected
               ? "Dzongkha TTS"
-              : 'རྫོང་ཁའི་ཚིག་ཡིག་ལས་ངག་ཚིག།',
+              : 'རྫོང་ཁའི་ཡི་གུ་ལས་སྒྲ།',
           text: _getAppBarText(englishState)),
       body: GestureDetector(
         onTap: () {
