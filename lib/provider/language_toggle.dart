@@ -16,7 +16,7 @@ class _LanguageToggleState extends State<LanguageToggle> {
     return Consumer<EnglishState>(
       builder: (_, englishState, __) {
         return FlutterSwitch(
-          width: 62.0,
+          width: MediaQuery.of(context).size.width * 0.165,
           height: 26.0,
           valueFontSize: 14.0,
           value: englishState.isEnglishSelected,

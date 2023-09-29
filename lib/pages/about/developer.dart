@@ -151,7 +151,7 @@ class Developer extends StatelessWidget {
                         developer7: "པད་མ་དབང་འདུས།",
                         developer8: "ཚེ་དབང་ནོར་བུ།",
                         developer9: "སེང་གེ་རྡོ་རྗེ།",
-                        projectname: "ལམ་སྲོལ་དང་རྫོང་ཁ་གོང་འཕེལ་ལས་ཁུངས།",
+                        projectname: "སྲོལ་འཛིན་དང་རྫོང་ཁ་གོང་འཕེལ་ལས་ཁུངས།",
                         projectlogo: 'assets/img/dd.png',
                         projecturl: "https://www.dzongkha.gov.bt/",
                       )

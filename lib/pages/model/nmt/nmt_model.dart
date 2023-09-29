@@ -127,10 +127,11 @@ class _Nmt_modelState extends State<NmtModel> {
 
     return Scaffold(
       appBar: AppbarWidget(
-          title: englishState.isEnglishSelected
-              ? "Dzongkha NMT"
-              : 'རྫོང་ཁ་སྐད་སྒྱུར།',
-          text: _getAppBarText(englishState)),
+        title: englishState.isEnglishSelected
+            ? "Dzongkha NMT"
+            : 'རྫོང་ཁ་སྐད་སྒྱུར།',
+        text: _getAppBarText(englishState),
+      ),
       body: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -167,14 +168,16 @@ class _Nmt_modelState extends State<NmtModel> {
                       );
                     }).toList(),
                     onChanged: (String? value) {
-                      setState(() {
-                        originLanguage = value!;
-                        if (originLanguage == destinationLanguage) {
-                          destinationLanguage = (originLanguage == 'English')
-                              ? 'Dzongkha'
-                              : 'English';
-                        }
-                      });
+                      setState(
+                        () {
+                          originLanguage = value!;
+                          if (originLanguage == destinationLanguage) {
+                            destinationLanguage = (originLanguage == 'English')
+                                ? 'Dzongkha'
+                                : 'English';
+                          }
+                        },
+                      );
                     },
                   ),
                   const Column(
@@ -219,14 +222,16 @@ class _Nmt_modelState extends State<NmtModel> {
                       );
                     }).toList(),
                     onChanged: (String? value) {
-                      setState(() {
-                        destinationLanguage = value!;
-                        if (destinationLanguage == originLanguage) {
-                          originLanguage = (destinationLanguage == 'English')
-                              ? 'Dzongkha'
-                              : 'English';
-                        }
-                      });
+                      setState(
+                        () {
+                          destinationLanguage = value!;
+                          if (destinationLanguage == originLanguage) {
+                            originLanguage = (destinationLanguage == 'English')
+                                ? 'Dzongkha'
+                                : 'English';
+                          }
+                        },
+                      );
                     },
                   ),
                 ],
